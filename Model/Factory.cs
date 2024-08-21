@@ -8,5 +8,11 @@ namespace WPF_Azul.Model
 {
     class Factory
     {
+        public List<Tile> factoryTiles;
+
+        public Factory()
+        {
+            factoryTiles = new List<Tile>();
+        }
     }
 }

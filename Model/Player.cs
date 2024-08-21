@@ -4,15 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace WPF_Azul.Model
 {
-    class Tile
+    public class Player
     {
-        public TileType tileType { get; set; }
+        public string name { get; set; }
+        private uint score { get; set; }
 
-        public Tile()
-        {
-        }
     }
 }

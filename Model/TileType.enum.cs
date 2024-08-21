@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace WPF_Azul.Model
 {
-    class Tile
+    public enum TileType
     {
-        public TileType tileType { get; set; }
-
-        public Tile()
-        {
-        }
+        Blue,
+        Red,
+        LightBlue,
+        Black,
+        Yellow,
+        FirstTile
     }
 }
