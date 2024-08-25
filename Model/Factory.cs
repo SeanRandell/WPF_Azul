@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPF_Azul.Model
 {
-    class Factory
+    public class Factory
     {
         public List<Tile> factoryTiles;
 
@@ -14,5 +14,16 @@ namespace WPF_Azul.Model
         {
             factoryTiles = new List<Tile>();
         }
+
+        public void AddFactoryTile(Tile tile) {
+        }
+
+        public List<Tile> TakeAllTilesOfType(TileType tileType)
+        {
+            return new List<Tile>();
+        }
+
+
+
     }
 }

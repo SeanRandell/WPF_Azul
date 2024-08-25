@@ -13,6 +13,6 @@ namespace WPF_Azul.Model
         LightBlue,
         Black,
         Yellow,
-        FirstTile
+        StartingPlayerMarker
     }
 }

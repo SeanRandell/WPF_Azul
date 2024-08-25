@@ -11,5 +11,17 @@ namespace WPF_Azul.Model
         public string name { get; set; }
         private uint score { get; set; }
 
+        private uint startingScore = 0;
+
+        public Player(string name)
+        {
+            this.name = name;
+            score = startingScore;
+        }
+
+        public void ResetPlayerScore()
+        {
+            score = startingScore; 
+        }
     }
 }

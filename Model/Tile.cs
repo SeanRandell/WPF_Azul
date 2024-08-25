@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace WPF_Azul.Model
 {
-    class Tile
+    public class Tile
     {
-        public TileType tileType { get; set; }
+        private TileType _tileType;
+        public TileType TileType { get { return _tileType; }}
 
-        public Tile()
+        public Tile(TileType tileType)
         {
+            _tileType = tileType;
+
         }
     }
 }

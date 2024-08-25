@@ -10,8 +10,8 @@ namespace WPF_Azul.Model
     {
         // TODO - constants see if these can go somewhere else.
         private const int mainTilesLength = 5;
-        private const int mainTilesMinLength = 1;
-        private const int mainTilesMaxLength = 5;
+        private const int floorLineMinLength = 1;
+        private const int floorLineMaxLength = 5;
 
         private Tile[,] mainTiles;
         private Tile[][] ProductionTiles;

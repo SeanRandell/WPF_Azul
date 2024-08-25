@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Azul"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="800">
     <Grid>
-
+        <StackPanel>
+            <Button Name="btnModal" Width="100" Height="40" Content="Modal" Margin="5"
+                    Click="btnModal_Click"/>
+        <TextBlock x:Name="txtblckPlayerName" HorizontalAlignment="Center"></TextBlock>
+        </StackPanel>
     </Grid>
 </Window>
