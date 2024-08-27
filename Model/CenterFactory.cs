@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace WPF_Azul.Model
 {
@@ -10,19 +11,12 @@ namespace WPF_Azul.Model
     {
         public void ResetCenterFactory()
         {
-
+            // TODO - depends on how we eant to get rid of player dropped tile.
         }
 
         public bool ContainsStartingPlayerMarker()
         {
-            foreach (var tile in factoryTiles)
-            {
-                if (tile.TileType == TileType.StartingPlayerMarker)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return factoryTiles.Any(x => x.TileType == TileType.StartingPlayerMarker);
         }
     }
 }

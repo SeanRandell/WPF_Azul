@@ -8,22 +8,32 @@ namespace WPF_Azul.Model
 {
     public class Factory
     {
-        public List<Tile> factoryTiles;
+        private const int NORMAL_FACTORY_MAX_TILES = 4;
+        protected List<Tile> factoryTiles;
 
         public Factory()
         {
             factoryTiles = new List<Tile>();
         }
 
-        public void AddFactoryTile(Tile tile) {
+        public void SetupFactory(TileCollections tileCollections)
+        {
+            for (int i = 0; i < NORMAL_FACTORY_MAX_TILES; i++)
+            {
+                AddFactoryTile(tileCollections.GetRandomTileFromBag());
+            }
         }
 
-        public List<Tile> TakeAllTilesOfType(TileType tileType)
+        public void AddFactoryTile(Tile tile) 
         {
+            factoryTiles.Add(tile);
+        }
+
+        public List<Tile> TakeAllTilesOfType(TileType currentTileType)
+        {
+
             return new List<Tile>();
         }
-
-
 
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPF_Azul.Model
 {
-    internal class TileCollections
+    public class TileCollections
     {
         const int tileTypeAmount = 20;
 
@@ -55,19 +55,31 @@ namespace WPF_Azul.Model
 
         public Tile GetRandomTileFromBag()
         {
+            if(tilebag.Count == 0)
+            {
+                RefillBagFromBin();
+            }
+
             Random rng = new Random();
             int randomIndex = rng.Next(tilebag.Count);
 
             // Swap the random element with the last element
-            Tile temp = tilebag[randomIndex];
+            Tile tempTile = tilebag[randomIndex];
             tilebag[randomIndex] = tilebag[tilebag.Count - 1];
-            tilebag[tilebag.Count - 1] = temp;
+            tilebag[tilebag.Count - 1] = tempTile;
 
             // Pop (remove) the last element and return it
-            Tile poppedValue = tilebag[tilebag.Count - 1];
+            Tile poppedTile = tilebag[tilebag.Count - 1];
             tilebag.RemoveAt(tilebag.Count - 1);
 
-            return poppedValue;
+            return poppedTile;
+        }
+
+        private void RefillBagFromBin()
+        {
+            tilebag.AddRange(tileBin);
+            tileBin.Clear();
+            RandomizeBag();
         }
     }
 }
