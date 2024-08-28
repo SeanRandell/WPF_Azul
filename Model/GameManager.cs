@@ -9,18 +9,11 @@ namespace WPF_Azul.Model
 {
     public class GameManager
     {
-
-
-
-
         public GameManager()
         {
 
         }
 
-        public void AddTile(Tile tile)
-        {
 
-        }
     }
 }
