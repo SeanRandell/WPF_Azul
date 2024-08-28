@@ -27,5 +27,21 @@ namespace WPF_Azul.Model
         {
 
         }
+
+        // Check for rows and columns
+        public void GetTilePlacementScore(int tileX, int tileY)
+        {
+            // start counting in each direction until either hit edge of 
+        }
+
+        public void CheckForRow(int TileY)
+        {
+
+        }
+
+        public void CheckForColumn(int tileX)
+        {
+
+        }
     }
 }
