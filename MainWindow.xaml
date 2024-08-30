@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Azul"
+        xmlns:userControls="clr-namespace:WPF_Azul.View.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
     <Grid>
@@ -12,5 +13,6 @@
                     Click="btnModal_Click"/>
         <TextBlock x:Name="txtblckPlayerName" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>
+        <userControls:PlayerBoardView/>
     </Grid>
 </Window>
