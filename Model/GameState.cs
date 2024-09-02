@@ -6,17 +6,29 @@ using System.Threading.Tasks;
 
 namespace WPF_Azul.Model
 {
-    internal class GameState
+    public class GameState
     {
-        const int factoryAmount = 5;
+        private const int factoryAmount = 5;
         private int[] droppedTileCost = [-1, -1, -2, -2, -2, -3, -3];
+        private TileType[,] tilePattern = {
+            { TileType.Blue, TileType.Yellow, TileType.Red, TileType.Black, TileType.LightBlue},
+            { TileType.LightBlue, TileType.Blue, TileType.Yellow, TileType.Red, TileType.Black},
+            { TileType.Black, TileType.LightBlue, TileType.Blue, TileType.Yellow, TileType.Red},
+            { TileType.Red, TileType.Black, TileType.LightBlue, TileType.Blue, TileType.Yellow},
+            { TileType.Yellow, TileType.Red, TileType.Black, TileType.LightBlue, TileType.Blue}
+        };
+
+
+
         private int droppedTileLength;
 
         private List<Player> players;
         private List<Factory> Factories;
         private int activePlayerTurnIndex;
 
-        private int STARTING_PLAYER_INDEX = 0;
+        private const int STARTING_PLAYER_INDEX = 0;
+        private const int DEFAULT_PLAYER_COUNT = 2;
+
 
         public GameState()
         {
@@ -25,6 +37,9 @@ namespace WPF_Azul.Model
             activePlayerTurnIndex = STARTING_PLAYER_INDEX;
         }
 
-
+        public TileType[,] GetWallPattern()
+        {
+            return tilePattern;
+        }
     }
 }

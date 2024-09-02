@@ -3,11 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
              xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="200" d:DesignWidth="200">
     <Grid>
-        <TextBlock 
-            Text="Test"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <ItemsControl x:Name="StreamsItemsControl" ItemsSource="{Binding wallTiles}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid x:Name="WallTiles"
+                     Width="200"
+                     Height="200"
+                     Background="DarkGray"
+                     >
+
+                    </UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
     </Grid>
 </UserControl>

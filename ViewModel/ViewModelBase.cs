@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace WPF_Azul.ViewModel
 {
-    public class ViewModelBase
+    public class ViewModelBase : INotifyPropertyChanged
     {
-        protected event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

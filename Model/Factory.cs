@@ -32,7 +32,7 @@ namespace WPF_Azul.Model
         public List<Tile> TakeAllTilesOfType(TileType currentTileType)
         {
 
-            return new List<Tile>();
+            return factoryTiles.Where(t => t.TileType == currentTileType).ToList();
         }
 
     }

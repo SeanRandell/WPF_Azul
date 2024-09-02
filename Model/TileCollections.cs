@@ -31,7 +31,7 @@ namespace WPF_Azul.Model
 
                 for (int i = 0; i < tileTypeAmount; i++)
                 {
-                    var newTile = new Tile(tileType);
+                    var newTile = new Tile(tileType, 0, 0);
                     tilebag.Add(newTile);
                 }
             }

@@ -9,11 +9,16 @@ namespace WPF_Azul.Model
 {
     public class GameManager
     {
+        private GameState GameState;
         public GameManager()
         {
-
+            GameState = new GameState();
         }
 
+        public TileType[,] GetWallPattern()
+        {
+            return GameState.GetWallPattern();
+        }
 
     }
 }

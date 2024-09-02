@@ -4,15 +4,55 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Azul"
-        xmlns:userControls="clr-namespace:WPF_Azul.View.UserControls"
+        xmlns:view="clr-namespace:WPF_Azul.View.UserControls"
+        xmlns:vms="clr-namespace:WPF_Azul.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="800">
+        WindowStartupLocation="CenterOwner"
+        Title="Azul" Height="1000" Width="1000">
     <Grid>
-        <StackPanel>
+        <!--<StackPanel>
             <Button Name="btnModal" Width="100" Height="40" Content="Modal" Margin="5"
                     Click="btnModal_Click"/>
-        <TextBlock x:Name="txtblckPlayerName" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock x:Name="txtblckPlayerName" HorizontalAlignment="Center"></TextBlock>
+        </StackPanel>-->
+        <!--<userControls:PlayerBoardView/>-->
+        
+        <Grid.Resources>
+            <!--<DataTemplate DataType="{x:Type vms:TileViewModel}">
+                <view:TileView/>
+            </DataTemplate>-->
+            <DataTemplate DataType="{x:Type vms:MainMenuViewModel}">
+                <view:MainMenuView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:GameViewModel}">
+                <view:GameView/>
+            </DataTemplate>
+        </Grid.Resources>
+
+        <StackPanel>
+            <ContentControl Content="{Binding CurrentViewModel}"/>
         </StackPanel>
-        <userControls:PlayerBoardView/>
+
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0"
+            Background="Beige"
+            AllowDrop="True"
+            DragOver="panel_DragOver"
+            Drop="panel_Drop">
+            <TextBox Width="Auto" Margin="2"
+             Text="green"/>
+            <ContentControl Content="{Binding CurrentViewModel}" Margin="2"/>
+            <ContentControl Content="{Binding CurrentViewModel}" Margin="2"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1"
+            Background="Bisque"
+            AllowDrop="True"
+            DragOver="panel_DragOver"
+            Drop="panel_Drop">
+        </StackPanel>-->
+
     </Grid>
 </Window>

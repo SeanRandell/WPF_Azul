@@ -13,19 +13,19 @@ namespace WPF_Azul.Model
         private const int floorLineMinLength = 1;
         private const int floorLineMaxLength = 5;
 
-        private Tile[,] mainTiles;
+        private Tile[,] wallTiles;
         private Tile[][] ProductionTiles;
         private Tile[] droppedTiles;
 
         public PlayerBoard()
         {
-            mainTiles = new Tile[mainTilesLength, mainTilesLength];
-            InitMainTiles();
+            wallTiles = new Tile[mainTilesLength, mainTilesLength];
+            InitWallTiles();
         }
 
-        private void InitMainTiles()
+        private void InitWallTiles()
         {
-
+            
         }
 
         // Check for rows and columns
