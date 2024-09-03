@@ -18,23 +18,17 @@ namespace WPF_Azul.Model
             { TileType.Yellow, TileType.Red, TileType.Black, TileType.LightBlue, TileType.Blue}
         };
 
-
-
         private int droppedTileLength;
 
         private List<Player> players;
         private List<Factory> Factories;
         private int activePlayerTurnIndex;
 
-        private const int STARTING_PLAYER_INDEX = 0;
-        private const int DEFAULT_PLAYER_COUNT = 2;
-
-
         public GameState()
         {
             players = new List<Player>();
             Factories = new List<Factory>();
-            activePlayerTurnIndex = STARTING_PLAYER_INDEX;
+            activePlayerTurnIndex = GameConstants.STARTING_PLAYER_INDEX;
         }
 
         public TileType[,] GetWallPattern()

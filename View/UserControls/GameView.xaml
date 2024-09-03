@@ -22,7 +22,7 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
 
-
+        <!--Main Menu Button-->
         <Grid Grid.Row="0">
             <StackPanel Margin="0, 25, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="Game View" 
@@ -32,22 +32,28 @@
             </StackPanel>
         </Grid>
 
+        <!-- Grid Setup-->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3.5*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3.5*"/>
             </Grid.ColumnDefinitions>
 
+            <!-- Grid Section Labels-->
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Player 1"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="Factories"/>
             <TextBlock Grid.Row="1" Grid.Column="2" Text="Center Factory"/>
             <TextBlock Grid.Row="1" Grid.Column="3" Text="Player 2"/>
 
+            <!-- Player 1 Production Tiles with nullable test-->
+            
+
+            <!-- Player 1 Wall Tiles-->
             <ItemsControl ItemsSource="{Binding WallPattern}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -72,9 +78,32 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <local:FactoryView Grid.Row="1" Grid.Column="1">
-                
-            </local:FactoryView>
+            <!-- Test Factory View-->
+            <local:FactoryView Grid.Row="1" Grid.Column="1"/>
+
+            <!-- Multiple Factories Generation Test-->
+            <!--<ItemsControl ItemsSource="{Binding Factories}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <GroupBox Header="Factory">
+                            <ItemsControl ItemsSource="{Binding FactoryTiles}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ContentControl Content="{Binding}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>-->
+
 
         </Grid>
     </Grid>

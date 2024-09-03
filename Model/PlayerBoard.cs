@@ -9,23 +9,65 @@ namespace WPF_Azul.Model
     class PlayerBoard
     {
         // TODO - constants see if these can go somewhere else.
-        private const int mainTilesLength = 5;
-        private const int floorLineMinLength = 1;
-        private const int floorLineMaxLength = 5;
 
-        private Tile[,] wallTiles;
-        private Tile[][] ProductionTiles;
-        private Tile[] droppedTiles;
+
+        private List<List<Tile>> wallTiles;
+        private List<List<Tile>> productionTiles;
+        public List<List<Tile>> ProductionTiles
+        {
+            get { return productionTiles; }
+            set { productionTiles = value; }
+        }
+        private List<Tile> droppedTiles;
 
         public PlayerBoard()
         {
-            wallTiles = new Tile[mainTilesLength, mainTilesLength];
+            wallTiles = new List<List<Tile>>();
+            productionTiles = new List<List<Tile>>();
+            droppedTiles = new List<Tile>();
+
+            InitDroppedTiles();
             InitWallTiles();
+            InitProductionTiles();
+        }
+
+        private void InitDroppedTiles()
+        {
+            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
+            {
+                droppedTiles.Add(null);
+            }
+        }
+
+        private void InitProductionTiles()
+        {
+            // Number of lists you want to create
+            int numberOfLists = 5;
+
+            // Generate the lists
+            for (int i = 1; i <= numberOfLists; i++)
+            {
+                List<Tile> innerList = new List<Tile>();
+                for (int j = 1; j <= i; j++)
+                {
+                    //innerList.Add(null);
+                    innerList.Add(new Tile(TileType.Blue, 0, 0));
+                }
+                productionTiles.Add(innerList);
+            }
         }
 
         private void InitWallTiles()
         {
-            
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                List<Tile> innerList = new List<Tile>();
+                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
+                {
+                    innerList.Add(null);
+                }
+                wallTiles.Add(innerList);
+            }
         }
 
         // Check for rows and columns
