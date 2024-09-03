@@ -31,8 +31,6 @@ namespace WPF_Azul.ViewModel
             get { return wallPattern; }
             set { wallPattern = value; }
         }
-
-
         public GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
             //this.navigationStore = navigationStore;
