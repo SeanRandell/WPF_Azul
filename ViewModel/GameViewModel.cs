@@ -21,11 +21,13 @@ namespace WPF_Azul.ViewModel
         // TODO - move to a modal or other kind of menu
         public ICommand MainMenuCommand { get; }
 
-        private readonly PlayerBoard player1Board;
-        private readonly PlayerBoard player2Board;
+        //private readonly PlayerBoard player1Board;
+        //private readonly PlayerBoard player2Board;
 
+        //TODO - For all lists being used. Change them to an observableCollection if the view needs to be changed.
+
+        // TODO - Change to jsut use the wallpattern inside a player. See if an internal colour variable can be used.
         private List<List<Color>> wallPattern;
-
         public List<List<Color>> WallPattern
         {
             get { return wallPattern; }
@@ -36,13 +38,13 @@ namespace WPF_Azul.ViewModel
             //this.navigationStore = navigationStore;
             _gameManager = gameManager;
             MainMenuCommand = new MainMenuCommand(navigationStore);
-            InitWallPattern();
+            InitViewWallPattern();
             Console.WriteLine("test");
         }
 
-        private void InitWallPattern()
+        private void InitViewWallPattern()
         {
-            TileType[,] tileTypeArray = _gameManager.GetWallPattern();
+            TileType[,] tileTypeArray = GameConstants.WALL_TILE_PATTERN;
 
             WallPattern = new List<List<Color>>();
 

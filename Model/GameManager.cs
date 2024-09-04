@@ -14,11 +14,5 @@ namespace WPF_Azul.Model
         {
             GameState = new GameState();
         }
-
-        public TileType[,] GetWallPattern()
-        {
-            return GameState.GetWallPattern();
-        }
-
     }
 }

@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace WPF_Azul.Model
 {
-    class PlayerBoard
+    public class PlayerBoard
     {
-        // TODO - constants see if these can go somewhere else.
-
-
         private List<List<Tile>> wallTiles;
         private List<List<Tile>> productionTiles;
         public List<List<Tile>> ProductionTiles
