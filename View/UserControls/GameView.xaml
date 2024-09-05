@@ -44,14 +44,13 @@
                 <ColumnDefinition Width="3.5*"/>
             </Grid.ColumnDefinitions>
 
-
-
             <!-- Grid Section Labels-->
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Player 1"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="Factories"/>
             <TextBlock Grid.Row="1" Grid.Column="2" Text="Center Factory"/>
             <TextBlock Grid.Row="1" Grid.Column="3" Text="Player 2"/>
 
+            <!-- Player 1 Grid Layout -->
             <Grid Grid.Row="0" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="250"/>
@@ -63,27 +62,33 @@
 
                 <!-- Player 1 Production Tiles with nullable test-->
                 <ItemsControl ItemsSource="{Binding ProductionTilesPlayer1}" Grid.Row="0" Grid.Column="0">
+                    
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="1" HorizontalAlignment="Right" Width="250" Height="250" FlowDirection="RightToLeft"/>
+                        <UniformGrid Columns="1"  Width="250" Height="250" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+                    
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <ItemsControl ItemsSource="{Binding}">
+                            
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1"/>
+                                        <UniformGrid Rows="1" HorizontalAlignment="Right" FlowDirection="RightToLeft"/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
+                            
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <local:TileSlot BackgroundColour="{Binding}"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
+                            
                         </ItemsControl>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+                    
             </ItemsControl>
 
                 <!-- Player 1 Wall Tiles-->
