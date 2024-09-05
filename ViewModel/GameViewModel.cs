@@ -25,7 +25,7 @@ namespace WPF_Azul.ViewModel
         //private readonly PlayerBoard player2Board;
 
         //TODO - For all lists being used. Change them to an observableCollection if the view needs to be changed.
-
+        //TODO - These are temp list for configuring the view to viewmodel interaction. These should be removed if there is a more elequount way of doing this
         // TODO - Change to jsut use the wallpattern inside a player. See if an internal colour variable can be used.
         private List<List<Color>> wallPattern;
         public List<List<Color>> WallPattern
@@ -33,20 +33,126 @@ namespace WPF_Azul.ViewModel
             get { return wallPattern; }
             set { wallPattern = value; }
         }
+
+        private List<List<Tile>> wallTilesPlayer1;
+
+        public List<List<Tile>> WallTilesPlayer1
+        {
+            get { return wallTilesPlayer1; }
+            set { wallTilesPlayer1 = value; }
+        }
+
+        private List<List<Tile>> wallTilesPlayer2;
+
+        public List<List<Tile>> WallTilesPlayer2
+        {
+            get { return wallTilesPlayer2; }
+            set { wallTilesPlayer2 = value; }
+        }
+
+        private List<List<Tile>> productionTilesPlayer1;
+
+        public List<List<Tile>> ProductionTilesPlayer1
+        {
+            get { return productionTilesPlayer1; }
+            set { productionTilesPlayer1 = value; }
+        }
+
+        private List<List<Tile>> productionTilesPlayer2;
+
+        public List<List<Tile>> ProductionTilesPlayer2
+        {
+            get { return productionTilesPlayer2; }
+            set { productionTilesPlayer2 = value; }
+        }
+
+        private List<Tile> droppedTilesPlayer1;
+
+        public List<Tile> DroppedTilesPlayer1
+        {
+            get { return droppedTilesPlayer1; }
+            set { droppedTilesPlayer1 = value; }
+        }
+
+        private List<Tile> droppedTilesPlayer2;
+
+        public List<Tile> DroppedTilesPlayer2
+        {
+            get { return droppedTilesPlayer2; }
+            set { droppedTilesPlayer2 = value; }
+        }
+
+        private List<Factory> factories;
+
+        public List<Factory> Factories
+        {
+            get { return factories; }
+            set { factories = value; }
+        }
+
+        private CenterFactory centerFactory;
+
+        public CenterFactory CenterFactory
+        {
+            get { return centerFactory; }
+            set { centerFactory = value; }
+        }
+
+
         public GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
             //this.navigationStore = navigationStore;
             _gameManager = gameManager;
             MainMenuCommand = new MainMenuCommand(navigationStore);
+
+            wallPattern = new List<List<Color>>();
+            productionTilesPlayer1 = new List<List<Tile>>();
+            productionTilesPlayer2 = new List<List<Tile>>();
+
+            wallTilesPlayer1 = new List<List<Tile>>();
+            wallTilesPlayer2 = new List<List<Tile>>();
+
+            droppedTilesPlayer1 = new List<Tile>();
+            droppedTilesPlayer2 = new List<Tile>();
+
+            factories = new List<Factory>();
+            centerFactory = new CenterFactory();
+
+            InitProductionTiles();
+            InitPlayerWallTiles();
             InitViewWallPattern();
-            Console.WriteLine("test");
+            InitDroppedTiles();
+
+            InitFactories();
+        }
+
+        private void InitFactories()
+        {
+            factories = _gameManager.GetFactories();
+            centerFactory = _gameManager.GetCenterFactory();
+        }
+
+        private void InitPlayerWallTiles()
+        {
+            wallTilesPlayer1 = _gameManager.GetPlayerWallTiles(GameConstants.STARTING_PLAYER_INDEX);
+            wallTilesPlayer2 = _gameManager.GetPlayerWallTiles(GameConstants.PLAYER_TWO_INDEX);
+        }
+
+        private void InitProductionTiles()
+        {
+            productionTilesPlayer1 = _gameManager.GetPlayerProductionTiles(GameConstants.STARTING_PLAYER_INDEX);
+            productionTilesPlayer2 = _gameManager.GetPlayerProductionTiles(GameConstants.PLAYER_TWO_INDEX);
+        }
+
+        private void InitDroppedTiles()
+        {
+            droppedTilesPlayer1 = _gameManager.GetPlayerDroppedTiles(GameConstants.STARTING_PLAYER_INDEX);
+            droppedTilesPlayer1 = _gameManager.GetPlayerDroppedTiles(GameConstants.PLAYER_TWO_INDEX);
         }
 
         private void InitViewWallPattern()
         {
             TileType[,] tileTypeArray = GameConstants.WALL_TILE_PATTERN;
-
-            WallPattern = new List<List<Color>>();
 
             for (int i = 0; i < 5; i++)
             {

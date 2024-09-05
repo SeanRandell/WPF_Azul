@@ -14,5 +14,30 @@ namespace WPF_Azul.Model
         {
             GameState = new GameState();
         }
+
+        public List<List<Tile>> GetPlayerProductionTiles(int playerIndex)
+        {
+            return GameState.players[playerIndex].PlayerBoard.ProductionTiles;
+        }
+
+        public List<List<Tile>> GetPlayerWallTiles(int playerIndex)
+        {
+            return GameState.players[playerIndex].PlayerBoard.WallTiles;
+        }
+
+        public List<Tile> GetPlayerDroppedTiles(int playerIndex)
+        {
+            return GameState.players[playerIndex].PlayerBoard.DroppedTiles;
+        }
+
+        public List<Factory> GetFactories()
+        {
+            return GameState.Factories;
+        }
+
+        public CenterFactory GetCenterFactory()
+        {
+            return GameState.CenterFactory;
+        }
     }
 }

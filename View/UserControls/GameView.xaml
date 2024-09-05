@@ -51,7 +51,7 @@
             <TextBlock Grid.Row="1" Grid.Column="3" Text="Player 2"/>
 
             <!-- Player 1 Production Tiles with nullable test-->
-            <ItemsControl ItemsSource="{Binding WallPattern}">
+            <!--<ItemsControl ItemsSource="{Binding ProductionTilesPlayer1}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="1" HorizontalAlignment="Stretch" Width="250" Height="250"/>
@@ -73,10 +73,10 @@
                         </ItemsControl>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </ItemsControl>-->
 
             <!-- Player 1 Wall Tiles-->
-            <ItemsControl ItemsSource="{Binding WallPattern}">
+            <ItemsControl ItemsSource="{Binding WallPattern}" Grid.Row="1" Grid.Column="0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="1" HorizontalAlignment="Stretch" Width="250" Height="250"/>
@@ -101,31 +101,36 @@
             </ItemsControl>
 
             <!-- Test Factory View-->
-            <local:FactoryView Grid.Row="1" Grid.Column="1"/>
-
-            <!-- Multiple Factories Generation Test-->
-            <!--<ItemsControl ItemsSource="{Binding Factories}">
+            <ItemsControl ItemsSource="{Binding Factories}" Grid.Row="1" Grid.Column="1">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <GroupBox Header="Factory">
-                            <ItemsControl ItemsSource="{Binding FactoryTiles}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Vertical" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <ContentControl Content="{Binding}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </GroupBox>
+                        <ItemsControl ItemsSource="{Binding FactoryTiles}" Height="100" Margin="5">
+                            <ItemsControl.Template>
+                                <ControlTemplate TargetType="ItemsControl">
+                                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="50">
+                                        <ItemsPresenter/>
+                                    </Border>
+                                </ControlTemplate>
+                            </ItemsControl.Template>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:TileView TileColour="{Binding TileTypeColour}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Rows="2" Columns="2"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>-->
-
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Margin="5" MaxHeight="500"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
 
         </Grid>
     </Grid>

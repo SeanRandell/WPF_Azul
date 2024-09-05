@@ -11,9 +11,7 @@ namespace WPF_Azul.Model
         public string name { get; set; }
         private uint score { get; set; }
 
-        private uint startingScore = 0;
         private PlayerBoard playerBoard;
-
         public PlayerBoard PlayerBoard
         {
             get { return playerBoard; }
@@ -23,13 +21,13 @@ namespace WPF_Azul.Model
         public Player(string name)
         {
             this.name = name;
-            score = startingScore;
+            score = GameConstants.STARTING_PLAYER_SCORE;
             playerBoard = new PlayerBoard();
         }
 
         public void ResetPlayerScore()
         {
-            score = startingScore; 
+            score = GameConstants.STARTING_PLAYER_SCORE; 
         }
     }
 }

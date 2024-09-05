@@ -9,13 +9,25 @@ namespace WPF_Azul.Model
     public class PlayerBoard
     {
         private List<List<Tile>> wallTiles;
+        public List<List<Tile>> WallTiles
+        {
+            get { return wallTiles; }
+            set { wallTiles = value; }
+        }
+
         private List<List<Tile>> productionTiles;
         public List<List<Tile>> ProductionTiles
         {
             get { return productionTiles; }
             set { productionTiles = value; }
         }
+
         private List<Tile> droppedTiles;
+        public List<Tile> DroppedTiles
+        {
+            get { return droppedTiles; }
+            set { droppedTiles = value; }
+        }
 
         public PlayerBoard()
         {
@@ -39,7 +51,7 @@ namespace WPF_Azul.Model
         private void InitProductionTiles()
         {
             // Number of lists you want to create
-            int numberOfLists = 5;
+            int numberOfLists = GameConstants.MAIN_TILES_LENGTH;
 
             // Generate the lists
             for (int i = 1; i <= numberOfLists; i++)

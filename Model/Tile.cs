@@ -29,7 +29,15 @@ namespace WPF_Azul.Model
         {
             _tileType = tileType;
             //ColorConverter colorConverter = new ColorConverter();
-            tileTypeColour = (Color)ColorConverter.ConvertFromString(_tileType.ToString());
+            if(_tileType == TileType.StartingPlayerMarker)
+            {
+                tileTypeColour = new Color{R = 255, G = 0, B = 255};
+            }
+            else
+            {
+                tileTypeColour = (Color)ColorConverter.ConvertFromString(_tileType.ToString());
+            }
+
             this.x = x;
             this.y = y;
         }
