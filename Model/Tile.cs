@@ -10,8 +10,50 @@ namespace WPF_Azul.Model
 {
     public class Tile
     {
-        private int x;
-        private int y;
+        private int wallTileX;
+        public int WalltileX
+        {
+            get { return wallTileX; }
+            set { wallTileX = value; }
+        }
+
+        private int wallTileY;
+        public int WalltileY
+        {
+            get { return wallTileY; }
+            set { wallTileY = value; }
+        }
+
+        private int productionRow;
+        public int ProductionRow
+        {
+            get { return productionRow; }
+            set { productionRow = value; }
+        }
+
+        private int productionRowIndex;
+
+        public int ProductionRowIndex
+        {
+            get { return productionRowIndex; }
+            set { productionRowIndex = value; }
+        }
+
+        private int factoriesIndex;
+
+        public int FactoriesIndex
+        {
+            get { return factoriesIndex; }
+            set { factoriesIndex = value; }
+        }
+
+        private int factoryIndex;
+
+        public int FactoryIndex
+        {
+            get { return factoryIndex; }
+            set { factoryIndex = value; }
+        }
 
         private TileType _tileType;
         public TileType TileType { get { return _tileType; }}
@@ -25,21 +67,25 @@ namespace WPF_Azul.Model
             }
         }
 
-        public Tile(TileType tileType, int x, int y)
+        public Tile(TileType tileType)
         {
             _tileType = tileType;
             //ColorConverter colorConverter = new ColorConverter();
             if(_tileType == TileType.StartingPlayerMarker)
             {
-                tileTypeColour = new Color{R = 255, G = 0, B = 255};
+                tileTypeColour = (Color)ColorConverter.ConvertFromString("Pink");
             }
             else
             {
                 tileTypeColour = (Color)ColorConverter.ConvertFromString(_tileType.ToString());
             }
 
-            this.x = x;
-            this.y = y;
+            wallTileX = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            wallTileX = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            productionRow = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            productionRowIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            factoriesIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            factoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
         }
     }
 }

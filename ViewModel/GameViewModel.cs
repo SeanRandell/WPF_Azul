@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,7 @@ namespace WPF_Azul.ViewModel
 
         // TODO - move to a modal or other kind of menu
         public ICommand MainMenuCommand { get; }
+        public ICommand FactoryTileClickCommand { get; }
 
         //private readonly PlayerBoard player1Board;
         //private readonly PlayerBoard player2Board;
@@ -66,12 +69,16 @@ namespace WPF_Azul.ViewModel
             set { productionTilesPlayer2 = value; }
         }
 
-        private List<Tile> droppedTilesPlayer1;
+        private ObservableCollection<Tile> droppedTilesPlayer1;
 
-        public List<Tile> DroppedTilesPlayer1
+        public ObservableCollection<Tile> DroppedTilesPlayer1
         {
             get { return droppedTilesPlayer1; }
-            set { droppedTilesPlayer1 = value; }
+            set 
+            { 
+                droppedTilesPlayer1 = value;
+                OnPropertyChanged();
+            }
         }
 
         private List<Tile> droppedTilesPlayer2;
@@ -90,20 +97,29 @@ namespace WPF_Azul.ViewModel
             set { factories = value; }
         }
 
-        private CenterFactory centerFactory;
+        private List<Tile> centerFactoryTiles;
 
-        public CenterFactory CenterFactory
+        public List<Tile> CenterFactoryTiles
         {
-            get { return centerFactory; }
-            set { centerFactory = value; }
+            get { return centerFactoryTiles; }
+            set { centerFactoryTiles = value; }
+        }
+
+        private Color defaultTileSlotColour;
+
+        public Color DefaultTileSlotColour
+        {
+            get { return defaultTileSlotColour; }
         }
 
 
         public GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
             //this.navigationStore = navigationStore;
+            defaultTileSlotColour = (Color)ColorConverter.ConvertFromString("Transparent");
             _gameManager = gameManager;
             MainMenuCommand = new MainMenuCommand(navigationStore);
+            FactoryTileClickCommand = new FactoryTileClickCommand(_gameManager, this);
 
             wallPattern = new List<List<Color>>();
             productionTilesPlayer1 = new List<List<Tile>>();
@@ -112,11 +128,11 @@ namespace WPF_Azul.ViewModel
             wallTilesPlayer1 = new List<List<Tile>>();
             wallTilesPlayer2 = new List<List<Tile>>();
 
-            droppedTilesPlayer1 = new List<Tile>();
+            droppedTilesPlayer1 = new ObservableCollection<Tile>();
             droppedTilesPlayer2 = new List<Tile>();
 
             factories = new List<Factory>();
-            centerFactory = new CenterFactory();
+            centerFactoryTiles = new List<Tile>();
 
             InitProductionTiles();
             InitPlayerWallTiles();
@@ -129,7 +145,7 @@ namespace WPF_Azul.ViewModel
         private void InitFactories()
         {
             factories = _gameManager.GetFactories();
-            centerFactory = _gameManager.GetCenterFactory();
+            centerFactoryTiles = _gameManager.GetCenterFactoryTiles();
         }
 
         private void InitPlayerWallTiles()
@@ -163,6 +179,12 @@ namespace WPF_Azul.ViewModel
                 }
                 WallPattern.Add(currentRow);
             }
+        }
+
+        public void FactoryTileSelected()
+        {
+            // TODO - fix how null tiles appear in the view.
+            droppedTilesPlayer1[0] = new Tile(TileType.Yellow);
         }
     }
 }

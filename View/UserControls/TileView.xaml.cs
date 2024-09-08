@@ -28,21 +28,53 @@ namespace WPF_Azul.View.UserControls
         /// </summary>
         public Color TileColour
         {
-            get { return (Color)GetValue(ValueProperty); }
+            get { return (Color)GetValue(TileColourProperty); }
             set
             {
-                SetValue(ValueProperty, value);
+                SetValue(TileColourProperty, value);
             }
         }
 
         /// <summary>
         /// Identified the BackgroundColour dependency property
         /// </summary>
-        public static readonly DependencyProperty ValueProperty =
+        public static readonly DependencyProperty TileColourProperty =
             DependencyProperty.Register("TileColour", typeof(Color),
               typeof(TileView), new PropertyMetadata(null));
 
         #endregion
+
+        public ICommand TestCommand
+        {
+            get { return (ICommand)GetValue(TestCommandProperty); }
+            set
+            {
+                SetValue(TestCommandProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Identified the BackgroundColour dependency property
+        /// </summary>
+        public static readonly DependencyProperty TestCommandProperty =
+            DependencyProperty.Register("TestCommand", typeof(ICommand),
+              typeof(TileView), new PropertyMetadata(null));
+
+        public object TestTile
+        {
+            get { return (object)GetValue(TestTileProperty); }
+            set
+            {
+                SetValue(TestTileProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Identified the BackgroundColour dependency property
+        /// </summary>
+        public static readonly DependencyProperty TestTileProperty =
+            DependencyProperty.Register("TestTile", typeof(object),
+              typeof(TileView), new PropertyMetadata(null));
 
         public TileView()
         {

@@ -49,6 +49,9 @@ namespace WPF_Azul.Model
             {
                 currentFactory.SetupFactory(tileCollections);
             }
+            //CenterFactory.AddFactoryTile(new Tile(TileType.Red, GameConstants.TILE_NOT_ON_PLAYERBOARD_INDEX, GameConstants.TILE_NOT_ON_PLAYERBOARD_INDEX));
+            //CenterFactory.AddFactoryTile(new Tile(TileType.Blue, GameConstants.TILE_NOT_ON_PLAYERBOARD_INDEX, GameConstants.TILE_NOT_ON_PLAYERBOARD_INDEX));
+            //CenterFactory.AddFactoryTile(new Tile(TileType.Black, GameConstants.TILE_NOT_ON_PLAYERBOARD_INDEX, GameConstants.TILE_NOT_ON_PLAYERBOARD_INDEX));
         }
     }
 }
