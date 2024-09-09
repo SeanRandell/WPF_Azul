@@ -29,9 +29,11 @@ namespace WPF_Azul.Model
             }
         }
 
-        public void AddFactoryTile(Tile tile) 
+        public int AddFactoryTile(Tile tile) 
         {
+            int preAdditionIndex = factoryTiles.Count;
             factoryTiles.Add(tile);
+            return preAdditionIndex;
         }
 
         public List<Tile> TakeAllTilesOfType(TileType currentTileType)

@@ -8,16 +8,12 @@
              d:DesignHeight="50" d:DesignWidth="50">
     <Grid>
         <Rectangle x:Name="TileSlotUI" 
-         Height="50" Width="50"
+         Height="40" Width="40"
          RadiusX="5" RadiusY="5" 
          >
             <Rectangle.Stroke>
                 <SolidColorBrush Color="Black"></SolidColorBrush>
             </Rectangle.Stroke>
-
-            <Rectangle.Fill>
-                <SolidColorBrush Color="{Binding Path=BackgroundColour}" Opacity="0.15"/>
-            </Rectangle.Fill>
         </Rectangle>
     </Grid>
 </UserControl>

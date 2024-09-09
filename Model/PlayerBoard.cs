@@ -45,7 +45,12 @@ namespace WPF_Azul.Model
             for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
             {
                 droppedTiles.Add(null);
+                //droppedTiles.Add(new Tile(TileType.Blue));
             }
+            droppedTiles[0] = new Tile(TileType.LightBlue);
+            droppedTiles[1] = new Tile(TileType.Blue);
+            droppedTiles[2] = new Tile(TileType.Blue);
+            droppedTiles[3] = new Tile(TileType.Blue);
         }
 
         private void InitProductionTiles()
@@ -60,7 +65,7 @@ namespace WPF_Azul.Model
                 for (int j = 1; j <= i; j++)
                 {
                     //innerList.Add(null);
-                    innerList.Add(new Tile(TileType.Blue, 0, 0));
+                    innerList.Add(new Tile(TileType.Blue));
                 }
                 productionTiles.Add(innerList);
             }
@@ -77,6 +82,8 @@ namespace WPF_Azul.Model
                 }
                 wallTiles.Add(innerList);
             }
+
+            wallTiles[2][3] = new Tile(TileType.Blue);
         }
 
         // Check for rows and columns

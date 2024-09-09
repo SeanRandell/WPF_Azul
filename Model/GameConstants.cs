@@ -15,8 +15,13 @@ namespace WPF_Azul.Model
         public static int DROPPED_TILE_LENGTH = 7;
         public static int MAIN_TILES_LENGTH = 5;
         public static int FACTORY_COUNT = 5;
+        public static int ALL_FACTORY_COUNT = 6;
+        public static int CENTER_FACTORY_INDEX = 5;
         public static int NORMAL_FACTORY_MAX_TILES = 4;
         public static int[] DROPPED_TILE_COSTS = [-1, -1, -2, -2, -2, -3, -3];
+        public static int ALL_PRODUCTION_ROWS_COUNT = 6;
+        public static int DROPPED_TILE_ROW_INDEX = 5;
+
         public static int FLOOR_LINE_MIN_LENGTH = 1;
         public static int FLOOR_LINE_MAX_LENGTH = 5;
         public static TileType[,] WALL_TILE_PATTERN = {
@@ -27,6 +32,6 @@ namespace WPF_Azul.Model
             { TileType.Yellow, TileType.Red, TileType.Black, TileType.LightBlue, TileType.Blue}
         };
 
-        public static int TILE_NOT_ON_PLAYERBOARD_INDEX = -1;
+        public static int TILE_NOT_IN_LIST_INDEX = -1;
     }
 }

@@ -20,31 +20,9 @@ namespace WPF_Azul.View.UserControls
     /// </summary>
     public partial class TileSlot : UserControl
     {
-        #region BackgroundColour DP
-
-        /// <summary>
-        /// Gets or sets the background colour of the tile
-        /// </summary>
-        public Color BackgroundColour
-        {
-            get { return (Color)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Identified the BackgroundColour dependency property
-        /// </summary>
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("BackgroundColour", typeof(Color),
-              typeof(TileSlot), new PropertyMetadata(null));
-
-        #endregion
-
         public TileSlot()
         {
             InitializeComponent();
-            TileSlotUI.DataContext = this;
         }
     }
 }

@@ -10,7 +10,10 @@ namespace WPF_Azul.Model
     public class CenterFactory : Factory
     {
         public CenterFactory() : base(){
-            AddFactoryTile(new Tile(TileType.StartingPlayerMarker, GameConstants.TILE_NOT_ON_PLAYERBOARD_INDEX, GameConstants.TILE_NOT_ON_PLAYERBOARD_INDEX));
+            Tile startingPlayerTile = new Tile(TileType.StartingPlayerMarker);
+            startingPlayerTile.FactoriesIndex = GameConstants.CENTER_FACTORY_INDEX;
+            startingPlayerTile.FactoryIndex = AddFactoryTile(startingPlayerTile);
+
         }
 
         public void ResetCenterFactory()
