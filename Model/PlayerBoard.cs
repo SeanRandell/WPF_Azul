@@ -8,22 +8,22 @@ namespace WPF_Azul.Model
 {
     public class PlayerBoard
     {
-        private List<List<Tile>> wallTiles;
-        public List<List<Tile>> WallTiles
+        private Tile[,] wallTiles;
+        public Tile[,] WallTiles
         {
             get { return wallTiles; }
             set { wallTiles = value; }
         }
 
-        private List<List<Tile>> productionTiles;
-        public List<List<Tile>> ProductionTiles
+        private Tile[][] productionTiles;
+        public Tile[][] ProductionTiles
         {
             get { return productionTiles; }
             set { productionTiles = value; }
         }
 
-        private List<Tile> droppedTiles;
-        public List<Tile> DroppedTiles
+        private Tile[] droppedTiles;
+        public Tile[] DroppedTiles
         {
             get { return droppedTiles; }
             set { droppedTiles = value; }
@@ -31,9 +31,9 @@ namespace WPF_Azul.Model
 
         public PlayerBoard()
         {
-            wallTiles = new List<List<Tile>>();
-            productionTiles = new List<List<Tile>>();
-            droppedTiles = new List<Tile>();
+            wallTiles = new Tile[GameConstants.MAIN_TILES_LENGTH, GameConstants.MAIN_TILES_LENGTH];
+            productionTiles = new Tile[GameConstants.MAIN_TILES_LENGTH][];
+            droppedTiles = new Tile[GameConstants.DROPPED_TILE_LENGTH];
 
             InitDroppedTiles();
             InitWallTiles();
@@ -44,8 +44,7 @@ namespace WPF_Azul.Model
         {
             for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
             {
-                droppedTiles.Add(null);
-                //droppedTiles.Add(new Tile(TileType.Blue));
+                droppedTiles[i] = null;
             }
             droppedTiles[0] = new Tile(TileType.LightBlue);
             droppedTiles[1] = new Tile(TileType.Blue);
@@ -55,19 +54,13 @@ namespace WPF_Azul.Model
 
         private void InitProductionTiles()
         {
-            // Number of lists you want to create
-            int numberOfLists = GameConstants.MAIN_TILES_LENGTH;
-
-            // Generate the lists
-            for (int i = 1; i <= numberOfLists; i++)
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
-                List<Tile> innerList = new List<Tile>();
-                for (int j = 1; j <= i; j++)
+                productionTiles[i] = new Tile[i + 1];
+                for (int j = 0; j <= i; j++)
                 {
-                    //innerList.Add(null);
-                    innerList.Add(new Tile(TileType.Blue));
+                    productionTiles[i][j] = null;
                 }
-                productionTiles.Add(innerList);
             }
         }
 
@@ -75,15 +68,14 @@ namespace WPF_Azul.Model
         {
             for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
-                List<Tile> innerList = new List<Tile>();
                 for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
                 {
-                    innerList.Add(null);
+                    wallTiles[i, j] = null;
                 }
-                wallTiles.Add(innerList);
             }
 
-            wallTiles[2][3] = new Tile(TileType.Blue);
+            // TODO - Remove after testing is done
+            //wallTiles[2,3] = new Tile(TileType.Blue);
         }
 
         // Check for rows and columns

@@ -25,7 +25,8 @@ namespace WPF_Azul.Commands
             // TODO - add selected tiles window.
             if(parameter is not null)
             {
-                Trace.WriteLine((parameter as Tile).TileType);
+                Tile selectedFactoryTile = (Tile)parameter;
+                Trace.WriteLine(selectedFactoryTile.TileType);
                 gameViewModel.FactoryTileSelected();
             }
 

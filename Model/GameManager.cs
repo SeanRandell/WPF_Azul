@@ -16,39 +16,66 @@ namespace WPF_Azul.Model
             GameState = new GameState();
         }
 
-        public List<List<Tile>> GetPlayerProductionTiles(int playerIndex)
+        public void UpdatePlayerProductionTiles(ObservableCollection<ObservableCollection<Tile>> playerProductionTiles, int playerIndex)
         {
-            return GameState.players[playerIndex].PlayerBoard.ProductionTiles;
-        }
-
-        public List<List<Tile>> GetPlayerWallTiles(int playerIndex)
-        {
-            return GameState.players[playerIndex].PlayerBoard.WallTiles;
-        }
-
-        public ObservableCollection<Tile> GetPlayerDroppedTiles(int playerIndex)
-        {
-            ObservableCollection<Tile> returnplayerDroppedTiles = new ObservableCollection<Tile>();
-            foreach (Tile tile in GameState.players[playerIndex].PlayerBoard.DroppedTiles)
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
-                returnplayerDroppedTiles.Add(tile);
+                for (int j = 0; j <= i; j++)
+                {
+                    playerProductionTiles[i][j] = GameState.players[playerIndex].PlayerBoard.ProductionTiles[i][j];
+                }
             }
-            return returnplayerDroppedTiles;
         }
 
-        public List<Factory> GetFactories()
+        public void UpdatePlayerWallTiles(ObservableCollection<ObservableCollection<Tile>> playerWallTiles, int playerIndex)
         {
-            return GameState.Factories;
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
+                {
+                    playerWallTiles[i][j] = GameState.players[playerIndex].PlayerBoard.WallTiles[i, j];
+                }
+            }
         }
 
-        public List<Tile> GetCenterFactoryTiles()
+        public void UpdatePlayerDroppedTiles(ObservableCollection<Tile> playerDroppedTiles, int playerIndex)
         {
-            return GameState.CenterFactory.FactoryTiles;
+            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
+            {
+                playerDroppedTiles[i] = GameState.players[playerIndex].PlayerBoard.DroppedTiles[i];
+            }
+        }
+
+        // TODO - edit to be a list of list of tiles instead of a list of factories
+        public void UpdateFactories(ObservableCollection<ObservableCollection<Tile>> factoryList)
+        {
+            for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
+            {
+                for (int j = 0; j < GameState.Factories[i].FactoryTiles.Count; j++)
+                {
+                    factoryList[i][j] = GameState.Factories[i].FactoryTiles[j];
+                }
+            }
+        }
+
+        public ObservableCollection<Tile> UpdateCenterFactoryTiles()
+        {
+            ObservableCollection<Tile> returnList = new ObservableCollection<Tile>();
+            for (int i = 0; i < GameState.CenterFactory.FactoryTiles.Count; i++)
+            {
+                returnList.Add(GameState.CenterFactory.FactoryTiles[i]);
+            }
+            return returnList;
         }
 
         public void FactoryTileClick()
         {
-            
+
+        }
+
+        public void TestAddDroppedTile()
+        {
+            GameState.players[0].PlayerBoard.DroppedTiles[0] = new Tile(TileType.Yellow);
         }
     }
 }

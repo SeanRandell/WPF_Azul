@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="WPF_Azul.View.UserControls.ValidProductionTileIndicator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="40">
+    <Grid>
+        <Rectangle x:Name="ValidProductionTileIndicatorViewUI" 
+         Height="40" Width="40"
+         RadiusX="5" RadiusY="5" 
+         >
+            <Rectangle.InputBindings>
+                <MouseBinding Gesture="LeftClick" Command="{Binding Path=ProductionLineCommandClick}" 
+                              CommandParameter="{Binding Path=ValidProductionLine}" />
+            </Rectangle.InputBindings>
+        </Rectangle>
+        <TextBlock
+                   Text="&#x1F882;" FontSize="30" Foreground="ForestGreen" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</UserControl>

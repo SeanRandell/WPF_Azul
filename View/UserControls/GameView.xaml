@@ -23,7 +23,6 @@
                 <TextBlock Text="Game View" 
                    FontWeight="Bold" FontSize="18"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <TextBlock Text="&#x1F882;" FontSize="30" Foreground="ForestGreen"/>
                 <Button Margin="2" Content="Main Menu" Command="{Binding MainMenuCommand}"/>
             </StackPanel>
         </Grid>
@@ -53,12 +52,31 @@
                     <RowDefinition Height="250"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
 
+                <!-- Player 1 selection Tiles -->
+                <ItemsControl ItemsSource="{Binding ValidProductionTilesPlayer1}" Grid.Row="0" Grid.Column="0">
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:ValidProductionTileIndicator ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    ValidProductionLine="{Binding}" Cursor="Hand"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+
                 <!-- Player 1 Production Tiles with nullable test-->
-                <ItemsControl ItemsSource="{Binding ProductionTilesPlayer1}" Grid.Row="0" Grid.Column="0">
+                <ItemsControl ItemsSource="{Binding ProductionTilesPlayer1}" Grid.Row="0" Grid.Column="1">
 
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -89,7 +107,7 @@
                 </ItemsControl>
 
                 <!-- Player 1 Wall Tiles-->
-                <ItemsControl ItemsSource="{Binding WallPattern}" Grid.Row="0" Grid.Column="1">
+                <ItemsControl ItemsSource="{Binding WallPattern}" Grid.Row="0" Grid.Column="2">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="1" HorizontalAlignment="Center" Width="210" Height="210"/>
@@ -202,7 +220,7 @@
             <ItemsControl ItemsSource="{Binding Factories}" Grid.Row="0" Grid.Column="1">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ItemsControl ItemsSource="{Binding FactoryTiles}" Height="80" Margin="5">
+                        <ItemsControl ItemsSource="{Binding}" Height="80" Margin="5">
                             <ItemsControl.Template>
                                 <ControlTemplate TargetType="ItemsControl">
                                     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="50">
