@@ -27,6 +27,16 @@ namespace WPF_Azul.ViewModel
         //TODO - For all lists being used. Change them to an observableCollection if the view needs to be changed.
         //TODO - These are temp list for configuring the view to viewmodel interaction. These should be removed if there is a more elequount way of doing this
         // TODO - Change to jsut use the wallpattern inside a player. See if an internal colour variable can be used.
+
+        /* TODO - production tile selection
+         * Have an arraylist containing each production tile as a row of clickable something?
+         * Not sure what this object should be yet. Maybe just a new object?
+            Defined them in the viewmodel
+            clear after production tile click
+            populate after factory tile click and getting which ones are valid from the gamemanager and models.
+        Create in xaml with the user control being either a green arrow that you can click on or a green arrow with green boxes that surround the selectable production tiles
+         */
+
         private List<List<Color>> wallPattern;
         public List<List<Color>> WallPattern
         {

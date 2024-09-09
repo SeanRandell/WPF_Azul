@@ -28,6 +28,7 @@
                 <TextBlock Text="Game View" 
                    FontWeight="Bold" FontSize="18"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="&#x1F882;" FontSize="30" Foreground="ForestGreen"/>
                 <Button Margin="2" Content="Main Menu" Command="{Binding MainMenuCommand}"/>
             </StackPanel>
         </Grid>
