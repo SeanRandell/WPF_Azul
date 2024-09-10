@@ -86,13 +86,7 @@ namespace WPF_Azul.Model
             {
                 
             }
-            // first check if production line is empty 
-            // then check if there is not already that tile type in the wall tile row
 
-            // check if the production line is full
-
-            // if there space but there is already tiles in this row
-            // check if there is already the same type of tile in the production line
             return resultList;
         }
     }
