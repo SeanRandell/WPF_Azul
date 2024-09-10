@@ -18,11 +18,12 @@ namespace WPF_Azul.Commands
         }
         public override void Execute(object? parameter)
         {
+            Trace.WriteLine("execute reached");
             // TODO - command for clicking on a production line after a player has picked a fsctory tile.
             if (parameter is not null)
             {
                 ValidProductionTile clickedProductionTile = (ValidProductionTile)parameter;
-                Trace.WriteLine(clickedProductionTile.ProductionTileIndex);
+                Trace.WriteLine("Test " + clickedProductionTile.ProductionTileIndex);
                 gameViewModel.ProductionLineSelected(clickedProductionTile.ProductionTileIndex);
             }
         }

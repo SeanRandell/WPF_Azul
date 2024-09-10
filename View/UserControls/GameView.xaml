@@ -68,7 +68,7 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:ValidProductionTileIndicator ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            <local:ValidProductionTileIndicator ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
                                                     ValidProductionLine="{Binding}" Cursor="Hand"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

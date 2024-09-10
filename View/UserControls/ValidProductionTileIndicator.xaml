@@ -15,6 +15,14 @@
                 <MouseBinding Gesture="LeftClick" Command="{Binding Path=ProductionLineCommandClick}" 
                               CommandParameter="{Binding Path=ValidProductionLine}" />
             </Rectangle.InputBindings>
+
+            <Rectangle.Stroke>
+                <SolidColorBrush Color="LightGreen" ></SolidColorBrush>
+            </Rectangle.Stroke>
+
+            <Rectangle.Fill>
+                <SolidColorBrush Color="LightGreen" Opacity=".75"/>
+            </Rectangle.Fill>
         </Rectangle>
         <TextBlock
                    Text="&#x1F882;" FontSize="30" Foreground="ForestGreen" 

@@ -21,9 +21,10 @@ namespace WPF_Azul.Commands
         }
         public override void Execute(object? parameter)
         {
+
             // TODO - command for a player selecting a factory tile and placing a preview of these tiles in a selected tiles window.
             // TODO - add selected tiles window.
-            if(parameter is not null)
+            if (parameter is not null)
             {
                 Tile selectedFactoryTile = (Tile)parameter;
                 Trace.WriteLine(selectedFactoryTile.TileType);

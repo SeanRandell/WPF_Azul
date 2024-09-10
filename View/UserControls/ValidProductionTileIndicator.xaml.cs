@@ -37,9 +37,9 @@ namespace WPF_Azul.View.UserControls
             DependencyProperty.Register("ProductionLineCommandClick", typeof(ICommand),
               typeof(ValidProductionTileIndicator), new PropertyMetadata(null));
 
-        public ValidProductionTile ValidProductionLine
+        public object ValidProductionLine
         {
-            get { return (ValidProductionTile)GetValue(ValidProductionLineProperty); }
+            get { return (object)GetValue(ValidProductionLineProperty); }
             set
             {
                 SetValue(ValidProductionLineProperty, value);
@@ -50,7 +50,7 @@ namespace WPF_Azul.View.UserControls
         /// Identified the BackgroundColour dependency property
         /// </summary>
         public static readonly DependencyProperty ValidProductionLineProperty =
-            DependencyProperty.Register("ValidProductionLine", typeof(ValidProductionTile),
+            DependencyProperty.Register("ValidProductionLine", typeof(object),
               typeof(ValidProductionTileIndicator), new PropertyMetadata(null));
         public ValidProductionTileIndicator()
         {
