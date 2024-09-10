@@ -8,6 +8,14 @@ namespace WPF_Azul.Model
 {
     public class Factory
     {
+        protected int factoryIndex;
+
+        public int FactoryIndex
+        {
+            get { return factoryIndex; }
+            set { factoryIndex = value; }
+        }
+
         protected List<Tile> factoryTiles;
 
         public List<Tile> FactoryTiles
@@ -25,7 +33,9 @@ namespace WPF_Azul.Model
         {
             for (int i = 0; i < GameConstants.NORMAL_FACTORY_MAX_TILES; i++)
             {
-                AddFactoryTile(tileCollections.GetRandomTileFromBag());
+                Tile currentTile = tileCollections.GetRandomTileFromBag();
+                currentTile.FactoriesIndex = factoryIndex;
+                AddFactoryTile(currentTile);
             }
         }
 

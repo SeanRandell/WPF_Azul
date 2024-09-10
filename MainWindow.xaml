@@ -10,6 +10,9 @@
         WindowStartupLocation="CenterOwner"
         Title="Azul" Height="800" Width="1400">
     <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="LightGray" Opacity=".75"/>
+        </Grid.Background>
         <!--<StackPanel>
             <Button Name="btnModal" Width="100" Height="40" Content="Modal" Margin="5"
                     Click="btnModal_Click"/>

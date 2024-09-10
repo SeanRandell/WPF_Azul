@@ -53,12 +53,12 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="4*"/>
-                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="4.5*"/>
+                    <ColumnDefinition Width="4.5*"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Player 1 selection Tiles -->
-                <ItemsControl ItemsSource="{Binding ValidProductionTilesPlayer1}" Grid.Row="0" Grid.Column="0">
+                <ItemsControl ItemsSource="{Binding ValidProductionTilesPlayer1}" Grid.Row="0" Grid.Column="0" Margin="0 20 0 0">
 
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -68,8 +68,8 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:ValidProductionTileIndicator ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                                                    ValidProductionLine="{Binding}" Cursor="Hand"/>
+                            <local:ValidProductionTileIndicator ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    ValidProductionLine="{Binding}" Cursor="Hand" Margin="1"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 

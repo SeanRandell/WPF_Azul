@@ -93,5 +93,37 @@ namespace WPF_Azul.Model
         {
 
         }
+
+        public List<int> GetValidProductionTilesIndexes(TileType selectedTileType)
+        {
+            List<int> resultList = new List<int>();
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                // first check if production line is empty
+                for (int j = 0; j < productionTiles[i].Length; j++)
+                {
+                    if(productionTiles[i][j] != null)
+                    {
+
+                    }
+
+
+                }
+                // then check if there is not already that tile type in the wall tile row
+
+                // check if the production line is full
+
+                // if there space but there is already tiles in this row
+                // check if there is already the same type of tile in the production line
+            }
+            return resultList;
+        }
+
+        public Tile[] GetRow(Tile[,] matrix, int rowNumber)
+        {
+            return Enumerable.Range(0, matrix.GetLength(1))
+                    .Select(x => matrix[rowNumber, x])
+                    .ToArray();
+        }
     }
 }

@@ -5,20 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="40">
-    <Grid>
-        <Rectangle x:Name="ValidProductionTileIndicatorViewUI" 
+             d:DesignHeight="100" d:DesignWidth="100">
+    <Grid x:Name="ValidProductionTileIndicatorViewUI" >
+        <Grid.InputBindings>
+            <MouseBinding Gesture="LeftClick" Command="{Binding Path=ProductionLineCommandClick}" 
+                              CommandParameter="{Binding Path=ValidProductionLine}" />
+        </Grid.InputBindings>
+        <Rectangle
          Height="40" Width="40"
          RadiusX="5" RadiusY="5" 
          >
-            <Rectangle.InputBindings>
-                <MouseBinding Gesture="LeftClick" Command="{Binding Path=ProductionLineCommandClick}" 
-                              CommandParameter="{Binding Path=ValidProductionLine}" />
-            </Rectangle.InputBindings>
-
-            <Rectangle.Stroke>
-                <SolidColorBrush Color="LightGreen" ></SolidColorBrush>
-            </Rectangle.Stroke>
+            <!--<Rectangle.Stroke>
+                <SolidColorBrush Color="LightGreen"/>
+            </Rectangle.Stroke>-->
 
             <Rectangle.Fill>
                 <SolidColorBrush Color="LightGreen" Opacity=".75"/>

@@ -77,5 +77,23 @@ namespace WPF_Azul.Model
         {
             GameState.players[0].PlayerBoard.DroppedTiles[0] = new Tile(TileType.Yellow);
         }
+
+        public List<int> GetValidProductionTiles(TileType selectedTileType)
+        {
+            List<int> resultList = GameState.players[GameState.activePlayerTurnIndex].PlayerBoard.GetValidProductionTilesIndexes(selectedTileType);
+            // repeat for each production line
+            foreach (var item in resultList)
+            {
+                
+            }
+            // first check if production line is empty 
+            // then check if there is not already that tile type in the wall tile row
+
+            // check if the production line is full
+
+            // if there space but there is already tiles in this row
+            // check if there is already the same type of tile in the production line
+            return resultList;
+        }
     }
 }

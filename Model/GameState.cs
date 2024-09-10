@@ -39,6 +39,7 @@ namespace WPF_Azul.Model
             for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
             {
                 Factory currentFactory = new Factory();
+                currentFactory.FactoryIndex = i;
                 Factories.Add(currentFactory);
             }
         }

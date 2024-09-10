@@ -47,13 +47,13 @@ namespace WPF_Azul.Model
             set { factoriesIndex = value; }
         }
 
-        private int factoryIndex;
+        //private int factoryIndex;
 
-        public int FactoryIndex
-        {
-            get { return factoryIndex; }
-            set { factoryIndex = value; }
-        }
+        //public int FactoryIndex
+        //{
+        //    get { return factoryIndex; }
+        //    set { factoryIndex = value; }
+        //}
 
         private TileType _tileType;
         public TileType TileType { get { return _tileType; }}
@@ -85,7 +85,7 @@ namespace WPF_Azul.Model
             productionRow = GameConstants.TILE_NOT_IN_LIST_INDEX;
             productionRowIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             factoriesIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
-            factoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            //factoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
         }
     }
 }

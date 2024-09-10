@@ -28,7 +28,7 @@ namespace WPF_Azul.Commands
             {
                 Tile selectedFactoryTile = (Tile)parameter;
                 Trace.WriteLine(selectedFactoryTile.TileType);
-                gameViewModel.FactoryTileSelected();
+                gameViewModel.FactoryTileSelected(selectedFactoryTile.TileType, selectedFactoryTile.FactoriesIndex);
             }
 
             //Trace.WriteLine("text");

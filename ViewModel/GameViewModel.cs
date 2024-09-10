@@ -41,6 +41,17 @@ namespace WPF_Azul.ViewModel
         Create in xaml with the user control being either a green arrow that you can click on or a green arrow with green boxes that surround the selectable production tiles
          */
 
+        private TileType selectedTileType;
+
+        public TileType SelectedTileType
+        {
+            get { return selectedTileType; }
+            set { selectedTileType = value; }
+        }
+
+        private int selectedFactoryIndex;
+
+
         private ValidProductionTile activatedDroppedTileObject;
 
         public ValidProductionTile ActivatedDroppedTileObject
@@ -73,6 +84,8 @@ namespace WPF_Azul.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        private ValidProductionTile[] consistentValidProductionTiles;
 
         private ValidProductionTile activatedDroppedPlayer1Tiles;
 
@@ -208,6 +221,8 @@ namespace WPF_Azul.ViewModel
         {
             //this.navigationStore = navigationStore;
             //defaultTileSlotColour = (Color)ColorConverter.ConvertFromString("Transparent");
+            selectedTileType = TileType.Blue; // default value
+            selectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             _gameManager = gameManager;
             MainMenuCommand = new MainMenuCommand(navigationStore);
             FactoryTileClickCommand = new FactoryTileClickCommand(_gameManager, this);
@@ -226,11 +241,15 @@ namespace WPF_Azul.ViewModel
             centerFactoryTiles = new ObservableCollection<Tile>();
 
             validProductionTilesPlayer1 = new ObservableCollection<ValidProductionTile>();
-            validProductionTilesPlayer1.Add(new ValidProductionTile(0));
-            validProductionTilesPlayer1.Add(new ValidProductionTile(1));
-            validProductionTilesPlayer1.Add(new ValidProductionTile(2));
-            validProductionTilesPlayer1.Add(new ValidProductionTile(3));
-            validProductionTilesPlayer1.Add(new ValidProductionTile(4));
+
+            consistentValidProductionTiles = [
+                new ValidProductionTile(0),
+                new ValidProductionTile(1),
+                new ValidProductionTile(2),
+                new ValidProductionTile(3),
+                new ValidProductionTile(4),
+            ];
+
             validProductionTilesPlayer2 = new ObservableCollection<ValidProductionTile>();
             activatedDroppedPlayer1Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX);
             activatedDroppedPlayer2Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX);
@@ -355,12 +374,17 @@ namespace WPF_Azul.ViewModel
             return returnList;
         }
 
-        public void FactoryTileSelected()
+        public void FactoryTileSelected(TileType selectedTileType, int factoriesIndex)
         {
             // TODO - fix how null tiles appear in the view.
+            selectedFactoryIndex = factoriesIndex;
+            this.selectedTileType = selectedTileType;
+            List<int> validProductionLineIndexs = _gameManager.GetValidProductionTiles(this.selectedTileType);
 
-            _gameManager.TestAddDroppedTile();
-            _gameManager.UpdatePlayerDroppedTiles(droppedTilesPlayer1, GameConstants.STARTING_PLAYER_INDEX);
+            //_gameManager.TestAddDroppedTile();
+            //first get factory index and the tile type from the clicked on tile
+            // pass theses details to gamemanager.
+            //_gameManager.UpdatePlayerDroppedTiles(droppedTilesPlayer1, GameConstants.STARTING_PLAYER_INDEX);
         }
 
         public void ProductionLineSelected(int productionTileIndex)
