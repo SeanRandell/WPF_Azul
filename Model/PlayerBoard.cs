@@ -94,27 +94,66 @@ namespace WPF_Azul.Model
 
         }
 
+        // ToDO - Find a way to optimise 
         public List<int> GetValidProductionTilesIndexes(TileType selectedTileType)
         {
             List<int> resultList = new List<int>();
+
             for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
-                // first check if production line is empty
+                // first check if there is not already that tile type in the wall tile row
+                bool tileTypeExistsInWall = false;
+                foreach (Tile tile in GetRow(wallTiles, i))
+                {
+                    if (tile.TileType == selectedTileType)
+                    {
+                        tileTypeExistsInWall = true;
+                    }
+                }
+                if (tileTypeExistsInWall)
+                {
+                    continue;
+                }
+
+                // then check if production line is empty
+                bool isProductionLineEmpty = true;
                 for (int j = 0; j < productionTiles[i].Length; j++)
                 {
-                    if(productionTiles[i][j] != null)
+                    // then check if production line is empty
+                    if (productionTiles[i][j] != null)
                     {
-
+                        isProductionLineEmpty = false;
                     }
-
-
                 }
-                // then check if there is not already that tile type in the wall tile row
+
+                if (!isProductionLineEmpty)
+                {
+                    continue;
+                }
 
                 // check if the production line is full
-
-                // if there space but there is already tiles in this row
-                // check if there is already the same type of tile in the production line
+                bool isProductionLineFull = false;
+                        // check if the production line is full
+                        foreach (Tile tile in productionTiles[i])
+                        {
+                            if (tile != null)
+                            {
+                                isProductionLineFull = true;
+                            }
+                            else
+                            {
+                                isProductionLineFull = false;
+                            }
+                        }
+                        // if there space but there is already tiles in this row
+                        // check if there is already the same type of tile in the production line
+                        if (productionTiles[i][j].TileType == selectedTileType)
+                        {
+                            resultList.Add(i);
+                            break;
+                        }
+                    }
+                }
             }
             return resultList;
         }
