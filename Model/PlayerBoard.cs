@@ -94,7 +94,7 @@ namespace WPF_Azul.Model
 
         }
 
-        // ToDO - Find a way to optimise 
+        // TODO - Find a way to optimise 
         public List<int> GetValidProductionTilesIndexes(TileType selectedTileType)
         {
             List<int> resultList = new List<int>();
@@ -105,9 +105,12 @@ namespace WPF_Azul.Model
                 bool tileTypeExistsInWall = false;
                 foreach (Tile tile in GetRow(wallTiles, i))
                 {
-                    if (tile.TileType == selectedTileType)
+                    if (tile != null)
                     {
-                        tileTypeExistsInWall = true;
+                        if (tile.TileType == selectedTileType)
+                        {
+                            tileTypeExistsInWall = true;
+                        }
                     }
                 }
                 if (tileTypeExistsInWall)
@@ -115,43 +118,53 @@ namespace WPF_Azul.Model
                     continue;
                 }
 
-                // then check if production line is empty
-                bool isProductionLineEmpty = true;
-                for (int j = 0; j < productionTiles[i].Length; j++)
-                {
-                    // then check if production line is empty
-                    if (productionTiles[i][j] != null)
-                    {
-                        isProductionLineEmpty = false;
-                    }
-                }
 
-                if (!isProductionLineEmpty)
-                {
-                    continue;
-                }
 
                 // check if the production line is full
                 bool isProductionLineFull = false;
-                        // check if the production line is full
-                        foreach (Tile tile in productionTiles[i])
-                        {
-                            if (tile != null)
-                            {
-                                isProductionLineFull = true;
-                            }
-                            else
-                            {
-                                isProductionLineFull = false;
-                            }
-                        }
-                        // if there space but there is already tiles in this row
-                        // check if there is already the same type of tile in the production line
+                // check if the production line is full
+                for (int j = 0; j < productionTiles[i].Length; j++)
+                {
+                    if (productionTiles[i][j] != null)
+                    {
+                        isProductionLineFull = true;
+                    }
+                    else
+                    {
+                        isProductionLineFull = false;
+                    }
+                }
+
+                // if there space but there is already tiles in this row
+                // check if there is already the same type of tile in the production line
+                bool doesProductionLineMatchSelectedType = false;
+                for (int j = 0; j < productionTiles[i].Length; j++)
+                {
+                    if(productionTiles[i][j] != null)
+                    {
                         if (productionTiles[i][j].TileType == selectedTileType)
                         {
                             resultList.Add(i);
+                            doesProductionLineMatchSelectedType = true;
                             break;
                         }
+                    }
+                }
+                // if there is not matching tiles then check if production line is empty
+                if (!doesProductionLineMatchSelectedType)
+                {
+                    bool isProductionLineEmpty = true;
+                    for (int j = 0; j < productionTiles[i].Length; j++)
+                    {
+                        if (productionTiles[i][j] != null)
+                        {
+                            isProductionLineEmpty = false;
+                        }
+                    }
+                    if (isProductionLineEmpty)
+                    {
+                        resultList.Add(i);
+                        continue;
                     }
                 }
             }

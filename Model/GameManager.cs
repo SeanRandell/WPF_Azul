@@ -82,12 +82,17 @@ namespace WPF_Azul.Model
         {
             List<int> resultList = GameState.players[GameState.activePlayerTurnIndex].PlayerBoard.GetValidProductionTilesIndexes(selectedTileType);
             // repeat for each production line
-            foreach (var item in resultList)
-            {
-                
-            }
+            //foreach (int validIndex in resultList)
+            //{
+            //    vali
+            //}
 
             return resultList;
+        }
+
+        internal static int GetCurrentPlayerTurn()
+        {
+            throw new NotImplementedException();
         }
     }
 }

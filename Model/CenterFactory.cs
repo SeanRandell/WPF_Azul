@@ -12,8 +12,6 @@ namespace WPF_Azul.Model
         public CenterFactory() : base(){
             Tile startingPlayerTile = new Tile(TileType.StartingPlayerMarker);
             startingPlayerTile.FactoriesIndex = GameConstants.CENTER_FACTORY_INDEX;
-            startingPlayerTile.FactoryIndex = AddFactoryTile(startingPlayerTile);
-
         }
 
         public void ResetCenterFactory()

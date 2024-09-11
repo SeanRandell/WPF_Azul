@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WPF_Azul.Commands;
@@ -84,8 +85,6 @@ namespace WPF_Azul.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        private ValidProductionTile[] consistentValidProductionTiles;
 
         private ValidProductionTile activatedDroppedPlayer1Tiles;
 
@@ -240,21 +239,25 @@ namespace WPF_Azul.ViewModel
             factories = InitFactories();
             centerFactoryTiles = new ObservableCollection<Tile>();
 
-            validProductionTilesPlayer1 = new ObservableCollection<ValidProductionTile>();
 
-            consistentValidProductionTiles = [
-                new ValidProductionTile(0),
-                new ValidProductionTile(1),
-                new ValidProductionTile(2),
-                new ValidProductionTile(3),
-                new ValidProductionTile(4),
-            ];
-
-            validProductionTilesPlayer2 = new ObservableCollection<ValidProductionTile>();
-            activatedDroppedPlayer1Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX);
-            activatedDroppedPlayer2Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX);
-            activatedDroppedTileObject = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX);
+            validProductionTilesPlayer1 = InitValidProductionTiles();
+            validProductionTilesPlayer2 = InitValidProductionTiles();
+            activatedDroppedPlayer1Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, Visibility.Visible);
+            activatedDroppedPlayer2Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, Visibility.Visible);
+            activatedDroppedTileObject = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, Visibility.Visible);
             UpdateViewModelFromModel();
+        }
+
+        private ObservableCollection<ValidProductionTile> InitValidProductionTiles()
+        {
+            ObservableCollection<ValidProductionTile> returnList = new ObservableCollection<ValidProductionTile>();
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                ValidProductionTile newValid = new ValidProductionTile(i, Visibility.Hidden);
+
+                returnList.Add(newValid);
+            }
+            return returnList;
         }
 
         private ObservableCollection<ObservableCollection<Tile>> InitWallTiles()
@@ -356,6 +359,26 @@ namespace WPF_Azul.ViewModel
             _gameManager.UpdatePlayerDroppedTiles(droppedTilesPlayer1, GameConstants.PLAYER_TWO_INDEX);
         }
 
+        public void ProductionLineSelected(int productionTileIndex)
+        {
+            // TODO - rectoar these into a list that is accessed by the player turn index
+            // reset valid production lines
+            if(GameManager.GetCurrentPlayerTurn() == GameConstants.STARTING_PLAYER_INDEX)
+            {
+                foreach (ValidProductionTile validIndexs in validProductionTilesPlayer1)
+                {
+
+                }
+            }
+            else
+            {
+
+            }
+
+            Trace.WriteLine(productionTileIndex);
+
+        }
+
         private List<List<Color>> InitWallPattern()
         {
             TileType[,] tileTypeArray = GameConstants.WALL_TILE_PATTERN;
@@ -376,20 +399,18 @@ namespace WPF_Azul.ViewModel
 
         public void FactoryTileSelected(TileType selectedTileType, int factoriesIndex)
         {
-            // TODO - fix how null tiles appear in the view.
+            //first get factory index and the tile type from the clicked on tile
             selectedFactoryIndex = factoriesIndex;
             this.selectedTileType = selectedTileType;
-            List<int> validProductionLineIndexs = _gameManager.GetValidProductionTiles(this.selectedTileType);
 
-            //_gameManager.TestAddDroppedTile();
-            //first get factory index and the tile type from the clicked on tile
             // pass theses details to gamemanager.
-            //_gameManager.UpdatePlayerDroppedTiles(droppedTilesPlayer1, GameConstants.STARTING_PLAYER_INDEX);
-        }
-
-        public void ProductionLineSelected(int productionTileIndex)
-        {
-            Trace.WriteLine(productionTileIndex);
+            List<int> validProductionLineIndexes = _gameManager.GetValidProductionTiles(this.selectedTileType);
+            foreach (int validIndex in validProductionLineIndexes)
+            {
+                //validProductionTilesPlayer1[validIndex] = new ValidProductionTile(validIndex,Visibility.Visible);
+                validProductionTilesPlayer1[validIndex].IsEnabled = Visibility.Visible;
+                Trace.WriteLine(validIndex);
+            }
         }
     }
 }

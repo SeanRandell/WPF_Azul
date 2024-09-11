@@ -68,8 +68,14 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:ValidProductionTileIndicator ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                    ValidProductionLine="{Binding}" Cursor="Hand" Margin="1"/>
+                            <!--<ItemsControl ItemsSource="{Binding}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>-->
+                                        <local:ValidProductionTileIndicator ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    ValidProductionLine="{Binding}" Cursor="Hand" Margin="1" Visibility="{Binding IsEnabled, Mode=Twoway}"/>
+                                    <!--</DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>-->
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
