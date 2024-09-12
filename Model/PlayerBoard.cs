@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -140,7 +141,7 @@ namespace WPF_Azul.Model
                 bool doesProductionLineMatchSelectedType = false;
                 for (int j = 0; j < productionTiles[i].Length; j++)
                 {
-                    if(productionTiles[i][j] != null)
+                    if (productionTiles[i][j] != null)
                     {
                         if (productionTiles[i][j].TileType == selectedTileType)
                         {
@@ -181,6 +182,25 @@ namespace WPF_Azul.Model
         public void AddTilesToProductionTiles(int productionTileIndex, List<Tile> selectedFactoryTiles)
         {
             // loop through adding the selected tiles to production tiles until the production tiles are full and then when the selected tiles are empty.
+            int i;
+            for (i = 0; i < productionTiles[productionTileIndex].Length; i++)
+            {
+                if (productionTiles[productionTileIndex][i] == null)
+                {
+                    productionTiles[productionTileIndex][i] = selectedFactoryTiles[i];
+                }
+            }
+            selectedFactoryTiles.RemoveRange(0, i);
+
+            if (selectedFactoryTiles.Count > 0)
+            {
+                Trace.WriteLine("leftover: " + selectedFactoryTiles.Count);
+            }
+            else
+            {
+                Trace.WriteLine("All Selected tiles used");
+            }
+
             // may need to return this lsit depending on how we want to do changes to selected tiles list.
         }
     }

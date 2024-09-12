@@ -327,6 +327,40 @@ namespace WPF_Azul.ViewModel
             UpdateFactories();
         }
 
+        // TODO - Update for to work for both players
+        private void UpdateViewModelAfterPlayerTurn(int productionTileIndex)
+        {
+            UpdateFactory(selectedFactoryIndex);
+            UpdateProductionTile(productionTileIndex);
+            UpdateDroppedTiles();
+
+        }
+
+        private void UpdateProductionTile(int productionTileIndex)
+        {
+            _gameManager.UpdateProductionTile(productionTilesPlayer1[productionTileIndex], productionTileIndex);
+        }
+
+        private void UpdateFactory(int selectedFactoryIndex)
+        {
+            factories[selectedFactoryIndex] = _gameManager.UpdateFactory(selectedFactoryIndex);
+        }
+
+        private void ClearObservablesCollections()
+        {
+            productionTilesPlayer1.Clear();
+            productionTilesPlayer2.Clear();
+
+            wallTilesPlayer1.Clear();
+            wallTilesPlayer2.Clear();
+
+            droppedTilesPlayer1.Clear();
+            droppedTilesPlayer2.Clear();
+
+            factories.Clear();
+            centerFactoryTiles.Clear();
+        }
+
         private void UpdateFactories()
         {
             //factories = _gameManager.GetFactories();
@@ -363,7 +397,7 @@ namespace WPF_Azul.ViewModel
         {
             // TODO - rectoar these into a list that is accessed by the player turn index
             // reset valid production lines
-            if(GameManager.GetCurrentPlayerTurn() == GameConstants.STARTING_PLAYER_INDEX)
+            if(_gameManager.GetCurrentPlayerTurn() == GameConstants.STARTING_PLAYER_INDEX)
             {
                 foreach (ValidProductionTile validIndexes in validProductionTilesPlayer1)
                 {
@@ -378,8 +412,20 @@ namespace WPF_Azul.ViewModel
                 }
             }
             _gameManager.ProductionTileSelected(productionTileIndex, selectedTileType, selectedFactoryIndex);
-            Trace.WriteLine(productionTileIndex);
-
+            Trace.WriteLine("Production line index: "+ productionTileIndex);
+            //ClearObservablesCollections();
+            UpdateViewModelAfterPlayerTurn(productionTileIndex);
+            OnPropertyChanged();
+            for (int i = 0; i < productionTilesPlayer1[productionTileIndex].Count; i++)
+            {
+                if (productionTilesPlayer1[productionTileIndex][i] != null)
+                {
+                    Trace.WriteLine("Production line index: " + productionTileIndex + " Equals = " + productionTilesPlayer1[productionTileIndex][i].TileType);
+                } else
+                {
+                    Trace.WriteLine("Production line index: " + productionTileIndex + " Equals = null");
+                }
+            }
         }
 
         private List<List<Color>> InitWallPattern()
