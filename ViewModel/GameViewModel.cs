@@ -365,16 +365,19 @@ namespace WPF_Azul.ViewModel
             // reset valid production lines
             if(GameManager.GetCurrentPlayerTurn() == GameConstants.STARTING_PLAYER_INDEX)
             {
-                foreach (ValidProductionTile validIndexs in validProductionTilesPlayer1)
+                foreach (ValidProductionTile validIndexes in validProductionTilesPlayer1)
                 {
-
+                    validIndexes.IsEnabled = Visibility.Hidden;
                 }
             }
             else
             {
-
+                foreach (ValidProductionTile validIndexes in validProductionTilesPlayer2)
+                {
+                    validIndexes.IsEnabled = Visibility.Hidden;
+                }
             }
-
+            _gameManager.ProductionTileSelected(productionTileIndex, selectedTileType, selectedFactoryIndex);
             Trace.WriteLine(productionTileIndex);
 
         }

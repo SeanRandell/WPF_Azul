@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,6 +94,23 @@ namespace WPF_Azul.Model
         internal static int GetCurrentPlayerTurn()
         {
             throw new NotImplementedException();
+        }
+
+        public void ProductionTileSelected(int productionTileIndex, TileType selectedTileType, int selectedFactoryIndex)
+        {
+            // get list of tiles being moved from factory and remove them
+            List<Tile> selectedFactoryTiles = GameState.Factories[selectedFactoryIndex].TakeAllTilesOfType(selectedTileType);
+            GameState.Factories[selectedFactoryIndex].RemoveAllTilesOfType(selectedTileType);
+
+            //add as many tiles as you can from the list to the production tile
+            GameState.players[GameState.activePlayerTurnIndex].PlayerBoard.AddTilesToProductionTiles(productionTileIndex, selectedFactoryTiles);
+
+            // if factory tile count > 0 then add them to next null dropped tile index
+            if(selectedFactoryTiles.Count > 0)
+            {
+                Trace.WriteLine(selectedFactoryTiles.Count + " tiles left");
+            }
+            // TODO - manage edge case of a full dropped tiles list. Tiles that do not fit in the list get added to tile bin. Playerboard does not manage this. TileCollections does.
         }
     }
 }

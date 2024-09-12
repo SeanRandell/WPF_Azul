@@ -177,5 +177,11 @@ namespace WPF_Azul.Model
                     .Select(x => matrix[rowNumber, x])
                     .ToArray();
         }
+
+        public void AddTilesToProductionTiles(int productionTileIndex, List<Tile> selectedFactoryTiles)
+        {
+            // loop through adding the selected tiles to production tiles until the production tiles are full and then when the selected tiles are empty.
+            // may need to return this lsit depending on how we want to do changes to selected tiles list.
+        }
     }
 }

@@ -48,8 +48,12 @@ namespace WPF_Azul.Model
 
         public List<Tile> TakeAllTilesOfType(TileType currentTileType)
         {
-
             return factoryTiles.Where(t => t.TileType == currentTileType).ToList();
+        }
+
+        public void RemoveAllTilesOfType(TileType currentTileType)
+        {
+            factoryTiles.RemoveAll(t => t.TileType == currentTileType);
         }
 
     }
