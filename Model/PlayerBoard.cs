@@ -47,10 +47,10 @@ namespace WPF_Azul.Model
             {
                 droppedTiles[i] = null;
             }
-            droppedTiles[0] = new Tile(TileType.LightBlue);
-            droppedTiles[1] = new Tile(TileType.Blue);
-            droppedTiles[2] = new Tile(TileType.Blue);
-            droppedTiles[3] = new Tile(TileType.Blue);
+            //droppedTiles[0] = new Tile(TileType.LightBlue);
+            //droppedTiles[1] = new Tile(TileType.Blue);
+            //droppedTiles[2] = new Tile(TileType.Blue);
+            //droppedTiles[3] = new Tile(TileType.Blue);
         }
 
         private void InitProductionTiles()
@@ -195,6 +195,7 @@ namespace WPF_Azul.Model
             if (selectedFactoryTiles.Count > 0)
             {
                 Trace.WriteLine("leftover: " + selectedFactoryTiles.Count);
+                AddTilesToDroppedTiles(selectedFactoryTiles);
             }
             else
             {
@@ -202,6 +203,15 @@ namespace WPF_Azul.Model
             }
 
             // may need to return this lsit depending on how we want to do changes to selected tiles list.
+        }
+
+        public void AddTilesToDroppedTiles(List<Tile> selectedFactoryTiles)
+        {
+            // first find the first null index and start adding tiles there
+            int firstnullIndex = Array.FindIndex(droppedTiles, t => t == null);
+            Trace.WriteLine("First index of null value is " + firstnullIndex);
+            // once dropped tile is full or all tiles have been added. remove the added tiles from selected tiles
+            // checkk if dropped tiles is still full.
         }
     }
 }
