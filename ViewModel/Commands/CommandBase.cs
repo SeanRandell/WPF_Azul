@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WPF_Azul.Commands
+namespace WPF_Azul.ViewModel.Commands
 {
     public abstract class CommandBase : ICommand
     {

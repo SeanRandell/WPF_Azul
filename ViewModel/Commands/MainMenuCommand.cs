@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WPF_Azul.Model;
 using WPF_Azul.Stores;
 
-namespace WPF_Azul.Commands
+namespace WPF_Azul.ViewModel.Commands
 {
     public class MainMenuCommand : CommandBase
     {

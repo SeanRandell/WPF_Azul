@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WPF_Azul.ViewModel;
 
-namespace WPF_Azul.Commands
+namespace WPF_Azul.ViewModel.Commands
 {
     public class NavigationCommand : CommandBase
     {

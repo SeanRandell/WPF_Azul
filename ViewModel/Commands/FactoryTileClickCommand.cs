@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WPF_Azul.Model;
 using WPF_Azul.ViewModel;
 
-namespace WPF_Azul.Commands
+namespace WPF_Azul.ViewModel.Commands
 {
     public class FactoryTileClickCommand : CommandBase
     {

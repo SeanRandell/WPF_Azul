@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Navigation;
-using WPF_Azul.Commands;
+using WPF_Azul.ViewModel.Commands;
 using WPF_Azul.Model;
 using WPF_Azul.Stores;
 using WPF_Azul.View;
