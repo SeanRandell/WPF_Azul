@@ -39,7 +39,7 @@ namespace WPF_Azul.View.UserControls
         /// Identified the BackgroundColour dependency property
         /// </summary>
         public static readonly DependencyProperty TileColourProperty =
-            DependencyProperty.Register("TileColour", typeof(Color),
+            DependencyProperty.Register("FactoryList", typeof(Color),
               typeof(TileView), new PropertyMetadata(null));
 
         #endregion

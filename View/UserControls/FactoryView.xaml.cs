@@ -17,35 +17,34 @@ using WPF_Azul.Model;
 
 namespace WPF_Azul.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for FactoryView.xaml
-    /// </summary>
     public partial class FactoryView : UserControl
     {
-        //private ObservableCollection<ObservableCollection<Tile>> factoryTiles;
+        #region FactoryList DP
 
-        //public ObservableCollection<ObservableCollection<Tile>> FactoryTiles
-        //{
-        //    get { return factoryTiles; }
-        //    set { factoryTiles = value; }
-        //}
+        /// <summary>
+        /// Gets or sets the background colour of the tile
+        /// </summary>
+        public ObservableCollection<Factory> FactoryList
+        {
+            get { return (ObservableCollection<Factory>)GetValue(FactoryListProperty); }
+            set
+            {
+                SetValue(FactoryListProperty, value);
+            }
+        }
 
+        /// <summary>
+        /// Identified the BackgroundColour dependency property
+        /// </summary>
+        public static readonly DependencyProperty FactoryListProperty =
+            DependencyProperty.Register("FactoryList", typeof(ObservableCollection<Factory>),
+              typeof(FactoryView), new PropertyMetadata(null));
+
+        #endregion
         public FactoryView()
         {
             InitializeComponent();
-            //factoryTiles = new ObservableCollection<ObservableCollection<Tile>>();
-            //TempInitFactoryTiles();
-            //DataContext = this;
-
-        }
-
-        private void TempInitFactoryTiles()
-        {
-            //ObservableCollection<Tile> column1 = [new Tile(TileType.Yellow, 0, 0), new Tile(TileType.Red, 0, 0)];
-            //ObservableCollection<Tile> column2 = [new Tile(TileType.Black, 0, 0), new Tile(TileType.Blue, 0, 0)];
-            //factoryTiles.Add(column1);
-            //factoryTiles.Add(column2);
-
+            FactoryViewUI.DataContext = this;
         }
     }
 }

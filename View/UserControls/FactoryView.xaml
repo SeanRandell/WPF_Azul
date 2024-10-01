@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="125" d:DesignWidth="125">
     <Grid>
-        <Ellipse Stroke="Black">
-        </Ellipse>
+        <!--<Ellipse Stroke="Black">
+        </Ellipse>-->
 
         <!--<Grid>
             <Grid.RowDefinitions>
