@@ -119,21 +119,10 @@ namespace WPF_Azul.Model
                     continue;
                 }
 
-
-
                 // check if the production line is full
-                bool isProductionLineFull = false;
-                // check if the production line is full
-                for (int j = 0; j < productionTiles[i].Length; j++)
+                if (Array.IndexOf(productionTiles[i], null) < 0)
                 {
-                    if (productionTiles[i][j] != null)
-                    {
-                        isProductionLineFull = true;
-                    }
-                    else
-                    {
-                        isProductionLineFull = false;
-                    }
+                    continue;
                 }
 
                 // if there space but there is already tiles in this row
@@ -182,15 +171,17 @@ namespace WPF_Azul.Model
         public void AddTilesToProductionTiles(int productionTileIndex, List<Tile> selectedFactoryTiles)
         {
             // loop through adding the selected tiles to production tiles until the production tiles are full and then when the selected tiles are empty.
-            int i;
-            for (i = 0; i < productionTiles[productionTileIndex].Length; i++)
+            int i = Array.IndexOf(productionTiles[productionTileIndex], null);
+            int tilesAddedToProductionCount = 0;
+            for (; i < productionTiles[productionTileIndex].Length && tilesAddedToProductionCount < selectedFactoryTiles.Count; i++)
             {
                 if (productionTiles[productionTileIndex][i] == null)
                 {
-                    productionTiles[productionTileIndex][i] = selectedFactoryTiles[i];
+                    productionTiles[productionTileIndex][i] = selectedFactoryTiles[tilesAddedToProductionCount];
+                    tilesAddedToProductionCount++;
                 }
             }
-            selectedFactoryTiles.RemoveRange(0, i);
+            selectedFactoryTiles.RemoveRange(0, tilesAddedToProductionCount);
 
             if (selectedFactoryTiles.Count > 0)
             {

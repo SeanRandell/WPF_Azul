@@ -39,41 +39,35 @@ namespace WPF_Azul.View.UserControls
         /// Identified the BackgroundColour dependency property
         /// </summary>
         public static readonly DependencyProperty TileColourProperty =
-            DependencyProperty.Register("FactoryList", typeof(Color),
+            DependencyProperty.Register("TileColour", typeof(Color),
               typeof(TileView), new PropertyMetadata(null));
 
         #endregion
 
-        public ICommand TestCommand
+        public ICommand FactoryTileClickCommand
         {
-            get { return (ICommand)GetValue(TestCommandProperty); }
+            get { return (ICommand)GetValue(FactoryTileClickCommandProperty); }
             set
             {
-                SetValue(TestCommandProperty, value);
+                SetValue(FactoryTileClickCommandProperty, value);
             }
         }
 
-        /// <summary>
-        /// Identified the BackgroundColour dependency property
-        /// </summary>
-        public static readonly DependencyProperty TestCommandProperty =
-            DependencyProperty.Register("TestCommand", typeof(ICommand),
+        public static readonly DependencyProperty FactoryTileClickCommandProperty =
+            DependencyProperty.Register("FactoryTileClickCommand", typeof(ICommand),
               typeof(TileView), new PropertyMetadata(null));
 
-        public object TestTile
+        public object TileObject
         {
-            get { return (object)GetValue(TestTileProperty); }
+            get { return (object)GetValue(TileObjectProperty); }
             set
             {
-                SetValue(TestTileProperty, value);
+                SetValue(TileObjectProperty, value);
             }
         }
 
-        /// <summary>
-        /// Identified the BackgroundColour dependency property
-        /// </summary>
-        public static readonly DependencyProperty TestTileProperty =
-            DependencyProperty.Register("TestTile", typeof(object),
+        public static readonly DependencyProperty TileObjectProperty =
+            DependencyProperty.Register("TileObject", typeof(object),
               typeof(TileView), new PropertyMetadata(null));
 
         public TileView()

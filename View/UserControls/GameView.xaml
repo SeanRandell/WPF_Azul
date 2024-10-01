@@ -347,7 +347,7 @@
 
             </Grid>
 
-            <!--  Factory View Slot  -->
+            <!--  Factory View  -->
             <ItemsControl
                 Grid.Row="0"
                 Grid.Column="1"
@@ -355,64 +355,7 @@
                 >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ItemsControl
-                            Height="80"
-                            Margin="5"
-                            ItemsSource="{Binding}"
-                            >
-                            <ItemsControl.Template>
-                                <ControlTemplate TargetType="ItemsControl">
-                                    <Border
-                                        BorderBrush="Black"
-                                        BorderThickness="1"
-                                        CornerRadius="50"
-                                        >
-                                        <ItemsPresenter />
-                                    </Border>
-                                </ControlTemplate>
-                            </ItemsControl.Template>
-                        </ItemsControl>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel MaxHeight="500" Margin="5" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-
-            <!--  Test Factory View  -->
-            <ItemsControl
-                Grid.Row="0"
-                Grid.Column="1"
-                ItemsSource="{Binding Factories}"
-                >
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <ItemsControl
-                            Height="80"
-                            Margin="5"
-                            ItemsSource="{Binding}"
-                            >
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <!--<Button Command="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">-->
-                                    <local:TileView
-                                        Cursor="Hand"
-                                        TestCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                        TestTile="{Binding}"
-                                        TileColour="{Binding TileTypeColour}"
-                                        />
-                                    <!--</Button>-->
-
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="2" Rows="2" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                        <local:FactoryView FactoryObject="{Binding}" FactoryTileClickCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>

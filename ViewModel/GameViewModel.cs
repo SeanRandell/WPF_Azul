@@ -461,5 +461,14 @@ namespace WPF_Azul.ViewModel
                 Trace.WriteLine(validIndex);
             }
         }
+
+        internal void UndoFactoryTileSelected()
+        {
+            foreach (ValidProductionTile productionTile in validProductionTilesPlayer1)
+            {
+                productionTile.IsEnabled = Visibility.Hidden;
+                selectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            }
+        }
     }
 }

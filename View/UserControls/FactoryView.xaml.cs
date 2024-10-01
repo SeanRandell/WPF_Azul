@@ -21,26 +21,38 @@ namespace WPF_Azul.View.UserControls
     {
         #region FactoryList DP
 
-        /// <summary>
-        /// Gets or sets the background colour of the tile
-        /// </summary>
-        public ObservableCollection<Factory> FactoryList
+        public ObservableCollection<Tile> FactoryObject
         {
-            get { return (ObservableCollection<Factory>)GetValue(FactoryListProperty); }
+            get { return (ObservableCollection<Tile>)GetValue(FactoryProperty); }
             set
             {
-                SetValue(FactoryListProperty, value);
+                SetValue(FactoryProperty, value);
             }
         }
 
-        /// <summary>
-        /// Identified the BackgroundColour dependency property
-        /// </summary>
-        public static readonly DependencyProperty FactoryListProperty =
-            DependencyProperty.Register("FactoryList", typeof(ObservableCollection<Factory>),
+        public static readonly DependencyProperty FactoryProperty =
+            DependencyProperty.Register("FactoryObject", typeof(ObservableCollection<Tile>),
               typeof(FactoryView), new PropertyMetadata(null));
 
         #endregion
+
+        #region FactoryTileClickCommand DP
+
+        public ICommand FactoryTileClickCommand
+        {
+            get { return (ICommand)GetValue(FactoryTileClickCommandProperty); }
+            set
+            {
+                SetValue(FactoryTileClickCommandProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty FactoryTileClickCommandProperty =
+            DependencyProperty.Register("FactoryTileClickCommand", typeof(ICommand),
+              typeof(FactoryView), new PropertyMetadata(null));
+
+        #endregion
+
         public FactoryView()
         {
             InitializeComponent();

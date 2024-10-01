@@ -1,29 +1,38 @@
-﻿<UserControl x:Class="WPF_Azul.View.UserControls.TileView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="100"
-             AllowDrop="True">
+﻿<UserControl
+    x:Class="WPF_Azul.View.UserControls.TileView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="100"
+    d:DesignWidth="100"
+    AllowDrop="True"
+    mc:Ignorable="d"
+    >
     <Grid>
-        <Rectangle x:Name="TileViewUI" 
-         Height="40" Width="40"
-         RadiusX="5" RadiusY="5" 
-         StrokeThickness="5"
-         >
+        <Rectangle
+            x:Name="TileViewUI"
+            Width="40"
+            Height="40"
+            RadiusX="5"
+            RadiusY="5"
+            StrokeThickness="5"
+            >
             <Rectangle.Stroke>
-                <SolidColorBrush Color="{Binding Path=TileColour}" ></SolidColorBrush>
+                <SolidColorBrush Color="{Binding Path=TileColour}" />
             </Rectangle.Stroke>
 
             <Rectangle.Fill>
-                <SolidColorBrush Color="{Binding Path=TileColour}" Opacity=".75"/>
+                <SolidColorBrush Opacity=".75" Color="{Binding Path=TileColour}" />
             </Rectangle.Fill>
 
             <Rectangle.InputBindings>
-                <MouseBinding Gesture="LeftClick" Command="{Binding Path=TestCommand}" 
-                              CommandParameter="{Binding Path=TestTile}"/>
+                <MouseBinding
+                    Command="{Binding Path=FactoryTileClickCommand}"
+                    CommandParameter="{Binding Path=TileObject}"
+                    Gesture="LeftClick"
+                    />
             </Rectangle.InputBindings>
         </Rectangle>
 

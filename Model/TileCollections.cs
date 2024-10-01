@@ -11,8 +11,8 @@ namespace WPF_Azul.Model
         const int tileTypeAmount = 20;
 
         //To insert, simply place at the end, and increment the size. 
-        private List<Tile> tilebag;
-        private List<Tile> tileBin;
+        internal List<Tile> tilebag;
+        internal List<Tile> tileBin;
 
         public TileCollections()
         {
@@ -80,6 +80,11 @@ namespace WPF_Azul.Model
             tilebag.AddRange(tileBin);
             tileBin.Clear();
             RandomizeBag();
+        }
+
+        internal void AddTilesToTileBin(List<Tile> tilesToBin)
+        {
+            tileBin.AddRange(tilesToBin);
         }
     }
 }
