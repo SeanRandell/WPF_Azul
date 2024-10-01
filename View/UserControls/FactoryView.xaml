@@ -6,57 +6,48 @@
              xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="125" d:DesignWidth="125">
-    <Grid>
+    <Grid x:Name="FactoryViewUI">
         <!--<Ellipse Stroke="Black">
         </Ellipse>-->
 
-        <!--<Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-        </Grid>
-        <Rectangle x:Name="rectangleUI" 
-         Height="50" Width="50"
-         RadiusX="5" RadiusY="5" 
-         
-         >
-            <Rectangle.Stroke>
-                <SolidColorBrush Color="Black"></SolidColorBrush>
-            </Rectangle.Stroke>
-
-            <Rectangle.Fill>
-                <SolidColorBrush Color="{Binding Path=BackgroundColour}" Opacity="0.15"/>
-
-            </Rectangle.Fill>
-        </Rectangle>-->
-        <ItemsControl ItemsSource="{Binding FactoryTiles}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="1" HorizontalAlignment="Stretch" Width="100" Height="100"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+        <ItemsControl
+                Grid.Row="0"
+                Grid.Column="1"
+                ItemsSource="{Binding Factories}"
+                >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ItemsControl ItemsSource="{Binding}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Rows="1"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                    <ItemsControl
+                            Height="80"
+                            Margin="5"
+                            ItemsSource="{Binding}"
+                            >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:TileView TileColour="{Binding TileTypeColour}"/>
-      
+                                <!--<Button Command="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">-->
+                                <local:TileView
+                                        Cursor="Hand"
+                                        TestCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        TestTile="{Binding}"
+                                        TileColour="{Binding TileTypeColour}"
+                                        />
+                                <!--</Button>-->
+
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2" Rows="2" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel MaxHeight="500" Margin="5" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
         </ItemsControl>
     </Grid>
 </UserControl>

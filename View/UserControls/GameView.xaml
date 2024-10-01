@@ -348,7 +348,7 @@
             </Grid>
 
             <!--  Factory View Slot  -->
-            <!--<ItemsControl
+            <ItemsControl
                 Grid.Row="0"
                 Grid.Column="1"
                 ItemsSource="{Binding Factories}"
@@ -379,7 +379,7 @@
                         <WrapPanel MaxHeight="500" Margin="5" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-            </ItemsControl>-->
+            </ItemsControl>
 
             <!--  Test Factory View  -->
             <ItemsControl
