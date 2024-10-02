@@ -19,21 +19,20 @@ namespace WPF_Azul.ViewModel
 			set { productionTileIndex = value; }
 		}
 
-		private Visibility isEnabled;
+		private bool _isEnabled;
 
-		public Visibility IsEnabled
+		public bool IsEnabled
 		{
-			get { return isEnabled; }
-			set { isEnabled = value;
+			get { return _isEnabled; }
+			set { _isEnabled = value;
 				OnPropertyChanged();
 			}
 		}
 
-
-		public ValidProductionTile(int productionTileIndex, Visibility isEnabled)
+		public ValidProductionTile(int productionTileIndex, bool isEnabled)
         {
             this.productionTileIndex = productionTileIndex;
-			this.IsEnabled = isEnabled;
+			IsEnabled = isEnabled;
         }
     }
 }

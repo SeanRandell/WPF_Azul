@@ -199,10 +199,23 @@ namespace WPF_Azul.Model
         public void AddTilesToDroppedTiles(List<Tile> selectedFactoryTiles)
         {
             // first find the first null index and start adding tiles there
-            int firstnullIndex = Array.FindIndex(droppedTiles, t => t == null);
-            Trace.WriteLine("First index of null value is " + firstnullIndex);
+            int i = Array.FindIndex(droppedTiles, t => t == null);
+            Trace.WriteLine("First index of null value in dropped tiles is " + i);
+
+            int tilesAddedToDroppedTiles = 0;
+            for (; i < droppedTiles.Length && tilesAddedToDroppedTiles < selectedFactoryTiles.Count; i++)
+            {
+                if (droppedTiles[i] == null)
+                {
+                    droppedTiles[i] = selectedFactoryTiles[tilesAddedToDroppedTiles];
+                    tilesAddedToDroppedTiles++;
+                }
+            }
+
             // once dropped tile is full or all tiles have been added. remove the added tiles from selected tiles
-            // checkk if dropped tiles is still full.
+            selectedFactoryTiles.RemoveRange(0, tilesAddedToDroppedTiles);
+            // check if selected tiles still contains items.
+            Trace.WriteLine("leftover dropped tiles: " + selectedFactoryTiles.Count);
         }
     }
 }

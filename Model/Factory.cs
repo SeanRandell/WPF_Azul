@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,15 +47,27 @@ namespace WPF_Azul.Model
             return preAdditionIndex;
         }
 
+        internal void AddTiles(List<Tile> tiles)
+        {
+            factoryTiles.AddRange(tiles);
+        }
+
         public List<Tile> TakeAllTilesOfType(TileType currentTileType)
         {
             return factoryTiles.Where(t => t.TileType == currentTileType).ToList();
         }
 
-        public void RemoveAllTilesOfType(TileType currentTileType)
+        public void ProcessFactoryTilesSelectedForProduction(TileType currentTileType)
         {
             factoryTiles.RemoveAll(t => t.TileType == currentTileType);
         }
 
+        internal List<Tile> RemoveRemainingTiles()
+        {
+            List<Tile> remainingTiles = factoryTiles.ToList();
+            factoryTiles.Clear();
+            Trace.WriteLine("remaining tile count after removing factory tiles = " + remainingTiles.Count);
+            return remainingTiles;
+        }
     }
 }

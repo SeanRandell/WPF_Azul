@@ -126,17 +126,19 @@ namespace WPF_Azul.Model
         {
             // get list of tiles being moved from factory and remove them
             List<Tile> selectedFactoryTiles = GameState.Factories[selectedFactoryIndex].TakeAllTilesOfType(selectedTileType);
-            GameState.Factories[selectedFactoryIndex].RemoveAllTilesOfType(selectedTileType);
+            GameState.Factories[selectedFactoryIndex].ProcessFactoryTilesSelectedForProduction(selectedTileType);
+
+            GameState.CenterFactory.AddTiles(GameState.Factories[selectedFactoryIndex].RemoveRemainingTiles());
 
             //add as many tiles as you can from the list to the production tile
             GameState.players[GameState.activePlayerTurnIndex].PlayerBoard.AddTilesToProductionTiles(productionTileIndex, selectedFactoryTiles);
 
             // if factory tile count > 0 then add them to next null dropped tile index
-            if (selectedFactoryTiles.Count > 0)
-            {
-                GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.AddTilesToDroppedTiles(selectedFactoryTiles);
-                Trace.WriteLine(selectedFactoryTiles.Count + " tiles left");
-            }
+            //if (selectedFactoryTiles.Count > 0)
+            //{
+            //    GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.AddTilesToDroppedTiles(selectedFactoryTiles);
+            //    Trace.WriteLine(selectedFactoryTiles.Count + " tiles left");
+            //}
             // TODO - manage edge case of a full dropped tiles list. Tiles that do not fit in the list get added to tile bin. Playerboard does not manage this. TileCollections does.
             if (selectedFactoryTiles.Count > 0)
             {
@@ -147,7 +149,7 @@ namespace WPF_Azul.Model
             }
         }
 
-        public void UpdateProductionTile(ObservableCollection<Tile> prodcutionTile, int productionTileIndex)
+        public void UpdateProductionTiles(ObservableCollection<Tile> prodcutionTile, int productionTileIndex)
         {
             for (int i = 0; i < GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.ProductionTiles[productionTileIndex].Length; i++)
             {
@@ -163,6 +165,14 @@ namespace WPF_Azul.Model
                 newFactoryTileList.Add(GameState.Factories[selectedFactoryIndex].FactoryTiles[i]);
             }
             return newFactoryTileList;
+        }
+
+        public void UpdateDroppedTiles(ObservableCollection<Tile> droppedTiles)
+        {
+            for (int i = 0; i < GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTiles.Length; i++)
+            {
+                droppedTiles[i] = GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTiles[i];
+            }
         }
     }
 }
