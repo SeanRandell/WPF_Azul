@@ -211,12 +211,21 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-        //private Color defaultTileSlotColour;
+        private string _debugTileBagText;
 
-        //public Color DefaultTileSlotColour
-        //{
-        //    get { return defaultTileSlotColour; }
-        //}
+        public string DebugTileBagText
+        {
+            get { return _debugTileBagText; }
+            set { _debugTileBagText = value; }
+        }
+
+        private string _debugTileBinText;
+
+        public string DebugTileBinText
+        {
+            get { return _debugTileBinText; }
+            set { _debugTileBinText = value; }
+        }
 
         public GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
@@ -248,6 +257,10 @@ namespace WPF_Azul.ViewModel
             _activatedDroppedPlayer1Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
             _activatedDroppedPlayer2Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
             _activatedDroppedTileObject = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
+
+            _debugTileBagText = UpdateDebugTileBagText();
+            _debugTileBinText = UpdateDebugTileBinText();
+
             UpdateViewModelFromModel();
         }
 
@@ -478,6 +491,16 @@ namespace WPF_Azul.ViewModel
                 productionTile.IsEnabled = false;
                 _selectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             }
+        }
+
+        private string UpdateDebugTileBinText()
+        {
+            throw new NotImplementedException();
+        }
+
+        private string UpdateDebugTileBagText()
+        {
+            throw new NotImplementedException();
         }
     }
 }

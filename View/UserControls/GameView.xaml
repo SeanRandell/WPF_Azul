@@ -48,6 +48,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3.5*" />
@@ -382,13 +383,20 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
+
             </ItemsControl>
             <!--  Player 2 Wall Pattern View  -->
             <!--  Player 2 Wall Tiles  -->
             <!--  Player 2 Production Tiles  -->
             <!--  Player 2 Dropped Tiles  -->
-            <!--<Button Grid.Row="1" Grid.Column="3" Command="{Binding FactoryTileClickCommand}">
-            </Button>-->
+
+            <!--  Debug Tile Collection Text  -->
+            <StackPanel Grid.Row="4" Grid.Column="0">
+                <TextBlock Text="{Binding DebugTileBagText}" />
+                <TextBlock Text="{Binding DebugTileBinText}" />
+            </StackPanel>
         </Grid>
+
+
     </Grid>
 </UserControl>
