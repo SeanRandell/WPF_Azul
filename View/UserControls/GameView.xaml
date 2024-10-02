@@ -365,6 +365,15 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
 
+            <!-- Undo Factory Click Button -->
+            <Button Content="Command Test" 
+                    Grid.Row="1"
+                Grid.Column="1" >
+                <Button.InputBindings>
+                    <MouseBinding Gesture="leftClick" Command="{Binding UndoFactoryTileClick}" />
+                </Button.InputBindings>
+            </Button>
+
             <!--  Center Factory view  -->
 
             <ItemsControl

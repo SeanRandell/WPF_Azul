@@ -26,6 +26,8 @@ namespace WPF_Azul.ViewModel
         public ICommand FactoryTileClickCommand { get; }
         public ICommand ProductionLineClickCommand { get; }
 
+        public ICommand UndoFactoryTileClick { get; }
+
         //private readonly PlayerBoard player1Board;
         //private readonly PlayerBoard player2Board;
 
@@ -226,6 +228,7 @@ namespace WPF_Azul.ViewModel
             MainMenuCommand = new MainMenuCommand(navigationStore);
             FactoryTileClickCommand = new FactoryTileClickCommand(_gameManager, this);
             ProductionLineClickCommand = new ProductionLineClickCommand(this);
+            UndoFactoryTileClick = new UndoFactoryTileClick(this);
             wallPattern = InitWallPattern();
             productionTilesPlayer1 = InitPlayerProductionTiles();
             productionTilesPlayer2 = InitPlayerProductionTiles();
