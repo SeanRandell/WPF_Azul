@@ -120,10 +120,19 @@ namespace WPF_Azul.Model
         public void ProductionTileSelected(int productionTileIndex, TileType selectedTileType, int selectedFactoryIndex)
         {
             // get list of tiles being moved from factory and remove them
-            List<Tile> selectedFactoryTiles = GameState.Factories[selectedFactoryIndex].TakeAllTilesOfType(selectedTileType);
-            GameState.Factories[selectedFactoryIndex].ProcessFactoryTilesSelectedForProduction(selectedTileType);
+            List<Tile> selectedFactoryTiles;
+            if (selectedFactoryIndex == GameConstants.CENTER_FACTORY_INDEX)
+            {
+                selectedFactoryTiles = GameState.CenterFactory.TakeAllTilesOfType(selectedTileType);
+                GameState.CenterFactory.ProcessFactoryTilesSelectedForProduction(selectedTileType);
+            }
+            else
+            {
+                selectedFactoryTiles = GameState.Factories[selectedFactoryIndex].TakeAllTilesOfType(selectedTileType);
+                GameState.Factories[selectedFactoryIndex].ProcessFactoryTilesSelectedForProduction(selectedTileType);
 
-            GameState.CenterFactory.AddTiles(GameState.Factories[selectedFactoryIndex].RemoveRemainingTiles());
+                GameState.CenterFactory.AddTiles(GameState.Factories[selectedFactoryIndex].RemoveRemainingTiles());
+            }
 
             //add as many tiles as you can from the list to the production tile
             GameState.players[GameState.activePlayerTurnIndex].PlayerBoard.AddTilesToProductionTiles(productionTileIndex, selectedFactoryTiles);

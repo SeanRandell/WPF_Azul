@@ -331,7 +331,11 @@ namespace WPF_Azul.ViewModel
         // TODO - Update for to work for both players
         private void UpdateViewModelAfterPlayerTurn(int productionTileIndex)
         {
-            UpdateFactory(_selectedFactoryIndex);
+            if(_selectedFactoryIndex != GameConstants.CENTER_FACTORY_INDEX)
+            {
+                UpdateFactory(_selectedFactoryIndex);
+            }
+
             UpdateCenterFactory();
 
             if (productionTileIndex != GameConstants.DROPPED_TILE_ROW_INDEX)
