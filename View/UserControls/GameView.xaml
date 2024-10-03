@@ -277,57 +277,33 @@
                 </ItemsControl>
             </Grid>
 
-
-
             <!--  Player 1 - Dropped Tiles Slots  -->
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="8*" />
                 </Grid.ColumnDefinitions>
-
-                <!--  Player 1 Dropped Tiles selection Tiles  -->
-                <ItemsControl
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Margin="0,20,0,0"
-                    ItemsSource="{Binding ValidProductionTilesPlayer1}"
-                    >
-
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <!--<ItemsControl ItemsSource="{Binding}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>-->
-                            <local:ValidProductionTileIndicator
-                                Margin="1"
-                                Cursor="Hand"
-                                ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                ValidProductionLine="{Binding}"
-                                Visibility="{Binding IsEnabled, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
-                                />
-                            <!--</DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>-->
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                </ItemsControl>
 
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="0"
                     Text=" Player Dropped Tiles"
                     />
+
+                <!--  Player 1 Dropped Tiles selection Tiles  -->
+                <local:ValidProductionTileIndicator
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,20,0,0"
+                    Cursor="Hand"
+                    ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    ValidProductionLine="{Binding ActivatedDroppedPlayer1Tiles}"
+                    Visibility="{Binding ActivatedDroppedPlayer1Tiles.IsEnabled, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
+                    />
+
                 <ItemsControl
                     Grid.Row="1"
                     Grid.Column="1"
@@ -364,7 +340,7 @@
                 </ItemsControl>
 
             </Grid>
-            
+
             <!--  Factory View  -->
             <ItemsControl
                 Grid.Row="0"

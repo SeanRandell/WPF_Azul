@@ -65,6 +65,10 @@ namespace WPF_Azul.Model
         internal List<Tile> RemoveRemainingTiles()
         {
             List<Tile> remainingTiles = factoryTiles.ToList();
+            foreach (Tile tile in remainingTiles)
+            {
+                tile.FactoriesIndex = GameConstants.CENTER_FACTORY_INDEX;
+            }
             factoryTiles.Clear();
             Trace.WriteLine("remaining tile count after removing factory tiles = " + remainingTiles.Count);
             return remainingTiles;

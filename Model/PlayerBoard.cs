@@ -170,20 +170,23 @@ namespace WPF_Azul.Model
 
         public void AddTilesToProductionTiles(int productionTileIndex, List<Tile> selectedFactoryTiles)
         {
-            // loop through adding the selected tiles to production tiles until the production tiles are full and then when the selected tiles are empty.
-            int i = Array.IndexOf(productionTiles[productionTileIndex], null);
-            int tilesAddedToProductionCount = 0;
-            for (; i < productionTiles[productionTileIndex].Length && tilesAddedToProductionCount < selectedFactoryTiles.Count; i++)
+            if (productionTileIndex != GameConstants.DROPPED_TILE_ROW_INDEX)
             {
-                if (productionTiles[productionTileIndex][i] == null)
+                // loop through adding the selected tiles to production tiles until the production tiles are full and then when the selected tiles are empty.
+                int i = Array.IndexOf(productionTiles[productionTileIndex], null);
+                int tilesAddedToProductionCount = 0;
+                for (; i >= 0 && i < productionTiles[productionTileIndex].Length && tilesAddedToProductionCount < selectedFactoryTiles.Count; i++)
                 {
-                    productionTiles[productionTileIndex][i] = selectedFactoryTiles[tilesAddedToProductionCount];
-                    tilesAddedToProductionCount++;
+                    if (productionTiles[productionTileIndex][i] == null)
+                    {
+                        productionTiles[productionTileIndex][i] = selectedFactoryTiles[tilesAddedToProductionCount];
+                        tilesAddedToProductionCount++;
+                    }
                 }
+                selectedFactoryTiles.RemoveRange(0, tilesAddedToProductionCount);
             }
-            selectedFactoryTiles.RemoveRange(0, tilesAddedToProductionCount);
 
-            if (selectedFactoryTiles.Count > 0)
+            if (selectedFactoryTiles.Count > 0 || productionTileIndex == GameConstants.DROPPED_TILE_ROW_INDEX)
             {
                 Trace.WriteLine("leftover: " + selectedFactoryTiles.Count);
                 AddTilesToDroppedTiles(selectedFactoryTiles);
@@ -193,7 +196,7 @@ namespace WPF_Azul.Model
                 Trace.WriteLine("All Selected tiles used");
             }
 
-            // may need to return this lsit depending on how we want to do changes to selected tiles list.
+            // may need to return this list depending on how we want to do changes to selected tiles list.
         }
 
         public void AddTilesToDroppedTiles(List<Tile> selectedFactoryTiles)
@@ -203,7 +206,7 @@ namespace WPF_Azul.Model
             Trace.WriteLine("First index of null value in dropped tiles is " + i);
 
             int tilesAddedToDroppedTiles = 0;
-            for (; i < droppedTiles.Length && tilesAddedToDroppedTiles < selectedFactoryTiles.Count; i++)
+            for (; i >= 0 && i < droppedTiles.Length && tilesAddedToDroppedTiles < selectedFactoryTiles.Count; i++)
             {
                 if (droppedTiles[i] == null)
                 {

@@ -28,21 +28,7 @@ namespace WPF_Azul.ViewModel
 
         public ICommand UndoFactoryTileClick { get; }
 
-        //private readonly PlayerBoard player1Board;
-        //private readonly PlayerBoard player2Board;
-
-        //TODO - For all lists being used. Change them to an observableCollection if the view needs to be changed.
-        //TODO - These are temp list for configuring the view to viewmodel interaction. These should be removed if there is a more elequount way of doing this
         // TODO - Change to jsut use the wallpattern inside a player. See if an internal colour variable can be used.
-
-        /* TODO - production tile selection
-         * Have an arraylist containing each production tile as a row of clickable something?
-         * Not sure what this object should be yet. Maybe just a new object?
-            Defined them in the viewmodel
-            clear after production tile click
-            populate after factory tile click and getting which ones are valid from the gamemanager and models.
-        Create in xaml with the user control being either a green arrow that you can click on or a green arrow with green boxes that surround the selectable production tiles
-         */
 
         private TileType _selectedTileType;
 
@@ -53,16 +39,6 @@ namespace WPF_Azul.ViewModel
         }
 
         private int _selectedFactoryIndex;
-
-
-        private ValidProductionTile _activatedDroppedTileObject;
-
-        public ValidProductionTile ActivatedDroppedTileObject
-        {
-            get { return _activatedDroppedTileObject; }
-            set { _activatedDroppedTileObject = value; }
-        }
-
 
         private ObservableCollection<ValidProductionTile> _validProductionTilesPlayer1;
 
@@ -241,8 +217,6 @@ namespace WPF_Azul.ViewModel
 
         public GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
-            //this.navigationStore = navigationStore;
-            //defaultTileSlotColour = (Color)ColorConverter.ConvertFromString("Transparent");
             _selectedTileType = TileType.Blue; // default value
             _selectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             _gameManager = gameManager;
@@ -268,7 +242,6 @@ namespace WPF_Azul.ViewModel
             _validProductionTilesPlayer2 = InitValidProductionTiles();
             _activatedDroppedPlayer1Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
             _activatedDroppedPlayer2Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
-            _activatedDroppedTileObject = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
 
             _debugTileBagText = UpdateDebugTileBagText();
             _debugTileBinText = UpdateDebugTileBinText();
@@ -360,7 +333,11 @@ namespace WPF_Azul.ViewModel
         {
             UpdateFactory(_selectedFactoryIndex);
             UpdateCenterFactory();
-            UpdateProductionTile(productionTileIndex);
+
+            if (productionTileIndex != GameConstants.DROPPED_TILE_ROW_INDEX)
+            {
+                UpdateProductionTile(productionTileIndex);
+            }
             _gameManager.UpdateDroppedTiles(DroppedTilesPlayer1);
             DebugTileBagText = UpdateDebugTileBagText();
             DebugTileBinText = UpdateDebugTileBinText();
@@ -393,8 +370,6 @@ namespace WPF_Azul.ViewModel
 
         private void UpdateFactories()
         {
-            //factories = _gameManager.GetFactories();
-            //centerFactoryTiles = _gameManager.GetCenterFactoryTiles();
             _gameManager.UpdateFactories(_factories);
             UpdateCenterFactory();
         }
@@ -406,24 +381,18 @@ namespace WPF_Azul.ViewModel
 
         private void UpdatePlayerWallTiles()
         {
-            //wallTilesPlayer1 = _gameManager.GetPlayerWallTiles(GameConstants.STARTING_PLAYER_INDEX);
-            //wallTilesPlayer2 = _gameManager.GetPlayerWallTiles(GameConstants.PLAYER_TWO_INDEX);
             _gameManager.UpdatePlayerWallTiles(WallTilesPlayer1, GameConstants.STARTING_PLAYER_INDEX);
             _gameManager.UpdatePlayerWallTiles(WallTilesPlayer2, GameConstants.PLAYER_TWO_INDEX);
         }
 
         private void UpdateProductionTiles()
         {
-            //productionTilesPlayer1 = _gameManager.GetPlayerProductionTiles(GameConstants.STARTING_PLAYER_INDEX);
-            //productionTilesPlayer2 = _gameManager.GetPlayerProductionTiles(GameConstants.PLAYER_TWO_INDEX);
             _gameManager.UpdatePlayerProductionTiles(ProductionTilesPlayer1, GameConstants.STARTING_PLAYER_INDEX);
             _gameManager.UpdatePlayerProductionTiles(ProductionTilesPlayer2, GameConstants.PLAYER_TWO_INDEX);
         }
 
         private void UpdateDroppedTiles()
         {
-            //droppedTilesPlayer1 = _gameManager.GetPlayerDroppedTiles(GameConstants.STARTING_PLAYER_INDEX);
-            //droppedTilesPlayer1 = _gameManager.GetPlayerDroppedTiles(GameConstants.PLAYER_TWO_INDEX);
             _gameManager.UpdatePlayerDroppedTiles(DroppedTilesPlayer1, GameConstants.STARTING_PLAYER_INDEX);
             _gameManager.UpdatePlayerDroppedTiles(DroppedTilesPlayer1, GameConstants.PLAYER_TWO_INDEX);
         }
@@ -446,20 +415,26 @@ namespace WPF_Azul.ViewModel
                     validIndexes.IsEnabled = false;
                 }
             }
+
+            ActivatedDroppedPlayer1Tiles.IsEnabled = false;
+
             _gameManager.ProductionTileSelected(productionTileIndex, _selectedTileType, _selectedFactoryIndex);
             Trace.WriteLine("Production line index: " + productionTileIndex);
             //ClearObservablesCollections();
             UpdateViewModelAfterPlayerTurn(productionTileIndex);
             OnPropertyChanged();
-            for (int i = 0; i < _productionTilesPlayer1[productionTileIndex].Count; i++)
+            if (productionTileIndex != GameConstants.DROPPED_TILE_ROW_INDEX)
             {
-                if (_productionTilesPlayer1[productionTileIndex][i] != null)
+                for (int i = 0; i < _productionTilesPlayer1[productionTileIndex].Count; i++)
                 {
-                    Trace.WriteLine("Production line index: " + productionTileIndex + " Equals = " + _productionTilesPlayer1[productionTileIndex][i].TileType);
-                }
-                else
-                {
-                    Trace.WriteLine("Production line index: " + productionTileIndex + " Equals = null");
+                    if (_productionTilesPlayer1[productionTileIndex][i] != null)
+                    {
+                        Trace.WriteLine("Production line index: " + productionTileIndex + " Equals = " + _productionTilesPlayer1[productionTileIndex][i].TileType);
+                    }
+                    else
+                    {
+                        Trace.WriteLine("Production line index: " + productionTileIndex + " Equals = null");
+                    }
                 }
             }
         }
@@ -489,13 +464,15 @@ namespace WPF_Azul.ViewModel
             _selectedTileType = selectedTileType;
 
             // pass theses details to gamemanager.
-            List<int> validProductionLineIndexes = _gameManager.GetValidProductionTiles(this._selectedTileType);
+            List<int> validProductionLineIndexes = _gameManager.GetValidProductionTiles(_selectedTileType);
             foreach (int validIndex in validProductionLineIndexes)
             {
                 //validProductionTilesPlayer1[validIndex] = new ValidProductionTile(validIndex,Visibility.Visible);
-                _validProductionTilesPlayer1[validIndex].IsEnabled = true;
+                ValidProductionTilesPlayer1[validIndex].IsEnabled = true;
+
                 Trace.WriteLine(validIndex);
             }
+            ActivatedDroppedPlayer1Tiles.IsEnabled = true;
         }
 
         internal void UndoFactoryTileSelected()
@@ -505,6 +482,8 @@ namespace WPF_Azul.ViewModel
                 productionTile.IsEnabled = false;
                 _selectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             }
+            // ToDo change for both players
+            ActivatedDroppedPlayer1Tiles.IsEnabled = false;
         }
 
         private string UpdateDebugTileBinText()

@@ -8,7 +8,6 @@ using WPF_Azul.Model;
 
 namespace WPF_Azul.ViewModel
 {
-	// TODO - this implements
     public class ValidProductionTile : ViewModelBase
     {
 		private int productionTileIndex;
