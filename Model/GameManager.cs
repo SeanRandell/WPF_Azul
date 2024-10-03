@@ -174,5 +174,15 @@ namespace WPF_Azul.Model
                 droppedTiles[i] = GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTiles[i];
             }
         }
+
+        public int GetDebugTileBagCount()
+        {
+            return GameState.tileCollections.tileBag.Count;
+        }
+
+        public int GetDebugTileBinCount()
+        {
+            return GameState.tileCollections.tileBin.Count;
+        }
     }
 }

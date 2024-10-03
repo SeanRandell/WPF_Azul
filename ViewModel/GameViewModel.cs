@@ -69,8 +69,8 @@ namespace WPF_Azul.ViewModel
         public ObservableCollection<ValidProductionTile> ValidProductionTilesPlayer1
         {
             get { return _validProductionTilesPlayer1; }
-            set 
-            { 
+            set
+            {
                 _validProductionTilesPlayer1 = value;
                 OnPropertyChanged();
             }
@@ -93,7 +93,9 @@ namespace WPF_Azul.ViewModel
         public ValidProductionTile ActivatedDroppedPlayer1Tiles
         {
             get { return _activatedDroppedPlayer1Tiles; }
-            set { _activatedDroppedPlayer1Tiles = value;
+            set
+            {
+                _activatedDroppedPlayer1Tiles = value;
                 OnPropertyChanged();
             }
         }
@@ -103,7 +105,9 @@ namespace WPF_Azul.ViewModel
         public ValidProductionTile ActivatedDroppedPlayer2Tiles
         {
             get { return _activatedDroppedPlayer2Tiles; }
-            set { _activatedDroppedPlayer2Tiles = value;
+            set
+            {
+                _activatedDroppedPlayer2Tiles = value;
                 OnPropertyChanged();
             }
         }
@@ -216,7 +220,11 @@ namespace WPF_Azul.ViewModel
         public string DebugTileBagText
         {
             get { return _debugTileBagText; }
-            set { _debugTileBagText = value; }
+            set
+            {
+                _debugTileBagText = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _debugTileBinText;
@@ -224,7 +232,11 @@ namespace WPF_Azul.ViewModel
         public string DebugTileBinText
         {
             get { return _debugTileBinText; }
-            set { _debugTileBinText = value; }
+            set
+            {
+                _debugTileBinText = value;
+                OnPropertyChanged();
+            }
         }
 
         public GameViewModel(GameManager gameManager, NavigationStore navigationStore)
@@ -350,7 +362,8 @@ namespace WPF_Azul.ViewModel
             UpdateCenterFactory();
             UpdateProductionTile(productionTileIndex);
             _gameManager.UpdateDroppedTiles(DroppedTilesPlayer1);
-
+            DebugTileBagText = UpdateDebugTileBagText();
+            DebugTileBinText = UpdateDebugTileBinText();
         }
 
         private void UpdateProductionTile(int productionTileIndex)
@@ -419,7 +432,7 @@ namespace WPF_Azul.ViewModel
         {
             // TODO - rectoar these into a list that is accessed by the player turn index
             // reset valid production lines
-            if(_gameManager.GetCurrentPlayerTurn() == GameConstants.STARTING_PLAYER_INDEX)
+            if (_gameManager.GetCurrentPlayerTurn() == GameConstants.STARTING_PLAYER_INDEX)
             {
                 foreach (ValidProductionTile validIndexes in _validProductionTilesPlayer1)
                 {
@@ -434,7 +447,7 @@ namespace WPF_Azul.ViewModel
                 }
             }
             _gameManager.ProductionTileSelected(productionTileIndex, _selectedTileType, _selectedFactoryIndex);
-            Trace.WriteLine("Production line index: "+ productionTileIndex);
+            Trace.WriteLine("Production line index: " + productionTileIndex);
             //ClearObservablesCollections();
             UpdateViewModelAfterPlayerTurn(productionTileIndex);
             OnPropertyChanged();
@@ -443,7 +456,8 @@ namespace WPF_Azul.ViewModel
                 if (_productionTilesPlayer1[productionTileIndex][i] != null)
                 {
                     Trace.WriteLine("Production line index: " + productionTileIndex + " Equals = " + _productionTilesPlayer1[productionTileIndex][i].TileType);
-                } else
+                }
+                else
                 {
                     Trace.WriteLine("Production line index: " + productionTileIndex + " Equals = null");
                 }
@@ -495,12 +509,12 @@ namespace WPF_Azul.ViewModel
 
         private string UpdateDebugTileBinText()
         {
-            throw new NotImplementedException();
+            return "TileBag: " + _gameManager.GetDebugTileBagCount();
         }
 
         private string UpdateDebugTileBagText()
         {
-            throw new NotImplementedException();
+            return "TileBag: " + _gameManager.GetDebugTileBinCount();
         }
     }
 }

@@ -11,12 +11,13 @@ namespace WPF_Azul.Model
         const int tileTypeAmount = 20;
 
         //To insert, simply place at the end, and increment the size. 
-        internal List<Tile> tilebag;
+        internal List<Tile> tileBag;
         internal List<Tile> tileBin;
 
         public TileCollections()
         {
-            tilebag = new List<Tile>();
+            tileBag = new List<Tile>();
+            tileBin = new List<Tile>();
             CreateRandomTileBag();
         }
 
@@ -32,7 +33,7 @@ namespace WPF_Azul.Model
                 for (int i = 0; i < tileTypeAmount; i++)
                 {
                     var newTile = new Tile(tileType);
-                    tilebag.Add(newTile);
+                    tileBag.Add(newTile);
                 }
             }
             RandomizeBag();
@@ -41,43 +42,43 @@ namespace WPF_Azul.Model
         public void RandomizeBag()
         {
             Random rng = new Random();
-            int tilebagCount = tilebag.Count;
+            int tilebagCount = tileBag.Count;
 
             while (tilebagCount > 1)
             {
                 tilebagCount--;
                 int k = rng.Next(tilebagCount + 1);
-                Tile value = tilebag[k];
-                tilebag[k] = tilebag[tilebagCount];
-                tilebag[tilebagCount] = value;
+                Tile value = tileBag[k];
+                tileBag[k] = tileBag[tilebagCount];
+                tileBag[tilebagCount] = value;
             }
         }
 
         public Tile GetRandomTileFromBag()
         {
-            if(tilebag.Count == 0)
+            if(tileBag.Count == 0)
             {
                 RefillBagFromBin();
             }
 
             Random rng = new Random();
-            int randomIndex = rng.Next(tilebag.Count);
+            int randomIndex = rng.Next(tileBag.Count);
 
             // Swap the random element with the last element
-            Tile tempTile = tilebag[randomIndex];
-            tilebag[randomIndex] = tilebag[tilebag.Count - 1];
-            tilebag[tilebag.Count - 1] = tempTile;
+            Tile tempTile = tileBag[randomIndex];
+            tileBag[randomIndex] = tileBag[tileBag.Count - 1];
+            tileBag[tileBag.Count - 1] = tempTile;
 
             // Pop (remove) the last element and return it
-            Tile poppedTile = tilebag[tilebag.Count - 1];
-            tilebag.RemoveAt(tilebag.Count - 1);
+            Tile poppedTile = tileBag[tileBag.Count - 1];
+            tileBag.RemoveAt(tileBag.Count - 1);
 
             return poppedTile;
         }
 
         private void RefillBagFromBin()
         {
-            tilebag.AddRange(tileBin);
+            tileBag.AddRange(tileBin);
             tileBin.Clear();
             RandomizeBag();
         }
