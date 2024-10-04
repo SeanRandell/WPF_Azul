@@ -188,5 +188,20 @@ namespace WPF_Azul.Model
         {
             return GameState.tileCollections.tileBin.Count;
         }
+
+        internal void StartGame()
+        {
+            GameState._gamePhase = GamePhase.PlayingRound;
+        }
+
+        internal void ChecKForRoundEnd()
+        {
+            //loop through all factories and center factory to make sure they are empty.
+                // if yes, Change GamePhase to round over.
+                // call startScoring process method.
+                    // This involves checking if a production tile is full and then moving the tile to the player wall\
+                    // then score this action and save that particular addition to a corresponding row.
+
+        }
     }
 }

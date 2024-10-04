@@ -22,6 +22,7 @@ namespace WPF_Azul.ViewModel.Commands
         public override void Execute(object? parameter)
         {
             navigationStore.NavigateGameView();
+            gameManager.StartGame();
         }
     }
 }

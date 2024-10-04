@@ -441,6 +441,18 @@ namespace WPF_Azul.ViewModel
                     }
                 }
             }
+
+            CheckForRoundEnd();
+        }
+
+        private void CheckForRoundEnd()
+        {
+            // model checks for round end. possibly do in and after production tile selected method.
+            _gameManager.ChecKForRoundEnd();
+            // gameviewmodel checks for gamestate change. Is there a gamestate enum?
+                // if yes model intiates end of round scoring calculations, refreshes playerboard and factories.
+                // viewmodel updates
+            // if no do nothing
         }
 
         private List<List<Color>> InitWallPattern()

@@ -13,6 +13,7 @@ namespace WPF_Azul.Model
         public CenterFactory CenterFactory;
         public TileCollections tileCollections;
         public int activePlayerTurnIndex;
+        public GamePhase _gamePhase;
 
         public GameState()
         {
@@ -21,6 +22,7 @@ namespace WPF_Azul.Model
             Factories = new List<Factory>();
             CenterFactory = new CenterFactory();
             activePlayerTurnIndex = GameConstants.STARTING_PLAYER_INDEX;
+            _gamePhase = GamePhase.StartUp;
             InitPlayers();
             InitFactories();
             SetupFactoriesForRound();
