@@ -9,7 +9,7 @@ namespace WPF_Azul.Model
     public class Player
     {
         public string name { get; set; }
-        private uint score { get; set; }
+        public int score { get; set; }
 
         private PlayerBoard playerBoard;
         public PlayerBoard PlayerBoard
@@ -28,6 +28,20 @@ namespace WPF_Azul.Model
         public void ResetPlayerScore()
         {
             score = GameConstants.STARTING_PLAYER_SCORE; 
+        }
+
+        public void UpdatePlayerScore(int[] WallTileScore, int droppedTileScore)
+        {
+            int totalToAdd = 0;
+            totalToAdd += WallTileScore.Sum() + droppedTileScore;
+
+            if((score += totalToAdd) < 0)
+            {
+                score = 0;
+            } else
+            {
+                score += totalToAdd;
+            }
         }
     }
 }

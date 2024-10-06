@@ -191,6 +191,56 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        private ObservableCollection<int> _wallTileScoresPlayer1;
+
+        public ObservableCollection<int> WallTileScoresPlayer1
+        {
+            get { return _wallTileScoresPlayer1; }
+            set
+            {
+                _wallTileScoresPlayer1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _droppedTileScoresPlayer1;
+
+        public int DroppedTileScoresPlayer1
+        {
+            get { return _droppedTileScoresPlayer1; }
+            set
+            {
+                _droppedTileScoresPlayer1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // These values do not change so they should not need to use OnProperyChanged()
+        private int[] _droppedTileValues;
+
+        public int[] DroppedTileValues
+        {
+            get { return _droppedTileValues; }
+            set
+            {
+                _droppedTileValues = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _totalScorePlayer1;
+
+        public int TotalScorePlayer1
+        {
+            get { return _totalScorePlayer1; }
+            set
+            {
+                _totalScorePlayer1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private string _debugTileBagText;
 
         public string DebugTileBagText
@@ -215,9 +265,22 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        private bool _isFactoryTileSelected;
+
+        public bool IsFactoryTileSelected
+        {
+            get { return _isFactoryTileSelected; }
+            set
+            {
+                _isFactoryTileSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
         public GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
             _selectedTileType = TileType.Blue; // default value
+            _isFactoryTileSelected = false;
             _selectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             _gameManager = gameManager;
             MainMenuCommand = new MainMenuCommand(navigationStore);
@@ -236,7 +299,10 @@ namespace WPF_Azul.ViewModel
 
             _factories = InitFactories();
             _centerFactoryTiles = new ObservableCollection<Tile>();
-
+            _wallTileScoresPlayer1 = new ObservableCollection<int>();
+            _droppedTileScoresPlayer1 = 0;
+            _totalScorePlayer1 = 0;
+            _droppedTileValues = GameConstants.DROPPED_TILE_COSTS;
 
             _validProductionTilesPlayer1 = InitValidProductionTiles();
             _validProductionTilesPlayer2 = InitValidProductionTiles();
@@ -331,7 +397,7 @@ namespace WPF_Azul.ViewModel
         // TODO - Update for to work for both players
         private void UpdateViewModelAfterPlayerTurn(int productionTileIndex)
         {
-            if(_selectedFactoryIndex != GameConstants.CENTER_FACTORY_INDEX)
+            if (_selectedFactoryIndex != GameConstants.CENTER_FACTORY_INDEX)
             {
                 UpdateFactory(_selectedFactoryIndex);
             }
@@ -386,19 +452,19 @@ namespace WPF_Azul.ViewModel
         private void UpdatePlayerWallTiles()
         {
             _gameManager.UpdatePlayerWallTiles(WallTilesPlayer1, GameConstants.STARTING_PLAYER_INDEX);
-            _gameManager.UpdatePlayerWallTiles(WallTilesPlayer2, GameConstants.PLAYER_TWO_INDEX);
+            //_gameManager.UpdatePlayerWallTiles(WallTilesPlayer2, GameConstants.PLAYER_TWO_INDEX);
         }
 
         private void UpdateProductionTiles()
         {
             _gameManager.UpdatePlayerProductionTiles(ProductionTilesPlayer1, GameConstants.STARTING_PLAYER_INDEX);
-            _gameManager.UpdatePlayerProductionTiles(ProductionTilesPlayer2, GameConstants.PLAYER_TWO_INDEX);
+            //_gameManager.UpdatePlayerProductionTiles(ProductionTilesPlayer2, GameConstants.PLAYER_TWO_INDEX);
         }
 
         private void UpdateDroppedTiles()
         {
             _gameManager.UpdatePlayerDroppedTiles(DroppedTilesPlayer1, GameConstants.STARTING_PLAYER_INDEX);
-            _gameManager.UpdatePlayerDroppedTiles(DroppedTilesPlayer1, GameConstants.PLAYER_TWO_INDEX);
+            //_gameManager.UpdatePlayerDroppedTiles(DroppedTilesPlayer1, GameConstants.PLAYER_TWO_INDEX);
         }
 
         public void ProductionLineSelected(int productionTileIndex)
@@ -419,14 +485,15 @@ namespace WPF_Azul.ViewModel
                     validIndexes.IsEnabled = false;
                 }
             }
-
+            IsFactoryTileSelected = false;
             ActivatedDroppedPlayer1Tiles.IsEnabled = false;
 
             _gameManager.ProductionTileSelected(productionTileIndex, _selectedTileType, _selectedFactoryIndex);
+
             Trace.WriteLine("Production line index: " + productionTileIndex);
-            //ClearObservablesCollections();
+
             UpdateViewModelAfterPlayerTurn(productionTileIndex);
-            OnPropertyChanged();
+
             if (productionTileIndex != GameConstants.DROPPED_TILE_ROW_INDEX)
             {
                 for (int i = 0; i < _productionTilesPlayer1[productionTileIndex].Count; i++)
@@ -448,11 +515,45 @@ namespace WPF_Azul.ViewModel
         private void CheckForRoundEnd()
         {
             // model checks for round end. possibly do in and after production tile selected method.
-            _gameManager.ChecKForRoundEnd();
+            _gameManager.CheckForRoundEndAndProcess();
+
             // gameviewmodel checks for gamestate change. Is there a gamestate enum?
-                // if yes model intiates end of round scoring calculations, refreshes playerboard and factories.
+            if (_gameManager.IsRoundOver())
+            {
+                // if yes model has already intiated end of round scoring calculations, refreshed playerboards and factories.
+
                 // viewmodel updates
-            // if no do nothing
+                UpdateWallTileScores();
+                UpdateDroppedTilesScores();
+                UpdatePlayerScores();
+                UpdatePlayerWallTiles();
+                UpdateProductionTiles();
+                UpdateDroppedTiles();
+                UpdateFactories();
+                DebugTileBinText = UpdateDebugTileBinText();
+                DebugTileBagText = UpdateDebugTileBagText();
+                _gameManager.StartNewRound();
+            }
+        }
+
+        private void UpdatePlayerScores()
+        {
+            TotalScorePlayer1 = _gameManager.GetTotalPlayerScore();
+        }
+
+        private void UpdateDroppedTilesScores()
+        {
+            DroppedTileScoresPlayer1 = _gameManager.GetPlayerDroppedTileScore();
+        }
+
+        private void UpdateWallTileScores()
+        {
+            List<int> newScores = _gameManager.GetPlayerWallScores();
+            WallTileScoresPlayer1.Clear();
+            for (int i = 0; i < newScores.Count; i++)
+            {
+                WallTileScoresPlayer1.Add(newScores[i]);
+            }
         }
 
         private List<List<Color>> InitWallPattern()
@@ -478,6 +579,7 @@ namespace WPF_Azul.ViewModel
             //first get factory index and the tile type from the clicked on tile
             _selectedFactoryIndex = factoriesIndex;
             _selectedTileType = selectedTileType;
+            IsFactoryTileSelected = true;
 
             // pass theses details to gamemanager.
             List<int> validProductionLineIndexes = _gameManager.GetValidProductionTiles(_selectedTileType);
@@ -500,6 +602,7 @@ namespace WPF_Azul.ViewModel
             }
             // ToDo change for both players
             ActivatedDroppedPlayer1Tiles.IsEnabled = false;
+            IsFactoryTileSelected = false;
         }
 
         private string UpdateDebugTileBinText()

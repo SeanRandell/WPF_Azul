@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace WPF_Azul.Model
 {
@@ -30,13 +31,31 @@ namespace WPF_Azul.Model
             set { droppedTiles = value; }
         }
 
+        //TODO - these score calculations may not need to be saved. Find a better way of getting them to the viewmodel only when needed.
+        private int[] _wallTileScores;
+
+        public int[] WallTileScores
+        {
+            get { return _wallTileScores; }
+            set { _wallTileScores = value; }
+        }
+
+        private int _droppedTileScore;
+
+        public int DroppedTileScore
+        {
+            get { return _droppedTileScore; }
+            set { _droppedTileScore = value; }
+        }
+
         public PlayerBoard()
         {
             wallTiles = new Tile[GameConstants.MAIN_TILES_LENGTH, GameConstants.MAIN_TILES_LENGTH];
             productionTiles = new Tile[GameConstants.MAIN_TILES_LENGTH][];
             droppedTiles = new Tile[GameConstants.DROPPED_TILE_LENGTH];
-
-            InitDroppedTiles();
+            _wallTileScores = new int[GameConstants.MAIN_TILES_LENGTH];
+            _droppedTileScore = 0;
+            //InitDroppedTiles();
             InitWallTiles();
             InitProductionTiles();
         }
@@ -219,6 +238,95 @@ namespace WPF_Azul.Model
             selectedFactoryTiles.RemoveRange(0, tilesAddedToDroppedTiles);
             // check if selected tiles still contains items.
             Trace.WriteLine("leftover dropped tiles: " + selectedFactoryTiles.Count);
+        }
+
+        internal void CalculateProductionTileScores(TileCollections tileCollections)
+        {
+            int[] returnList = new int[GameConstants.MAIN_TILES_LENGTH];
+
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                // Move tiles our of productionTiles
+                if (Array.IndexOf(productionTiles[i], null) < 0)
+                {
+                    int wallTileSlotIndex = 0;
+                    for (int j = 0; j < productionTiles[i].Length; j++)
+                    {
+                        if(j == 0)
+                        {
+                            wallTileSlotIndex = GameConstants.GetWallTilePatternIndex(i,productionTiles[i][j].TileType);
+                            wallTiles[i, wallTileSlotIndex] = productionTiles[i][j].DeepClone(i ,wallTileSlotIndex);
+                        }
+                        else
+                        {
+                            tileCollections.tileBin.Add(productionTiles[i][j].DeepClone());
+                        }
+                        productionTiles[i][j] = null;
+                    }
+
+                    // Check connected tiles in the row
+                    int rowScore = 1;
+                    rowScore += CountConnectedTiles(i, wallTileSlotIndex, 0, 1); // Check east
+                    rowScore += CountConnectedTiles(i, wallTileSlotIndex, 0, -1); // Check west
+
+                    // Check connected tiles in the column
+                    int columnscore = 1;
+                    columnscore += CountConnectedTiles(i, wallTileSlotIndex, 1, 0); // Check south
+                    columnscore += CountConnectedTiles(i, wallTileSlotIndex, -1, 0); // Check north
+
+                    //Subtract 1 because the starting tile is counted twice.
+                    returnList[i] = (rowScore + columnscore - 1);
+                }
+                else
+                {
+                    returnList[i] = 0;
+                }
+            }
+
+            WallTileScores = returnList;
+        }
+
+        private int CountConnectedTiles(int x, int y, int xDirection, int yDirection)
+        {
+            int count = 0;
+            int newX = x + xDirection;
+            int newY = y + yDirection;
+
+            while (IsValidWallTile(newX, newY) && wallTiles[newX, newY] != null)
+            {
+                Trace.WriteLine("WallTile[" + x + ", " + y + "] is the start");
+                Trace.WriteLine("WallTile[" + newX + "," + newY + "] = " + wallTiles[newX, newY].TileType);
+                count++;
+                newX += xDirection;
+                newY += yDirection;
+            }
+
+            return count;
+        }
+
+        public void CalculateDroppedTileScores(TileCollections tileCollections)
+        {
+            int totalScore = 0;
+            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
+            {
+                if (droppedTiles[i] != null)
+                {
+                    totalScore += GameConstants.DROPPED_TILE_COSTS[i];
+                    tileCollections.tileBin.Add(droppedTiles[i].DeepClone());
+                }
+                droppedTiles[i] = null;
+            }
+            DroppedTileScore = totalScore;
+        }
+
+        private bool IsValidWallTile(int x, int y)
+        {
+            return x >= 0 && x < wallTiles.GetLength(0) && y >= 0 && y < wallTiles.GetLength(1);
+        }
+
+        internal bool CheckIfPlayerEndedGame()
+        {
+            throw new NotImplementedException();
         }
     }
 }

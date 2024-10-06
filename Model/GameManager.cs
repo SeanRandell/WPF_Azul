@@ -12,10 +12,10 @@ namespace WPF_Azul.Model
 {
     public class GameManager
     {
-        private GameState GameState;
+        private GameState _gameState;
         public GameManager()
         {
-            GameState = new GameState();
+            _gameState = new GameState();
         }
 
         public void UpdatePlayerProductionTiles(ObservableCollection<ObservableCollection<Tile>> playerProductionTiles, int playerIndex)
@@ -24,7 +24,7 @@ namespace WPF_Azul.Model
             {
                 for (int j = 0; j <= i; j++)
                 {
-                    playerProductionTiles[i][j] = GameState.players[playerIndex].PlayerBoard.ProductionTiles[i][j];
+                    playerProductionTiles[i][j] = _gameState.players[playerIndex].PlayerBoard.ProductionTiles[i][j];
                 }
             }
         }
@@ -35,7 +35,7 @@ namespace WPF_Azul.Model
             {
                 for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
                 {
-                    playerWallTiles[i][j] = GameState.players[playerIndex].PlayerBoard.WallTiles[i, j];
+                    playerWallTiles[i][j] = _gameState.players[playerIndex].PlayerBoard.WallTiles[i, j];
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace WPF_Azul.Model
         {
             for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
             {
-                playerDroppedTiles[i] = GameState.players[playerIndex].PlayerBoard.DroppedTiles[i];
+                playerDroppedTiles[i] = _gameState.players[playerIndex].PlayerBoard.DroppedTiles[i];
             }
         }
 
@@ -52,7 +52,7 @@ namespace WPF_Azul.Model
         {
             for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
             {
-                for (int j = 0; j < GameState.Factories[i].FactoryTiles.Count; j++)
+                for (int j = 0; j < _gameState.Factories[i].FactoryTiles.Count; j++)
                 {
                     //if (factoryList[i][j] != null)
                     //{
@@ -62,7 +62,7 @@ namespace WPF_Azul.Model
                     //{
                     //    factoryList[i][j] = null;
                     //}
-                    factoryList[i][j] = GameState.Factories[i].FactoryTiles[j];
+                    factoryList[i] = UpdateFactory(i);
                 }
             }
         }
@@ -80,7 +80,7 @@ namespace WPF_Azul.Model
                 //{
                 //    factoryList[i][j] = null;
                 //}
-                factoryTiles[i] = GameState.Factories[factoryIndex].FactoryTiles[i];
+                factoryTiles[i] = _gameState.Factories[factoryIndex].FactoryTiles[i];
 
             }
         }
@@ -88,9 +88,9 @@ namespace WPF_Azul.Model
         public ObservableCollection<Tile> UpdateCenterFactoryTiles()
         {
             ObservableCollection<Tile> returnList = new ObservableCollection<Tile>();
-            for (int i = 0; i < GameState.CenterFactory.FactoryTiles.Count; i++)
+            for (int i = 0; i < _gameState.CenterFactory.FactoryTiles.Count; i++)
             {
-                returnList.Add(GameState.CenterFactory.FactoryTiles[i]);
+                returnList.Add(_gameState.CenterFactory.FactoryTiles[i]);
             }
             return returnList;
         }
@@ -102,19 +102,19 @@ namespace WPF_Azul.Model
 
         public void TestAddDroppedTile()
         {
-            GameState.players[0].PlayerBoard.DroppedTiles[0] = new Tile(TileType.Yellow);
+            _gameState.players[0].PlayerBoard.DroppedTiles[0] = new Tile(TileType.Yellow);
         }
 
         public List<int> GetValidProductionTiles(TileType selectedTileType)
         {
-            List<int> resultList = GameState.players[GameState.activePlayerTurnIndex].PlayerBoard.GetValidProductionTilesIndexes(selectedTileType);
+            List<int> resultList = _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.GetValidProductionTilesIndexes(selectedTileType);
 
             return resultList;
         }
 
         public int GetCurrentPlayerTurn()
         {
-            return GameState.activePlayerTurnIndex;
+            return _gameState.activePlayerTurnIndex;
         }
 
         public void ProductionTileSelected(int productionTileIndex, TileType selectedTileType, int selectedFactoryIndex)
@@ -123,19 +123,19 @@ namespace WPF_Azul.Model
             List<Tile> selectedFactoryTiles;
             if (selectedFactoryIndex == GameConstants.CENTER_FACTORY_INDEX)
             {
-                selectedFactoryTiles = GameState.CenterFactory.TakeAllTilesOfType(selectedTileType);
-                GameState.CenterFactory.ProcessFactoryTilesSelectedForProduction(selectedTileType);
+                selectedFactoryTiles = _gameState.CenterFactory.TakeAllTilesOfType(selectedTileType);
+                _gameState.CenterFactory.ProcessFactoryTilesSelectedForProduction(selectedTileType);
             }
             else
             {
-                selectedFactoryTiles = GameState.Factories[selectedFactoryIndex].TakeAllTilesOfType(selectedTileType);
-                GameState.Factories[selectedFactoryIndex].ProcessFactoryTilesSelectedForProduction(selectedTileType);
+                selectedFactoryTiles = _gameState.Factories[selectedFactoryIndex].TakeAllTilesOfType(selectedTileType);
+                _gameState.Factories[selectedFactoryIndex].ProcessFactoryTilesSelectedForProduction(selectedTileType);
 
-                GameState.CenterFactory.AddTiles(GameState.Factories[selectedFactoryIndex].RemoveRemainingTiles());
+                _gameState.CenterFactory.AddTiles(_gameState.Factories[selectedFactoryIndex].RemoveRemainingTiles());
             }
 
             //add as many tiles as you can from the list to the production tile
-            GameState.players[GameState.activePlayerTurnIndex].PlayerBoard.AddTilesToProductionTiles(productionTileIndex, selectedFactoryTiles);
+            _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.AddTilesToProductionTiles(productionTileIndex, selectedFactoryTiles);
 
             // if factory tile count > 0 then add them to next null dropped tile index
             //if (selectedFactoryTiles.Count > 0)
@@ -147,61 +147,152 @@ namespace WPF_Azul.Model
             if (selectedFactoryTiles.Count > 0)
             {
                 Trace.WriteLine(selectedFactoryTiles.Count + " tiles to be added to tile bin");
-                Trace.WriteLine("TileBin Count = " + GameState.tileCollections.tileBin.Count);
-                GameState.tileCollections.AddTilesToTileBin(selectedFactoryTiles);
-                Trace.WriteLine("TileBin Count = " + GameState.tileCollections.tileBin.Count);
+                Trace.WriteLine("TileBin Count = " + _gameState.tileCollections.tileBin.Count);
+                _gameState.tileCollections.AddTilesToTileBin(selectedFactoryTiles);
+                Trace.WriteLine("TileBin Count = " + _gameState.tileCollections.tileBin.Count);
             }
         }
 
         public void UpdateProductionTiles(ObservableCollection<Tile> prodcutionTile, int productionTileIndex)
         {
-            for (int i = 0; i < GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.ProductionTiles[productionTileIndex].Length; i++)
+            for (int i = 0; i < _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.ProductionTiles[productionTileIndex].Length; i++)
             {
-                prodcutionTile[i] = GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.ProductionTiles[productionTileIndex][i];
+                prodcutionTile[i] = _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.ProductionTiles[productionTileIndex][i];
             }
         }
 
         public ObservableCollection<Tile> UpdateFactory(int selectedFactoryIndex)
         {
             ObservableCollection<Tile> newFactoryTileList = new ObservableCollection<Tile>();
-            for (int i = 0; i < GameState.Factories[selectedFactoryIndex].FactoryTiles.Count; i++)
+            for (int i = 0; i < _gameState.Factories[selectedFactoryIndex].FactoryTiles.Count; i++)
             {
-                newFactoryTileList.Add(GameState.Factories[selectedFactoryIndex].FactoryTiles[i]);
+                newFactoryTileList.Add(_gameState.Factories[selectedFactoryIndex].FactoryTiles[i]);
             }
             return newFactoryTileList;
         }
 
         public void UpdateDroppedTiles(ObservableCollection<Tile> droppedTiles)
         {
-            for (int i = 0; i < GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTiles.Length; i++)
+            for (int i = 0; i < _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTiles.Length; i++)
             {
-                droppedTiles[i] = GameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTiles[i];
+                droppedTiles[i] = _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTiles[i];
             }
         }
 
         public int GetDebugTileBagCount()
         {
-            return GameState.tileCollections.tileBag.Count;
+            return _gameState.tileCollections.tileBag.Count;
         }
 
         public int GetDebugTileBinCount()
         {
-            return GameState.tileCollections.tileBin.Count;
+            return _gameState.tileCollections.tileBin.Count;
         }
 
         internal void StartGame()
         {
-            GameState._gamePhase = GamePhase.PlayingRound;
+            _gameState._gamePhase = GamePhase.PlayingRound;
         }
 
-        internal void ChecKForRoundEnd()
+        internal void CheckForRoundEndAndProcess()
         {
             //loop through all factories and center factory to make sure they are empty.
-                // if yes, Change GamePhase to round over.
-                // call startScoring process method.
-                    // This involves checking if a production tile is full and then moving the tile to the player wall\
-                    // then score this action and save that particular addition to a corresponding row.
 
+            bool doFactoriesStillHaveTiles = false;
+            foreach (Factory factory in _gameState.Factories)
+            {
+                if (factory.FactoryTiles.Any())
+                {
+                    doFactoriesStillHaveTiles = true;
+                }
+            }
+
+            if (_gameState.CenterFactory.FactoryTiles.Any())
+            {
+                doFactoriesStillHaveTiles = true;
+            }
+
+            // if yes, Change GamePhase to round over.
+            if (!doFactoriesStillHaveTiles)
+            {
+                _gameState._gamePhase = GamePhase.EndOfRound;
+                ProcessRoundEnd();
+            }
+        }
+
+        private void ProcessRoundEnd()
+        {
+            //first update walltile scores and process them and empty production tiles
+            _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.CalculateProductionTileScores(_gameState.tileCollections);
+            _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.CalculateDroppedTileScores(_gameState.tileCollections);
+
+            //minus the content of dropped tiles from player score
+            // empty dropped tiles
+
+            _gameState.players[GameConstants.STARTING_PLAYER_INDEX].UpdatePlayerScore(_gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.WallTileScores, _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTileScore);
+
+            // replenish factories
+            _gameState.SetupFactoriesForRound();
+        }
+
+        internal List<int> GetPlayerWallScores()
+        {
+            // This involves checking if a production tile is full and then moving the tile to the player wall
+            return _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.WallTileScores.ToList();
+        }
+
+        internal bool IsRoundOver()
+        {
+            if(_gameState._gamePhase == GamePhase.EndOfRound)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        internal void CheckForGameOverAndProcess()
+        {
+            for (int i = 0; i < _gameState.players.Count; i++)
+            {
+                if (_gameState.players[i].PlayerBoard.CheckIfPlayerEndedGame())
+                {
+                    StartGameEndProcessing();
+                    break;
+                }
+            }
+        }
+
+        private void StartGameEndProcessing()
+        {
+            //tell each playerboard to calculate rows, columns and if each tile is present 5 times in the wall
+
+            //check if player 1 or player 2 is the winner for now. TODO - do this with iteration instead.
+            // Set gamephase
+
+        }
+
+        internal bool IsGameOver()
+        {
+            if(_gameState._gamePhase == GamePhase.Player1Wins || _gameState._gamePhase == GamePhase.Player2Wins || _gameState._gamePhase == GamePhase.Draw)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        internal int GetPlayerDroppedTileScore()
+        {
+            return _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTileScore;
+        }
+
+        internal int GetTotalPlayerScore()
+        {
+            return (int)_gameState.players[GameConstants.STARTING_PLAYER_INDEX].score;
+        }
+
+        internal void StartNewRound()
+        {
+            _gameState._gamePhase = GamePhase.PlayingRound;
         }
     }
 }

@@ -56,7 +56,7 @@ namespace WPF_Azul.Model
         //}
 
         private TileType _tileType;
-        public TileType TileType { get { return _tileType; }}
+        public TileType TileType { get { return _tileType; } }
 
         private Color tileTypeColour;
         public Color TileTypeColour
@@ -71,7 +71,7 @@ namespace WPF_Azul.Model
         {
             _tileType = tileType;
             //ColorConverter colorConverter = new ColorConverter();
-            if(_tileType == TileType.StartingPlayerMarker)
+            if (_tileType == TileType.StartingPlayerMarker)
             {
                 tileTypeColour = (Color)ColorConverter.ConvertFromString("Pink");
             }
@@ -87,5 +87,14 @@ namespace WPF_Azul.Model
             factoriesIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             //factoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
         }
+
+        public Tile DeepClone(int wallTileX = -1, int wallTileY = -1)
+        {
+            Tile clonedTile = new Tile(TileType);
+            clonedTile.wallTileX = wallTileX;
+            clonedTile.wallTileY = wallTileY;
+            return clonedTile;
+        }
     }
 }
+

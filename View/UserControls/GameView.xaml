@@ -4,17 +4,25 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:WPF_Azul.View.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:WPF_Azul.ViewModel"
     d:DesignHeight="1000"
-    d:DesignWidth="1000"
+    d:DesignWidth="1200"
     mc:Ignorable="d"
     >
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
     </UserControl.Resources>
+
     <Grid>
+
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseRightButtonDown">
+                <i:InvokeCommandAction Command="{Binding UndoFactoryTileClick}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -51,10 +59,10 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3.5*" />
+                <ColumnDefinition Width="4.5*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="3.5*" />
+                <ColumnDefinition Width="2.5*" />
             </Grid.ColumnDefinitions>
 
             <!--  Grid Section Labels  -->
@@ -86,8 +94,9 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="4.5*" />
-                    <ColumnDefinition Width="4.5*" />
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
                 <!--  Player 1 selection Tiles  -->
@@ -106,9 +115,6 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <!--<ItemsControl ItemsSource="{Binding}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>-->
                             <local:ValidProductionTileIndicator
                                 Margin="1"
                                 Cursor="Hand"
@@ -116,9 +122,6 @@
                                 ValidProductionLine="{Binding}"
                                 Visibility="{Binding IsEnabled, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
                                 />
-                            <!--</DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>-->
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -245,7 +248,7 @@
 
                 <ItemsControl
                     Grid.Row="0"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     ItemsSource="{Binding WallTilesPlayer1}"
                     >
                     <ItemsControl.ItemsPanel>
@@ -275,20 +278,45 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+
+                <!--  Player 1 Wall Tile Scores  -->
+                <ItemsControl
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Margin="0,20,0,0"
+                    ItemsSource="{Binding WallTileScoresPlayer1}"
+                    >
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="32" Text="{Binding}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+
             </Grid>
 
             <!--  Player 1 - Dropped Tiles Slots  -->
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100" />
+                    <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="8*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
-                    Grid.Row="1"
+                    Grid.Row="0"
                     Grid.Column="0"
                     Text=" Player Dropped Tiles"
                     />
@@ -304,8 +332,9 @@
                     Visibility="{Binding ActivatedDroppedPlayer1Tiles.IsEnabled, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
                     />
 
+                <!--  Player 1 Dropped Tile Slots  -->
                 <ItemsControl
-                    Grid.Row="1"
+                    Grid.Row="0"
                     Grid.Column="1"
                     ItemsSource="{Binding DroppedTilesPlayer1}"
                     >
@@ -323,7 +352,7 @@
 
                 <!--  Player 1 - Dropped Tiles  -->
                 <ItemsControl
-                    Grid.Row="1"
+                    Grid.Row="0"
                     Grid.Column="1"
                     ItemsSource="{Binding DroppedTilesPlayer1}"
                     >
@@ -339,6 +368,41 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
+                <!--  Player 1 Dropped tile score  -->
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="0,20,0,0"
+                    FontSize="32"
+                    Text="{Binding DroppedTileScoresPlayer1}"
+                    />
+
+
+                <!--  Player 1 Dropped Tile Values  -->
+                <ItemsControl
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,0,0,0"
+                    ItemsSource="{Binding DroppedTileValues}"
+                    >
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Margin="0,0,12,0"
+                                FontSize="32"
+                                Text="{Binding}"
+                                />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
             </Grid>
 
             <!--  Factory View  -->
@@ -363,15 +427,21 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="1"
-                Content="Command Test"
-                >
-                <Button.InputBindings>
-                    <MouseBinding Command="{Binding UndoFactoryTileClick}" Gesture="leftClick" />
-                </Button.InputBindings>
-            </Button>
+                Command="{Binding UndoFactoryTileClick}"
+                Content="Undo Tile Selection"
+                Visibility="{Binding IsFactoryTileSelected, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
+                />
+
+            <!--  Player 1 Score  -->
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="0,20,0,0"
+                FontSize="32"
+                Text="{Binding TotalScorePlayer1}"
+                />
 
             <!--  Center Factory view  -->
-
             <ItemsControl
                 Grid.Row="0"
                 Grid.Column="2"
