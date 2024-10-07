@@ -289,5 +289,14 @@ namespace WPF_Azul.Model
         {
             return _gameState.activePlayerTurnIndex;
         }
+
+        internal void ChangePlayerTurn()
+        {
+            _gameState.activePlayerTurnIndex++;
+            if(_gameState.activePlayerTurnIndex == _gameState.players.Count)
+            {
+                _gameState.activePlayerTurnIndex = 0;
+            }
+        }
     }
 }

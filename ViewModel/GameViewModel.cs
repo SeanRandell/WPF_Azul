@@ -274,6 +274,8 @@ namespace WPF_Azul.ViewModel
                 DebugTileBagText = UpdateDebugTileBagText();
                 _gameManager.StartNewRound();
             }
+
+            _gameManager.ChangePlayerTurn();
         }
 
         public void FactoryTileSelected(TileType selectedTileType, int factoriesIndex)
@@ -290,7 +292,7 @@ namespace WPF_Azul.ViewModel
                 //validProductionTilesPlayer1[validIndex] = new ValidProductionTile(validIndex,Visibility.Visible);
                 PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ValidProductionTiles[validIndex].IsEnabled = true;
 
-                Trace.WriteLine(validIndex);
+                Trace.WriteLine("Valid Production Tile index: " + validIndex);
             }
             PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ActivatedDroppedTiles.IsEnabled = true;
         }
