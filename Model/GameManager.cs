@@ -95,16 +95,6 @@ namespace WPF_Azul.Model
             return returnList;
         }
 
-        public void FactoryTileClick()
-        {
-
-        }
-
-        public void TestAddDroppedTile()
-        {
-            _gameState.players[0].PlayerBoard.DroppedTiles[0] = new Tile(TileType.Yellow);
-        }
-
         public List<int> GetValidProductionTiles(TileType selectedTileType)
         {
             List<int> resultList = _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.GetValidProductionTilesIndexes(selectedTileType);
@@ -293,6 +283,11 @@ namespace WPF_Azul.Model
         internal void StartNewRound()
         {
             _gameState._gamePhase = GamePhase.PlayingRound;
+        }
+
+        internal int GetCurrentPlayerIndex()
+        {
+            return _gameState.activePlayerTurnIndex;
         }
     }
 }

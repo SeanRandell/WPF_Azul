@@ -4,56 +4,34 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Media;
 using WPF_Azul.Model;
 
 namespace WPF_Azul.ViewModel
 {
     public class PlayerBoardViewModel : ViewModelBase
     {
-        private ObservableCollection<ValidProductionTile> _validProductionTilesPlayer1;
+        private ObservableCollection<ValidProductionTile> _validProductionTiles;
 
-        public ObservableCollection<ValidProductionTile> ValidProductionTilesPlayer1
+        public ObservableCollection<ValidProductionTile> ValidProductionTiles
         {
-            get { return _validProductionTilesPlayer1; }
+            get { return _validProductionTiles; }
             set
             {
-                _validProductionTilesPlayer1 = value;
+                _validProductionTiles = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<ValidProductionTile> _validProductionTilesPlayer2;
+        private ValidProductionTile _activatedDroppedTiles;
 
-        public ObservableCollection<ValidProductionTile> ValidProductionTilesPlayer2
+        public ValidProductionTile ActivatedDroppedTiles
         {
-            get { return _validProductionTilesPlayer2; }
+            get { return _activatedDroppedTiles; }
             set
             {
-                _validProductionTilesPlayer2 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private ValidProductionTile _activatedDroppedPlayer1Tiles;
-
-        public ValidProductionTile ActivatedDroppedPlayer1Tiles
-        {
-            get { return _activatedDroppedPlayer1Tiles; }
-            set
-            {
-                _activatedDroppedPlayer1Tiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private ValidProductionTile _activatedDroppedPlayer2Tiles;
-
-        public ValidProductionTile ActivatedDroppedPlayer2Tiles
-        {
-            get { return _activatedDroppedPlayer2Tiles; }
-            set
-            {
-                _activatedDroppedPlayer2Tiles = value;
+                _activatedDroppedTiles = value;
                 OnPropertyChanged();
             }
         }
@@ -65,98 +43,62 @@ namespace WPF_Azul.ViewModel
             set { _wallPattern = value; }
         }
 
-        private ObservableCollection<ObservableCollection<Tile>> _wallTilesPlayer1;
+        private ObservableCollection<ObservableCollection<Tile>> _wallTiles;
 
-        public ObservableCollection<ObservableCollection<Tile>> WallTilesPlayer1
+        public ObservableCollection<ObservableCollection<Tile>> WallTiles
         {
-            get { return _wallTilesPlayer1; }
+            get { return _wallTiles; }
             set
             {
-                _wallTilesPlayer1 = value;
+                _wallTiles = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<ObservableCollection<Tile>> _wallTilesPlayer2;
+        private ObservableCollection<ObservableCollection<Tile>> _productionTiles;
 
-        public ObservableCollection<ObservableCollection<Tile>> WallTilesPlayer2
+        public ObservableCollection<ObservableCollection<Tile>> ProductionTiles
         {
-            get { return _wallTilesPlayer2; }
+            get { return _productionTiles; }
             set
             {
-                _wallTilesPlayer2 = value;
+                _productionTiles = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<ObservableCollection<Tile>> _productionTilesPlayer1;
+        private ObservableCollection<Tile> _droppedTiles;
 
-        public ObservableCollection<ObservableCollection<Tile>> ProductionTilesPlayer1
+        public ObservableCollection<Tile> DroppedTiles
         {
-            get { return _productionTilesPlayer1; }
+            get { return _droppedTiles; }
             set
             {
-                _productionTilesPlayer1 = value;
+                _droppedTiles = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<ObservableCollection<Tile>> _productionTilesPlayer2;
+        private ObservableCollection<int> _wallTileScores;
 
-        public ObservableCollection<ObservableCollection<Tile>> ProductionTilesPlayer2
+        public ObservableCollection<int> WallTileScores
         {
-            get { return _productionTilesPlayer2; }
+            get { return _wallTileScores; }
             set
             {
-                _productionTilesPlayer2 = value;
+                _wallTileScores = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<Tile> _droppedTilesPlayer1;
+        private int _droppedTileScores;
 
-        public ObservableCollection<Tile> DroppedTilesPlayer1
+        public int DroppedTileScores
         {
-            get { return _droppedTilesPlayer1; }
+            get { return _droppedTileScores; }
             set
             {
-                _droppedTilesPlayer1 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private ObservableCollection<Tile> _droppedTilesPlayer2;
-
-        public ObservableCollection<Tile> DroppedTilesPlayer2
-        {
-            get { return _droppedTilesPlayer2; }
-            set
-            {
-                _droppedTilesPlayer2 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private ObservableCollection<int> _wallTileScoresPlayer1;
-
-        public ObservableCollection<int> WallTileScoresPlayer1
-        {
-            get { return _wallTileScoresPlayer1; }
-            set
-            {
-                _wallTileScoresPlayer1 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _droppedTileScoresPlayer1;
-
-        public int DroppedTileScoresPlayer1
-        {
-            get { return _droppedTileScoresPlayer1; }
-            set
-            {
-                _droppedTileScoresPlayer1 = value;
+                _droppedTileScores = value;
                 OnPropertyChanged();
             }
         }
@@ -174,39 +116,169 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-        private int _totalScorePlayer1;
+        private int _totalScore;
 
-        public int TotalScorePlayer1
+        public int TotalScore
         {
-            get { return _totalScorePlayer1; }
+            get { return _totalScore; }
             set
             {
-                _totalScorePlayer1 = value;
+                _totalScore = value;
                 OnPropertyChanged();
             }
         }
 
-        public PlayerBoardViewModel()
+        private GameManager _gameManager;
+
+        public ICommand ProductionLineClickCommand { get; }
+
+        public PlayerBoardViewModel(GameManager gameManager, ICommand ProductionLineClickCommand)
         {
+            _gameManager = gameManager;
+            this.ProductionLineClickCommand = ProductionLineClickCommand;
             _wallPattern = InitWallPattern();
-            _productionTilesPlayer1 = InitPlayerProductionTiles();
-            _productionTilesPlayer2 = InitPlayerProductionTiles();
+            _productionTiles = InitPlayerProductionTiles();
 
-            _wallTilesPlayer1 = InitWallTiles();
-            _wallTilesPlayer2 = InitWallTiles();
+            _wallTiles = InitWallTiles();
 
-            _droppedTilesPlayer1 = InitPlayerDroppedTiles();
-            _droppedTilesPlayer2 = InitPlayerDroppedTiles();
+            _droppedTiles = InitPlayerDroppedTiles();
 
-            _wallTileScoresPlayer1 = new ObservableCollection<int>();
-            _droppedTileScoresPlayer1 = 0;
-            _totalScorePlayer1 = 0;
+            _wallTileScores = new ObservableCollection<int>();
+            _droppedTileScores = 0;
+            _totalScore = 0;
             _droppedTileValues = GameConstants.DROPPED_TILE_COSTS;
 
-            _validProductionTilesPlayer1 = InitValidProductionTiles();
-            _validProductionTilesPlayer2 = InitValidProductionTiles();
-            _activatedDroppedPlayer1Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
-            _activatedDroppedPlayer2Tiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
+            _validProductionTiles = InitValidProductionTiles();
+            _activatedDroppedTiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
+        }
+
+        private ObservableCollection<ValidProductionTile> InitValidProductionTiles()
+        {
+            ObservableCollection<ValidProductionTile> returnList = new ObservableCollection<ValidProductionTile>();
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                ValidProductionTile newValid = new ValidProductionTile(i, false);
+
+                returnList.Add(newValid);
+            }
+            return returnList;
+        }
+
+        private ObservableCollection<ObservableCollection<Tile>> InitWallTiles()
+        {
+            ObservableCollection<ObservableCollection<Tile>> returnlist = new ObservableCollection<ObservableCollection<Tile>>();
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                ObservableCollection<Tile> currentColumn = new ObservableCollection<Tile>();
+                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
+                {
+                    currentColumn.Add(null);
+                }
+                returnlist.Add(currentColumn);
+            }
+            return returnlist;
+        }
+
+        private ObservableCollection<ObservableCollection<Tile>> InitPlayerProductionTiles()
+        {
+            ObservableCollection<ObservableCollection<Tile>> returnList = new ObservableCollection<ObservableCollection<Tile>>();
+            for (int i = 1; i <= GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                ObservableCollection<Tile> innerList = new ObservableCollection<Tile>();
+                for (int j = 1; j <= i; j++)
+                {
+                    innerList.Add(null);
+                }
+                returnList.Add(innerList);
+            }
+            return returnList;
+        }
+
+        private ObservableCollection<Tile> InitPlayerDroppedTiles()
+        {
+            ObservableCollection<Tile> returnList = new ObservableCollection<Tile>();
+
+            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
+            {
+                returnList.Add(null);
+            }
+
+            return returnList;
+        }
+
+        private List<List<Color>> InitWallPattern()
+        {
+            TileType[,] tileTypeArray = GameConstants.WALL_TILE_PATTERN;
+
+            List<List<Color>> returnList = new List<List<Color>>();
+
+            for (int i = 0; i < 5; i++)
+            {
+                List<Color> currentRow = new List<Color>();
+                for (int j = 0; j < 5; j++)
+                {
+                    currentRow.Add((Color)ColorConverter.ConvertFromString(tileTypeArray[i, j].ToString()));
+                }
+                returnList.Add(currentRow);
+            }
+            return returnList;
+        }
+
+        private void UpdatePlayerScores()
+        {
+            TotalScore = _gameManager.GetTotalPlayerScore();
+        }
+
+        private void UpdateDroppedTilesScores()
+        {
+            DroppedTileScores = _gameManager.GetPlayerDroppedTileScore();
+        }
+
+        private void UpdateWallTileScores()
+        {
+            List<int> newScores = _gameManager.GetPlayerWallScores();
+            WallTileScores.Clear();
+            for (int i = 0; i < newScores.Count; i++)
+            {
+                WallTileScores.Add(newScores[i]);
+            }
+        }
+
+        private void UpdatePlayerWallTiles()
+        {
+            _gameManager.UpdatePlayerWallTiles(WallTiles, GameConstants.STARTING_PLAYER_INDEX);
+        }
+
+        private void UpdateProductionTiles()
+        {
+            _gameManager.UpdatePlayerProductionTiles(ProductionTiles, GameConstants.STARTING_PLAYER_INDEX);
+        }
+
+        private void UpdateDroppedTiles()
+        {
+            _gameManager.UpdatePlayerDroppedTiles(DroppedTiles, GameConstants.STARTING_PLAYER_INDEX);
+        }
+
+        internal void UpdateViewModelFromModel()
+        {
+            UpdateProductionTiles();
+            UpdatePlayerWallTiles();
+            UpdateDroppedTiles();
+        }
+
+        internal void UpdateProductionTile(int productionTileIndex)
+        {
+            _gameManager.UpdateProductionTiles(_productionTiles[productionTileIndex], productionTileIndex);
+        }
+
+        internal void UpdateViewModelAfterRoundEnd()
+        {
+            UpdateWallTileScores();
+            UpdateDroppedTilesScores();
+            UpdatePlayerScores();
+            UpdatePlayerWallTiles();
+            UpdateProductionTiles();
+            UpdateDroppedTiles();
         }
     }
 }
