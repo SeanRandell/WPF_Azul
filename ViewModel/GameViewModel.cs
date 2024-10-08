@@ -160,8 +160,9 @@ namespace WPF_Azul.ViewModel
 
         private void InitPlayerViewModels()
         {
-            PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager, ProductionLineClickCommand));
-            PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager, ProductionLineClickCommand));
+            // TODO - change.
+            PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager.GetPlayer(GameConstants.STARTING_PLAYER_INDEX), ProductionLineClickCommand));
+            PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager.GetPlayer(1), ProductionLineClickCommand));
         }
 
         private ObservableCollection<ObservableCollection<Tile>> InitFactories()
@@ -201,7 +202,7 @@ namespace WPF_Azul.ViewModel
             {
                 PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].UpdateProductionTile(productionTileIndex);
             }
-            _gameManager.UpdateDroppedTiles(PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].DroppedTiles);
+            PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].UpdateDroppedTiles();
             DebugTileBagText = UpdateDebugTileBagText();
             DebugTileBinText = UpdateDebugTileBinText();
         }
@@ -214,6 +215,7 @@ namespace WPF_Azul.ViewModel
         private void UpdateFactories()
         {
             _gameManager.UpdateFactories(_factories);
+
             UpdateCenterFactory();
         }
 

@@ -12,40 +12,15 @@ namespace WPF_Azul.Model
 {
     public class GameManager
     {
-        private GameState _gameState;
+        internal GameState _gameState;
         public GameManager()
         {
             _gameState = new GameState();
         }
 
-        public void UpdatePlayerProductionTiles(ObservableCollection<ObservableCollection<Tile>> playerProductionTiles, int playerIndex)
+        public Player GetPlayer(int index)
         {
-            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
-            {
-                for (int j = 0; j <= i; j++)
-                {
-                    playerProductionTiles[i][j] = _gameState.players[playerIndex].PlayerBoard.ProductionTiles[i][j];
-                }
-            }
-        }
-
-        public void UpdatePlayerWallTiles(ObservableCollection<ObservableCollection<Tile>> playerWallTiles, int playerIndex)
-        {
-            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
-            {
-                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
-                {
-                    playerWallTiles[i][j] = _gameState.players[playerIndex].PlayerBoard.WallTiles[i, j];
-                }
-            }
-        }
-
-        public void UpdatePlayerDroppedTiles(ObservableCollection<Tile> playerDroppedTiles, int playerIndex)
-        {
-            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
-            {
-                playerDroppedTiles[i] = _gameState.players[playerIndex].PlayerBoard.DroppedTiles[i];
-            }
+            return _gameState.players[index];
         }
 
         public void UpdateFactories(ObservableCollection<ObservableCollection<Tile>> factoryList)
@@ -143,13 +118,7 @@ namespace WPF_Azul.Model
             }
         }
 
-        public void UpdateProductionTiles(ObservableCollection<Tile> prodcutionTile, int productionTileIndex)
-        {
-            for (int i = 0; i < _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.ProductionTiles[productionTileIndex].Length; i++)
-            {
-                prodcutionTile[i] = _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.ProductionTiles[productionTileIndex][i];
-            }
-        }
+
 
         public ObservableCollection<Tile> UpdateFactory(int selectedFactoryIndex)
         {
@@ -159,14 +128,6 @@ namespace WPF_Azul.Model
                 newFactoryTileList.Add(_gameState.Factories[selectedFactoryIndex].FactoryTiles[i]);
             }
             return newFactoryTileList;
-        }
-
-        public void UpdateDroppedTiles(ObservableCollection<Tile> droppedTiles)
-        {
-            for (int i = 0; i < _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.DroppedTiles.Length; i++)
-            {
-                droppedTiles[i] = _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.DroppedTiles[i];
-            }
         }
 
         public int GetDebugTileBagCount()
@@ -221,16 +182,10 @@ namespace WPF_Azul.Model
                 //minus the content of dropped tiles from player score
                 // empty dropped tiles
 
-                _gameState.players[i].UpdatePlayerScore(_gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.WallTileScores, _gameState.players[i].PlayerBoard.DroppedTileScore);
+                _gameState.players[i].UpdatePlayerScore(_gameState.players[i].PlayerBoard.WallTileScores, _gameState.players[i].PlayerBoard.DroppedTileScore);
             }
             // replenish factories
             _gameState.SetupFactoriesForRound();
-        }
-
-        internal List<int> GetPlayerWallScores()
-        {
-            // This involves checking if a production tile is full and then moving the tile to the player wall
-            return _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.WallTileScores.ToList();
         }
 
         internal bool IsRoundOver()
@@ -279,7 +234,7 @@ namespace WPF_Azul.Model
 
         internal int GetTotalPlayerScore()
         {
-            return (int)_gameState.players[GameConstants.STARTING_PLAYER_INDEX].score;
+            return _gameState.players[GameConstants.STARTING_PLAYER_INDEX].score;
         }
 
         internal void StartNewRound()

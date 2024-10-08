@@ -128,13 +128,13 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-        private GameManager _gameManager;
+        private Player _playerModel;
 
         public ICommand ProductionLineClickCommand { get; }
 
-        public PlayerBoardViewModel(GameManager gameManager, ICommand ProductionLineClickCommand)
+        public PlayerBoardViewModel(Player playerModel, ICommand ProductionLineClickCommand)
         {
-            _gameManager = gameManager;
+            _playerModel = playerModel;
             this.ProductionLineClickCommand = ProductionLineClickCommand;
             _wallPattern = InitWallPattern();
             _productionTiles = InitPlayerProductionTiles();
@@ -226,17 +226,17 @@ namespace WPF_Azul.ViewModel
 
         private void UpdatePlayerScores()
         {
-            TotalScore = _gameManager.GetTotalPlayerScore();
+            TotalScore = _playerModel.score;
         }
 
-        private void UpdateDroppedTilesScores()
+        internal void UpdateDroppedTilesScores()
         {
-            DroppedTileScores = _gameManager.GetPlayerDroppedTileScore();
+            DroppedTileScores = _playerModel.PlayerBoard.DroppedTileScore;
         }
 
         private void UpdateWallTileScores()
         {
-            List<int> newScores = _gameManager.GetPlayerWallScores();
+            List<int> newScores = _playerModel.PlayerBoard.GetPlayerWallScores();
             WallTileScores.Clear();
             for (int i = 0; i < newScores.Count; i++)
             {
@@ -246,17 +246,17 @@ namespace WPF_Azul.ViewModel
 
         private void UpdatePlayerWallTiles()
         {
-            _gameManager.UpdatePlayerWallTiles(WallTiles, GameConstants.STARTING_PLAYER_INDEX);
+            _playerModel.PlayerBoard.UpdatePlayerWallTiles(WallTiles, GameConstants.STARTING_PLAYER_INDEX);
         }
 
         private void UpdateProductionTiles()
         {
-            _gameManager.UpdatePlayerProductionTiles(ProductionTiles, GameConstants.STARTING_PLAYER_INDEX);
+            _playerModel.PlayerBoard.UpdatePlayerProductionTiles(ProductionTiles, GameConstants.STARTING_PLAYER_INDEX);
         }
 
-        private void UpdateDroppedTiles()
+        internal void UpdateDroppedTiles()
         {
-            _gameManager.UpdatePlayerDroppedTiles(DroppedTiles, GameConstants.STARTING_PLAYER_INDEX);
+            _playerModel.PlayerBoard.UpdatePlayerDroppedTiles(DroppedTiles, GameConstants.STARTING_PLAYER_INDEX);
         }
 
         internal void UpdateViewModelFromModel()
@@ -268,7 +268,7 @@ namespace WPF_Azul.ViewModel
 
         internal void UpdateProductionTile(int productionTileIndex)
         {
-            _gameManager.UpdateProductionTiles(_productionTiles[productionTileIndex], productionTileIndex);
+            _playerModel.PlayerBoard.UpdateProductionTiles(_productionTiles[productionTileIndex], productionTileIndex);
         }
 
         internal void UpdateViewModelAfterRoundEnd()

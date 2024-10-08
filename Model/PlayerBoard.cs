@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -328,5 +329,57 @@ namespace WPF_Azul.Model
         {
             throw new NotImplementedException();
         }
+
+        internal List<int> GetPlayerWallScores()
+        {
+            return WallTileScores.ToList();
+        }
+
+        public void UpdatePlayerWallTiles(ObservableCollection<ObservableCollection<Tile>> playerWallTiles, int playerIndex)
+        {
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
+                {
+                    playerWallTiles[i][j] = WallTiles[i, j];
+                }
+            }
+        }
+
+        public void UpdateProductionTiles(ObservableCollection<Tile> prodcutionTile, int productionTileIndex)
+        {
+            for (int i = 0; i < ProductionTiles[productionTileIndex].Length; i++)
+            {
+                prodcutionTile[i] = ProductionTiles[productionTileIndex][i];
+            }
+        }
+
+        public void UpdatePlayerProductionTiles(ObservableCollection<ObservableCollection<Tile>> playerProductionTiles, int playerIndex)
+        {
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    playerProductionTiles[i][j] = ProductionTiles[i][j];
+                }
+            }
+        }
+
+        public void UpdatePlayerDroppedTiles(ObservableCollection<Tile> playerDroppedTiles, int playerIndex)
+        {
+            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
+            {
+                playerDroppedTiles[i] = DroppedTiles[i];
+            }
+        }
+
+        public void UpdateDroppedTiles(ObservableCollection<Tile> droppedTiles)
+        {
+            for (int i = 0; i < DroppedTiles.Length; i++)
+            {
+                droppedTiles[i] = DroppedTiles[i];
+            }
+        }
+
     }
 }
