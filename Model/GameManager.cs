@@ -145,9 +145,9 @@ namespace WPF_Azul.Model
 
         public void UpdateProductionTiles(ObservableCollection<Tile> prodcutionTile, int productionTileIndex)
         {
-            for (int i = 0; i < _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.ProductionTiles[productionTileIndex].Length; i++)
+            for (int i = 0; i < _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.ProductionTiles[productionTileIndex].Length; i++)
             {
-                prodcutionTile[i] = _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.ProductionTiles[productionTileIndex][i];
+                prodcutionTile[i] = _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.ProductionTiles[productionTileIndex][i];
             }
         }
 
@@ -163,9 +163,9 @@ namespace WPF_Azul.Model
 
         public void UpdateDroppedTiles(ObservableCollection<Tile> droppedTiles)
         {
-            for (int i = 0; i < _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTiles.Length; i++)
+            for (int i = 0; i < _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.DroppedTiles.Length; i++)
             {
-                droppedTiles[i] = _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTiles[i];
+                droppedTiles[i] = _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.DroppedTiles[i];
             }
         }
 
@@ -212,15 +212,17 @@ namespace WPF_Azul.Model
 
         private void ProcessRoundEnd()
         {
-            //first update walltile scores and process them and empty production tiles
-            _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.CalculateProductionTileScores(_gameState.tileCollections);
-            _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.CalculateDroppedTileScores(_gameState.tileCollections);
+            for (int i = 0; i < _gameState.players.Count; i++)
+            {
+                //first update walltile scores and process them and empty production tiles
+                _gameState.players[i].PlayerBoard.CalculateProductionTileScores(_gameState.tileCollections);
+                _gameState.players[i].PlayerBoard.CalculateDroppedTileScores(_gameState.tileCollections);
 
-            //minus the content of dropped tiles from player score
-            // empty dropped tiles
+                //minus the content of dropped tiles from player score
+                // empty dropped tiles
 
-            _gameState.players[GameConstants.STARTING_PLAYER_INDEX].UpdatePlayerScore(_gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.WallTileScores, _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTileScore);
-
+                _gameState.players[i].UpdatePlayerScore(_gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.WallTileScores, _gameState.players[i].PlayerBoard.DroppedTileScore);
+            }
             // replenish factories
             _gameState.SetupFactoriesForRound();
         }
@@ -228,7 +230,7 @@ namespace WPF_Azul.Model
         internal List<int> GetPlayerWallScores()
         {
             // This involves checking if a production tile is full and then moving the tile to the player wall
-            return _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.WallTileScores.ToList();
+            return _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.WallTileScores.ToList();
         }
 
         internal bool IsRoundOver()
@@ -272,7 +274,7 @@ namespace WPF_Azul.Model
 
         internal int GetPlayerDroppedTileScore()
         {
-            return _gameState.players[GameConstants.STARTING_PLAYER_INDEX].PlayerBoard.DroppedTileScore;
+            return _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.DroppedTileScore;
         }
 
         internal int GetTotalPlayerScore()
