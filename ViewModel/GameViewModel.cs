@@ -270,7 +270,11 @@ namespace WPF_Azul.ViewModel
                 // if yes model has already intiated end of round scoring calculations, refreshed playerboards and factories.
 
                 // viewmodel updates
-                PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].UpdateViewModelAfterRoundEnd();
+                for (int i = 0; i < PlayerViewModels.Count; i++)
+                {
+                    PlayerViewModels[i].UpdateViewModelAfterRoundEnd();
+                }
+
                 UpdateFactories();
                 DebugTileBinText = UpdateDebugTileBinText();
                 DebugTileBagText = UpdateDebugTileBagText();
