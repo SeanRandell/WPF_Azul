@@ -61,18 +61,6 @@ namespace WPF_Azul.Model
             InitProductionTiles();
         }
 
-        private void InitDroppedTiles()
-        {
-            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
-            {
-                droppedTiles[i] = null;
-            }
-            //droppedTiles[0] = new Tile(TileType.LightBlue);
-            //droppedTiles[1] = new Tile(TileType.Blue);
-            //droppedTiles[2] = new Tile(TileType.Blue);
-            //droppedTiles[3] = new Tile(TileType.Blue);
-        }
-
         private void InitProductionTiles()
         {
             for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
@@ -94,25 +82,6 @@ namespace WPF_Azul.Model
                     wallTiles[i, j] = null;
                 }
             }
-
-            // TODO - Remove after testing is done
-            //wallTiles[2,3] = new Tile(TileType.Blue);
-        }
-
-        // Check for rows and columns
-        public void GetTilePlacementScore(int tileX, int tileY)
-        {
-            // start counting in each direction until either hit edge of 
-        }
-
-        public void CheckForRow(int TileY)
-        {
-
-        }
-
-        public void CheckForColumn(int tileX)
-        {
-
         }
 
         // TODO - Find a way to optimise 
@@ -329,57 +298,5 @@ namespace WPF_Azul.Model
         {
             throw new NotImplementedException();
         }
-
-        internal List<int> GetPlayerWallScores()
-        {
-            return WallTileScores.ToList();
-        }
-
-        public void UpdatePlayerWallTiles(ObservableCollection<ObservableCollection<Tile>> playerWallTiles, int playerIndex)
-        {
-            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
-            {
-                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
-                {
-                    playerWallTiles[i][j] = WallTiles[i, j];
-                }
-            }
-        }
-
-        public void UpdateProductionTiles(ObservableCollection<Tile> prodcutionTile, int productionTileIndex)
-        {
-            for (int i = 0; i < ProductionTiles[productionTileIndex].Length; i++)
-            {
-                prodcutionTile[i] = ProductionTiles[productionTileIndex][i];
-            }
-        }
-
-        public void UpdatePlayerProductionTiles(ObservableCollection<ObservableCollection<Tile>> playerProductionTiles, int playerIndex)
-        {
-            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
-            {
-                for (int j = 0; j <= i; j++)
-                {
-                    playerProductionTiles[i][j] = ProductionTiles[i][j];
-                }
-            }
-        }
-
-        public void UpdatePlayerDroppedTiles(ObservableCollection<Tile> playerDroppedTiles, int playerIndex)
-        {
-            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
-            {
-                playerDroppedTiles[i] = DroppedTiles[i];
-            }
-        }
-
-        public void UpdateDroppedTiles(ObservableCollection<Tile> droppedTiles)
-        {
-            for (int i = 0; i < DroppedTiles.Length; i++)
-            {
-                droppedTiles[i] = DroppedTiles[i];
-            }
-        }
-
     }
 }

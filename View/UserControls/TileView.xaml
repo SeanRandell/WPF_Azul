@@ -13,8 +13,6 @@
     <Grid>
         <Rectangle
             x:Name="TileViewUI"
-            Width="40"
-            Height="40"
             RadiusX="5"
             RadiusY="5"
             StrokeThickness="5"

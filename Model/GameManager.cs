@@ -23,63 +23,11 @@ namespace WPF_Azul.Model
             return _gameState.players[index];
         }
 
-        public void UpdateFactories(ObservableCollection<ObservableCollection<Tile>> factoryList)
-        {
-            for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
-            {
-                for (int j = 0; j < _gameState.Factories[i].FactoryTiles.Count; j++)
-                {
-                    //if (factoryList[i][j] != null)
-                    //{
-                    //    factoryList[i][j] = GameState.Factories[i].FactoryTiles[j];
-                    //}
-                    //else
-                    //{
-                    //    factoryList[i][j] = null;
-                    //}
-                    factoryList[i] = UpdateFactory(i);
-                }
-            }
-        }
-
-        public void UpdateFactory(ObservableCollection<Tile> factoryTiles, int factoryIndex)
-        {
-            for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
-            {
-
-                //if (factoryList[i][j] != null)
-                //{
-                //    factoryList[i][j] = GameState.Factories[i].FactoryTiles[j];
-                //}
-                //else
-                //{
-                //    factoryList[i][j] = null;
-                //}
-                factoryTiles[i] = _gameState.Factories[factoryIndex].FactoryTiles[i];
-
-            }
-        }
-
-        public ObservableCollection<Tile> UpdateCenterFactoryTiles()
-        {
-            ObservableCollection<Tile> returnList = new ObservableCollection<Tile>();
-            for (int i = 0; i < _gameState.CenterFactory.FactoryTiles.Count; i++)
-            {
-                returnList.Add(_gameState.CenterFactory.FactoryTiles[i]);
-            }
-            return returnList;
-        }
-
         public List<int> GetValidProductionTiles(TileType selectedTileType)
         {
             List<int> resultList = _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.GetValidProductionTilesIndexes(selectedTileType);
 
             return resultList;
-        }
-
-        public int GetCurrentPlayerTurn()
-        {
-            return _gameState.activePlayerTurnIndex;
         }
 
         public void ProductionTileSelected(int productionTileIndex, TileType selectedTileType, int selectedFactoryIndex)
@@ -116,18 +64,6 @@ namespace WPF_Azul.Model
                 _gameState.tileCollections.AddTilesToTileBin(selectedFactoryTiles);
                 Trace.WriteLine("TileBin Count = " + _gameState.tileCollections.tileBin.Count);
             }
-        }
-
-
-
-        public ObservableCollection<Tile> UpdateFactory(int selectedFactoryIndex)
-        {
-            ObservableCollection<Tile> newFactoryTileList = new ObservableCollection<Tile>();
-            for (int i = 0; i < _gameState.Factories[selectedFactoryIndex].FactoryTiles.Count; i++)
-            {
-                newFactoryTileList.Add(_gameState.Factories[selectedFactoryIndex].FactoryTiles[i]);
-            }
-            return newFactoryTileList;
         }
 
         public int GetDebugTileBagCount()
@@ -225,16 +161,6 @@ namespace WPF_Azul.Model
                 return true;
             }
             return false;
-        }
-
-        internal int GetPlayerDroppedTileScore()
-        {
-            return _gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard.DroppedTileScore;
-        }
-
-        internal int GetTotalPlayerScore()
-        {
-            return _gameState.players[GameConstants.STARTING_PLAYER_INDEX].score;
         }
 
         internal void StartNewRound()

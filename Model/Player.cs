@@ -35,7 +35,7 @@ namespace WPF_Azul.Model
             int totalToAdd = 0;
             totalToAdd += WallTileScore.Sum() + droppedTileScore;
 
-            if((score += totalToAdd) < 0)
+            if((score + totalToAdd) < 0)
             {
                 score = 0;
             } else

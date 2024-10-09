@@ -171,12 +171,7 @@ namespace WPF_Azul.ViewModel
 
             for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
             {
-                ObservableCollection<Tile> innerList = new ObservableCollection<Tile>();
-                for (int j = 0; j < GameConstants.NORMAL_FACTORY_MAX_TILES; j++)
-                {
-                    innerList.Add(null);
-                }
-                returnList.Add(innerList);
+                returnList.Add(new ObservableCollection<Tile>());
             }
 
             return returnList;
@@ -209,19 +204,22 @@ namespace WPF_Azul.ViewModel
 
         private void UpdateFactory(int selectedFactoryIndex)
         {
-            _factories[selectedFactoryIndex] = _gameManager.UpdateFactory(selectedFactoryIndex);
+            UpdateCollection(_gameManager._gameState.Factories[selectedFactoryIndex].FactoryTiles, Factories[selectedFactoryIndex]);
         }
 
         private void UpdateFactories()
         {
-            _gameManager.UpdateFactories(_factories);
+            for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
+            {
+                UpdateCollection(_gameManager._gameState.Factories[i].FactoryTiles, Factories[i]);
+            }
 
             UpdateCenterFactory();
         }
 
         private void UpdateCenterFactory()
         {
-            CenterFactoryTiles = _gameManager.UpdateCenterFactoryTiles();
+            UpdateCollection(_gameManager._gameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
         }
 
         public void ProductionLineSelected(int productionTileIndex)

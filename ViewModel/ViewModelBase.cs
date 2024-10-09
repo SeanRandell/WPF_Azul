@@ -21,83 +21,80 @@ namespace WPF_Azul.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        /// <summary>
-        /// Move the data from the model to the viewmodel, using reflection. 
-        /// Property names in both objects MUST be the same (both name and type)
-        /// </summary>
-        /// <typeparam name="TModel">The model's type</typeparam>
-        /// <param name="model">The model object the data will be moved from</param>
-        public void UpdateFromModel<TModel>(TModel model)
+        public void UpdateCollection<TModel>(TModel[] modelArray, ObservableCollection<TModel> ViewModelCollection)
         {
-            this.Update<TModel>(model, MVVMDirection.FROM);
-        }
-
-        /// <summary>
-        /// Move the data from the viewmodel to the model, using reflection. 
-        /// Property names in both objects MUST be the same (both name and type)
-        /// </summary>
-        /// <typeparam name="TModel">The model's type</typeparam>
-        /// <param name="model">The model object the data will be moved from</param>
-        public void UpdateToModel<TModel>(TModel model)
-        {
-            this.Update<TModel>(model, MVVMDirection.TO);
-        }
-
-        /// <summary>
-        /// Update to or from the model based on the specified direction. Property names in both 
-        /// objects MUST be the same (both name and type), but properties used just for the view 
-        /// model aren't affected/used.
-        /// </summary>
-        /// <typeparam name="TModel">The model's type</typeparam>
-        /// <param name="model">The model object the data will be moved to/from</param>
-        /// <param name="direction">The direction in which the update will be performed</param>
-        public void Update<TModel>(TModel model, MVVMDirection direction)
-        {
-            PropertyInfo[] mProperties = model.GetType().GetProperties();
-            PropertyInfo[] vmProperties = this.GetType().GetProperties();
-
-            foreach (PropertyInfo mProperty in mProperties)
+            if (modelArray == null || ViewModelCollection == null )
             {
-                PropertyInfo vmProperty = this.GetType().GetProperty(mProperty.Name);
-                if (vmProperty != null)
+                throw new ArgumentNullException();
+            }
+
+            ViewModelCollection.Clear();
+
+            foreach (var item in modelArray)
+            {
+                ViewModelCollection.Add(item);
+            }
+        }
+
+        public void UpdateCollection<TModel>(List<TModel> modelList, ObservableCollection<TModel> ViewModelCollection)
+        {
+            if (modelList == null || ViewModelCollection == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            ViewModelCollection.Clear();
+
+            foreach (var item in modelList)
+            {
+                ViewModelCollection.Add(item);
+            }
+        }
+
+        public void Update2DCollection<T>(T[,] model2DArray, ObservableCollection<ObservableCollection<T>> ViewModel2DCollection)
+        {
+            if (model2DArray == null || ViewModel2DCollection == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            ViewModel2DCollection.Clear();
+
+            int rows = model2DArray.GetLength(0);
+            int columns = model2DArray.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                var innerCollection = new ObservableCollection<T>();
+
+                for (int j = 0; j < columns; j++)
                 {
-                    if (vmProperty.PropertyType.Equals(mProperty.PropertyType))
-                    {
-                        if (direction == MVVMDirection.FROM)
-                        {
-                            vmProperty.SetValue(this, mProperty.GetValue(model));
-                        }
-                        else
-                        {
-                            vmProperty.SetValue(model, mProperty.GetValue(this));
-                        }
-                    }
-                    else if (vmProperty.PropertyType.IsGenericType
-                        && mProperty.PropertyType.IsGenericType)
-                    {
-                        Type[] vmDerived = vmProperty.PropertyType.GetGenericArguments();
-                        Type[] mDerived = mProperty.PropertyType.GetGenericArguments();
-                        Type vmGeneric = vmProperty.PropertyType.GetGenericTypeDefinition();
-                        Type mGeneric = mProperty.PropertyType.GetGenericTypeDefinition();
-                        if (vmDerived[0].Equals(mDerived[0])
-                            && mGeneric.Equals(typeof(List<>))
-                            && vmGeneric.Equals(typeof(ObservableCollection<>)))
-                        {
-                            if (direction == MVVMDirection.FROM)
-                            {
-                                ConstructorInfo c = vmProperty.PropertyType.GetConstructor(new Type[] { mProperty.PropertyType });
-                                object o = c.Invoke(new object[] { mProperty.GetValue(model) });
-                                vmProperty.SetValue(this, o);
-                            }
-                            else
-                            {   // To model
-                                MethodInfo m = vmProperty.PropertyType.GetMethod("ToList");
-                                object o = m.Invoke(vmProperty.GetValue(this), null);
-                                mProperty.SetValue(model, o);
-                            }
-                        }
-                    }
+                    innerCollection.Add(model2DArray[i, j]);
                 }
+
+                ViewModel2DCollection.Add(innerCollection);
+            }
+        }
+
+        public static void UpdateJaggedCollection<T>(T[][] modelJagged2DArray, ObservableCollection<ObservableCollection<T>> ViewModel2DCollection)
+        {
+            if (modelJagged2DArray == null || ViewModel2DCollection == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            ViewModel2DCollection.Clear();
+
+            foreach (var row in modelJagged2DArray)
+            {
+                var innerCollection = new ObservableCollection<T>();
+
+                foreach (var item in row)
+                {
+                    innerCollection.Add(item);
+                }
+
+                ViewModel2DCollection.Add(innerCollection);
             }
         }
     }

@@ -1,18 +1,22 @@
-﻿<UserControl x:Class="WPF_Azul.View.UserControls.TileSlot"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="50">
+﻿<UserControl
+    x:Class="WPF_Azul.View.UserControls.TileSlot"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="100"
+    d:DesignWidth="100"
+    mc:Ignorable="d"
+    >
     <Grid>
-        <Rectangle x:Name="TileSlotUI" 
-         Height="40" Width="40"
-         RadiusX="5" RadiusY="5" 
-         >
+        <Rectangle
+            x:Name="TileSlotUI"
+            RadiusX="5"
+            RadiusY="5"
+            >
             <Rectangle.Stroke>
-                <SolidColorBrush Color="Black"></SolidColorBrush>
+                <SolidColorBrush Color="Black" />
             </Rectangle.Stroke>
         </Rectangle>
     </Grid>

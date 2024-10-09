@@ -314,9 +314,8 @@
                 Grid.Column="2"
                 Margin="0,20,0,0"
                 FontSize="32"
-                Text="{Binding DroppedTileScores}"
+                Text="{Binding DroppedTileScore}"
                 />
-
 
             <!--  Player 1 Dropped Tile Values  -->
             <ItemsControl
