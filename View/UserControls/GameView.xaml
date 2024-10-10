@@ -60,13 +60,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3.5*" />
-                <ColumnDefinition Width="1.5*" />
-                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="1.6*" />
+                <ColumnDefinition Width="0.4*" />
                 <ColumnDefinition Width="3.5*" />
             </Grid.ColumnDefinitions>
 
             <!--  Grid Section Labels  -->
-            <TextBlock
+            <!--<TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
                 Text="Player 1"
@@ -85,7 +85,7 @@
                 Grid.Row="0"
                 Grid.Column="3"
                 Text="Player 2"
-                />
+                />-->
 
             <!--  Player 1 Grid Layout  -->
             <local:PlayerBoardView
@@ -109,12 +109,26 @@
                 >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:FactoryView FactoryObject="{Binding}" FactoryTileClickCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                        <local:FactoryView
+                            MinWidth="100"
+                            MinHeight="100"
+                            HorizontalAlignment="Stretch"
+                            FactoryObject="{Binding}"
+                            FactoryTileClickCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel MaxHeight="500" Margin="5" />
+                        <WrapPanel
+                            MinWidth="100"
+                            MinHeight="200"
+                            MaxWidth="300"
+                            MaxHeight="300"
+                            Margin="5"
+                            VerticalAlignment="Top"
+                            Orientation="Vertical"
+                            />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
@@ -132,13 +146,17 @@
             <ItemsControl
                 Grid.Row="0"
                 Grid.Column="2"
-                Margin="5"
+                Margin="5,5,5,5"
                 ItemsSource="{Binding CenterFactoryTiles}"
                 >
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Margin="5" Orientation="Vertical" />
+                        <UniformGrid
+                            Margin="5"
+                            Columns="1"
+                            Rows="15"
+                            />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
