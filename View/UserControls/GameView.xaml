@@ -12,11 +12,9 @@
     d:DesignWidth="1400"
     mc:Ignorable="d"
     >
-    <UserControl.Resources>
-        <converters:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
-    </UserControl.Resources>
 
     <Grid>
+
 
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseRightButtonDown">
@@ -54,16 +52,21 @@
         <!--  Grid Setup  -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3.5*" />
-                <ColumnDefinition Width="1.6*" />
-                <ColumnDefinition Width="0.4*" />
-                <ColumnDefinition Width="3.5*" />
+                <ColumnDefinition Width="3.4*" />
+                <ColumnDefinition Width="1.4*" />
+                <ColumnDefinition Width="0.8*" />
+                <ColumnDefinition Width="3.4*" />
             </Grid.ColumnDefinitions>
+
+            <!--  Game View background  -->
+            <Grid.Background>
+                <ImageBrush ImageSource="../../ViewModel/Assets/WoodTableTexture.jpg" />
+            </Grid.Background>
 
             <!--  Grid Section Labels  -->
             <!--<TextBlock
@@ -91,6 +94,7 @@
             <local:PlayerBoardView
                 Grid.Row="0"
                 Grid.Column="0"
+                Margin="5,5,5,0"
                 DataContext="{Binding Player1BoardViewModel}"
                 />
 
@@ -98,6 +102,7 @@
             <local:PlayerBoardView
                 Grid.Row="0"
                 Grid.Column="3"
+                Margin="5,5,5,0"
                 DataContext="{Binding Player2BoardViewModel}"
                 />
 
@@ -105,6 +110,7 @@
             <ItemsControl
                 Grid.Row="0"
                 Grid.Column="1"
+                Margin="0,5,0,0"
                 ItemsSource="{Binding Factories}"
                 >
                 <ItemsControl.ItemTemplate>
@@ -112,6 +118,7 @@
                         <local:FactoryView
                             MinWidth="100"
                             MinHeight="100"
+                            Margin="2"
                             HorizontalAlignment="Stretch"
                             FactoryObject="{Binding}"
                             FactoryTileClickCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -124,7 +131,7 @@
                             MinWidth="100"
                             MinHeight="200"
                             MaxWidth="300"
-                            MaxHeight="300"
+                            MaxHeight="500"
                             Margin="5"
                             VerticalAlignment="Top"
                             Orientation="Vertical"
@@ -143,48 +150,103 @@
                 />
 
             <!--  Center Factory view  -->
-            <ItemsControl
+
+            <Grid
                 Grid.Row="0"
                 Grid.Column="2"
-                Margin="5,5,5,5"
-                ItemsSource="{Binding CenterFactoryTiles}"
+                Margin="0,5,0,0"
                 >
-
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid
-                            Margin="5"
-                            Columns="1"
-                            Rows="15"
-                            />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:TileView
-                            Cursor="Hand"
-                            FactoryTileClickCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            TileColour="{Binding TileTypeColour}"
-                            TileObject="{Binding}"
-                            />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="9*" />
+                </Grid.RowDefinitions>
 
 
-            </ItemsControl>
-            <!--  Player 2 Wall Pattern View  -->
-            <!--  Player 2 Wall Tiles  -->
-            <!--  Player 2 Production Tiles  -->
-            <!--  Player 2 Dropped Tiles  -->
+                <!--  Starting PLayer Marker  -->
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <local:TileView
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                        TileColour="{Binding StartingPlayerTile}"
+                        TileObject="{Binding StartingPlayerTile}"
+                        />
+                </Grid>
+
+
+                <ItemsControl
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    ItemsSource="{Binding CenterFactoryTiles}"
+                    >
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid
+                                Margin="0"
+                                VerticalAlignment="Top"
+                                Columns="3"
+                                Rows="5"
+                                />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:TileView
+                                Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                                MinWidth="30"
+                                MinHeight="30"
+                                Cursor="Hand"
+                                FactoryTileClickCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                TileColour="{Binding}"
+                                TileObject="{Binding}"
+                                />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+            </Grid>
 
             <!--  Debug Tile Collection Text  -->
             <StackPanel Grid.Row="4" Grid.Column="0">
                 <TextBlock Text="{Binding DebugTileBagText}" />
                 <TextBlock Text="{Binding DebugTileBinText}" />
             </StackPanel>
-        </Grid>
 
+
+            <!--  Player Won Elements  -->
+            <StackPanel
+                Grid.Row="4"
+                Grid.Column="1"
+                Visibility="{Binding GameHasEnded, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
+                >
+                <TextBlock Text="{Binding EndGameText}" />
+                <Button Command="{Binding ReplayGameButtonCommand}" Content="Replay" />
+            </StackPanel>
+
+            <!--  Game Draw Elements  -->
+            <StackPanel
+                Grid.Row="4"
+                Grid.Column="1"
+                Visibility="{Binding IsGameEndDraw, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
+                >
+                <TextBlock Text="{Binding EndGameText}" />
+                <Button Command="{Binding ReplayGameButtonCommand}" Content="Replay" />
+            </StackPanel>
+        </Grid>
 
     </Grid>
 </UserControl>

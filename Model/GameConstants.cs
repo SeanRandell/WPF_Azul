@@ -29,11 +29,11 @@ namespace WPF_Azul.Model
         public static int FLOOR_LINE_MIN_LENGTH = 1;
         public static int FLOOR_LINE_MAX_LENGTH = 5;
         public static TileType[,] WALL_TILE_PATTERN = {
-            { TileType.Blue, TileType.Yellow, TileType.Red, TileType.Black, TileType.LightBlue},
-            { TileType.LightBlue, TileType.Blue, TileType.Yellow, TileType.Red, TileType.Black},
-            { TileType.Black, TileType.LightBlue, TileType.Blue, TileType.Yellow, TileType.Red},
-            { TileType.Red, TileType.Black, TileType.LightBlue, TileType.Blue, TileType.Yellow},
-            { TileType.Yellow, TileType.Red, TileType.Black, TileType.LightBlue, TileType.Blue}
+            { TileType.Blue, TileType.Yellow, TileType.Red, TileType.Black, TileType.Green},
+            { TileType.Green, TileType.Blue, TileType.Yellow, TileType.Red, TileType.Black},
+            { TileType.Black, TileType.Green, TileType.Blue, TileType.Yellow, TileType.Red},
+            { TileType.Red, TileType.Black, TileType.Green, TileType.Blue, TileType.Yellow},
+            { TileType.Yellow, TileType.Red, TileType.Black, TileType.Green, TileType.Blue}
         };
 
         public static int TILE_NOT_IN_LIST_INDEX = -1;
@@ -43,7 +43,7 @@ namespace WPF_Azul.Model
         {
             int defaultReturnInt = -1;
             TileType currentType;
-            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            for (int i = 0; i < MAIN_TILES_LENGTH; i++)
             {
                 currentType = WALL_TILE_PATTERN[rowIndex, i];
                 if (currentType == tileTypeToFind)

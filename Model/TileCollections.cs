@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPF_Azul.Model
 {
-    public class TileCollections
+    internal class TileCollections
     {
         const int tileTypeAmount = 20;
 
@@ -14,7 +14,7 @@ namespace WPF_Azul.Model
         internal List<Tile> tileBag;
         internal List<Tile> tileBin;
 
-        public TileCollections()
+        internal TileCollections()
         {
             tileBag = new List<Tile>();
             tileBin = new List<Tile>();
@@ -39,7 +39,7 @@ namespace WPF_Azul.Model
             RandomizeBag();
         }
 
-        public void RandomizeBag()
+        internal void RandomizeBag()
         {
             Random rng = new Random();
             int tilebagCount = tileBag.Count;
@@ -54,7 +54,7 @@ namespace WPF_Azul.Model
             }
         }
 
-        public Tile GetRandomTileFromBag()
+        internal Tile GetRandomTileFromBag()
         {
             if(tileBag.Count == 0)
             {

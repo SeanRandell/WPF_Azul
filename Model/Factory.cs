@@ -30,7 +30,7 @@ namespace WPF_Azul.Model
             factoryTiles = new List<Tile>();
         }
 
-        public void SetupFactory(TileCollections tileCollections)
+        internal void SetupFactory(TileCollections tileCollections)
         {
             for (int i = 0; i < GameConstants.NORMAL_FACTORY_MAX_TILES; i++)
             {

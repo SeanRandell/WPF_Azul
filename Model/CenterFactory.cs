@@ -7,21 +7,78 @@ using System.Windows.Documents;
 
 namespace WPF_Azul.Model
 {
-    public class CenterFactory : Factory
+    internal class CenterFactory : Factory
     {
-        public CenterFactory() : base(){
-            Tile startingPlayerTile = new Tile(TileType.StartingPlayerMarker);
-            startingPlayerTile.FactoriesIndex = GameConstants.CENTER_FACTORY_INDEX;
+        internal Tile _startingPlayerTile { get; set; }
+
+        internal CenterFactory() : base()
+        {
+            _startingPlayerTile = new Tile(TileType.StartingPlayerMarker);
+            _startingPlayerTile.FactoriesIndex = GameConstants.CENTER_FACTORY_INDEX;
         }
 
-        public void ResetCenterFactory()
+        internal void ResetCenterFactoryForNewGame(TileCollections tileCollections)
         {
-            // TODO - depends on how we eant to get rid of player dropped tile.
+            tileCollections.tileBag.AddRange(factoryTiles);
+            factoryTiles.Clear();
         }
 
-        public bool ContainsStartingPlayerMarker()
+        internal void ResetCenterFactoryForRound(Tile[] droppedTiles)
         {
-            return factoryTiles.Any(x => x.TileType == TileType.StartingPlayerMarker);
+            for (int i = 0; i < droppedTiles.Length; i++)
+            {
+                if (droppedTiles[i] != null)
+                {
+                    continue;
+                }
+
+                if (droppedTiles[i].TileType == TileType.StartingPlayerMarker)
+                {
+                    _startingPlayerTile = droppedTiles[i];
+                    droppedTiles[i] = null;
+                }
+            }
+
+            //if (droppedTiles.Any(t => t.TileType == TileType.StartingPlayerMarker))
+            //{
+            //    int startingTileindex = droppedTiles.FindIndex(t => t.TileType == TileType.StartingPlayerMarker);
+            //    _startingPlayerTile = droppedTiles[startingTileindex];
+            //    droppedTiles.RemoveAt(startingTileindex);
+            //}
+        }
+
+        internal bool ContainsStartingPlayerMarker()
+        {
+            if (_startingPlayerTile != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        internal void CheckAndProcessIfFirstSelected(PlayerBoard playerBoard, TileCollections tileCollections)
+        {
+            if (ContainsStartingPlayerMarker())
+            {
+                if (playerBoard.TryToAddTileToDroppedTiles(_startingPlayerTile))
+                {
+                    _startingPlayerTile = null;
+                }
+                else
+                {
+                    tileCollections.tileBin.Add(_startingPlayerTile);
+                }
+            }
+        }
+
+        internal void GetStartingPlayerTileFromTileBin(List<Tile> tileBin)
+        {
+            int startingPlayerTileIndex = tileBin.FindIndex(tile => tile.TileType == TileType.StartingPlayerMarker);
+            _startingPlayerTile = tileBin[startingPlayerTileIndex];
+            tileBin.RemoveAt(startingPlayerTileIndex);
         }
     }
 }

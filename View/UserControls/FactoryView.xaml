@@ -9,54 +9,61 @@
     d:DesignWidth="125"
     mc:Ignorable="d"
     >
-    <Grid x:Name="FactoryViewUI">
+    <Border
+        Background="DarkGray"
+        BorderBrush="Black"
+        BorderThickness="3"
+        CornerRadius="60"
+        >
+        <Grid x:Name="FactoryViewUI">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
 
-        <Ellipse
+            <!--<Ellipse
             Grid.Column="0"
             Stretch="Uniform"
             Stroke="Black"
-            />
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="8*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="8*" />
-                <RowDefinition Height="1*" />
-            </Grid.RowDefinitions>
+            />-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="8*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="8*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
 
-            <ItemsControl
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="5"
-                ItemsSource="{Binding Path=FactoryObject}"
-                >
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:TileView
-                            Cursor="Hand"
-                            FactoryTileClickCommand="{Binding Path=FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            TileColour="{Binding TileTypeColour}"
-                            TileObject="{Binding}"
-                            />
+                <ItemsControl
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5"
+                    ItemsSource="{Binding Path=FactoryObject}"
+                    >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:TileView
+                                Cursor="Hand"
+                                FactoryTileClickCommand="{Binding Path=FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                TileColour="{Binding}"
+                                TileObject="{Binding}"
+                                />
 
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="2" Rows="2" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" Rows="2" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
 
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>

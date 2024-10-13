@@ -103,6 +103,18 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        private int _endGameScore;
+
+        public int EndGameScore
+        {
+            get { return _endGameScore; }
+            set
+            {
+                _endGameScore = value;
+                OnPropertyChanged();
+            }
+        }
+
         // These values do not change so they should not need to use OnProperyChanged()
         private int[] _droppedTileValues;
 
@@ -274,6 +286,12 @@ namespace WPF_Azul.ViewModel
             UpdatePlayerWallTiles();
             UpdateProductionTiles();
             UpdateDroppedTiles();
+        }
+
+        internal void UpdateViewModelAfterGameEnd()
+        {
+            EndGameScore = _playerModel.EndGameScore;
+            UpdatePlayerScores();
         }
     }
 }

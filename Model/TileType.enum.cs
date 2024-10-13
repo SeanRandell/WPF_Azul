@@ -10,7 +10,7 @@ namespace WPF_Azul.Model
     {
         Blue,
         Red,
-        LightBlue,
+        Green,
         Black,
         Yellow,
         StartingPlayerMarker

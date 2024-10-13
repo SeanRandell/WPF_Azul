@@ -10,8 +10,8 @@
     AllowDrop="True"
     mc:Ignorable="d"
     >
-    <Grid>
-        <Rectangle
+    <Grid x:Name="TileViewUI">
+        <!--<Rectangle
             x:Name="TileViewUI"
             RadiusX="5"
             RadiusY="5"
@@ -32,7 +32,19 @@
                     Gesture="LeftClick"
                     />
             </Rectangle.InputBindings>
-        </Rectangle>
+        </Rectangle>-->
+
+        <Grid.InputBindings>
+            <MouseBinding
+                Command="{Binding Path=FactoryTileClickCommand}"
+                CommandParameter="{Binding Path=TileObject}"
+                Gesture="LeftClick"
+                />
+        </Grid.InputBindings>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding Path=TileColour, TargetNullValue={x:Null}, Converter={StaticResource tileTypeToImageConverter}, Mode=Twoway}" />
+        </Grid.Background>
 
     </Grid>
 </UserControl>

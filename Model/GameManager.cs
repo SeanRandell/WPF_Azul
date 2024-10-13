@@ -38,6 +38,7 @@ namespace WPF_Azul.Model
             {
                 selectedFactoryTiles = _gameState.CenterFactory.TakeAllTilesOfType(selectedTileType);
                 _gameState.CenterFactory.ProcessFactoryTilesSelectedForProduction(selectedTileType);
+                _gameState.CenterFactory.CheckAndProcessIfFirstSelected(_gameState.players[_gameState.activePlayerTurnIndex].PlayerBoard, _gameState.tileCollections);
             }
             else
             {
@@ -120,8 +121,14 @@ namespace WPF_Azul.Model
 
                 _gameState.players[i].UpdatePlayerScore(_gameState.players[i].PlayerBoard.WallTileScores, _gameState.players[i].PlayerBoard.DroppedTileScore);
             }
-            // replenish factories
-            _gameState.SetupFactoriesForRound();
+
+            CheckForGameOverAndProcess();
+
+            if (!IsGameOver())
+            {
+                // replenish factories
+                _gameState.SetupFactoriesForRound();
+            }
         }
 
         internal bool IsRoundOver()
@@ -148,10 +155,40 @@ namespace WPF_Azul.Model
         private void StartGameEndProcessing()
         {
             //tell each playerboard to calculate rows, columns and if each tile is present 5 times in the wall
+            for (int i = 0; i < _gameState.players.Count; i++)
+            {
+                _gameState.players[i].CalculateEndGameScores();
+            }
 
-            //check if player 1 or player 2 is the winner for now. TODO - do this with iteration instead.
-            // Set gamephase
+            // check if draw
+            int amountOfSameScores = _gameState.players.GroupBy(s => s.score).ToList().Count;
+            if (amountOfSameScores == 1)
+            {
+                _gameState._gamePhase = GamePhase.Draw;
+            }
+            else
+            {
+                //check if player 1 or player 2 is the winner for now. TODO - do this with iteration instead.
+                int indexOfWinningPlayer = 0;
+                int currentHighestScore = 0;
+                for (int i = 0; i < _gameState.players.Count; i++)
+                {
+                    if (_gameState.players[i].score > currentHighestScore)
+                    {
+                        indexOfWinningPlayer = i;
+                        currentHighestScore = _gameState.players[i].score;
+                    }
+                }
 
+                if (indexOfWinningPlayer == GameConstants.STARTING_PLAYER_INDEX)
+                {
+                    _gameState._gamePhase = GamePhase.Player1Wins;
+                }
+                else
+                {
+                    _gameState._gamePhase = GamePhase.Player2Wins;
+                }
+            }
         }
 
         internal bool IsGameOver()

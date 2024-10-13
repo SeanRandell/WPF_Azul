@@ -18,11 +18,20 @@ namespace WPF_Azul.Model
             set { playerBoard = value; }
         }
 
+        private int _endGameScore;
+
+        public int EndGameScore
+        {
+            get { return _endGameScore; }
+            set { _endGameScore = value; }
+        }
+
         public Player(string name)
         {
             this.name = name;
             score = GameConstants.STARTING_PLAYER_SCORE;
             playerBoard = new PlayerBoard();
+            _endGameScore = 0;
         }
 
         public void ResetPlayerScore()
@@ -42,6 +51,13 @@ namespace WPF_Azul.Model
             {
                 score += totalToAdd;
             }
+        }
+
+        internal void CalculateEndGameScores()
+        {
+            // TODO - EndGameScore is only for testing purposes. Evaulate later if it should be kept or not.
+            EndGameScore += playerBoard.CheckForFullRowsAndColumns() + playerBoard.CheckIfAllTilesOfTypeAreFilled(); ;
+            score += EndGameScore;
         }
     }
 }

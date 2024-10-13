@@ -28,6 +28,8 @@ namespace WPF_Azul.ViewModel
 
         public ICommand UndoFactoryTileClick { get; }
 
+        public ICommand ReplayGameButtonCommand { get; }
+
         // TODO - Change to jsut use the wallpattern inside a player. See if an internal colour variable can be used.
 
         private TileType _selectedTileType;
@@ -48,6 +50,18 @@ namespace WPF_Azul.ViewModel
             set
             {
                 _factories = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Tile _startingPlayerTile;
+
+        public Tile StartingPlayerTile
+        {
+            get { return _startingPlayerTile; }
+            set
+            {
+                _startingPlayerTile = value;
                 OnPropertyChanged();
             }
         }
@@ -132,8 +146,43 @@ namespace WPF_Azul.ViewModel
             set { _playerViewModels = value; }
         }
 
+        private string _endGameText;
 
-        public GameViewModel(GameManager gameManager, NavigationStore navigationStore)
+        public string EndGameText
+        {
+            get { return _endGameText; }
+            set
+            {
+                _endGameText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _gameHasEnded;
+
+        public bool GameHasEnded
+        {
+            get { return _gameHasEnded; }
+            set
+            {
+                _gameHasEnded = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isGameEndDraw;
+
+        public bool IsGameEndDraw
+        {
+            get { return _isGameEndDraw; }
+            set
+            {
+                _isGameEndDraw = value;
+                OnPropertyChanged();
+            }
+        }
+
+        internal GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
             _selectedTileType = TileType.Blue; // default value
             _isFactoryTileSelected = false;
@@ -143,6 +192,7 @@ namespace WPF_Azul.ViewModel
             FactoryTileClickCommand = new FactoryTileClickCommand(_gameManager, this);
             ProductionLineClickCommand = new ProductionLineClickCommand(this);
             UndoFactoryTileClick = new UndoFactoryTileClick(this);
+            ReplayGameButtonCommand = new ReplayGameCommand(this);
 
             _playerViewModels = new List<PlayerBoardViewModel>();
             InitPlayerViewModels();
@@ -151,6 +201,11 @@ namespace WPF_Azul.ViewModel
 
             _factories = InitFactories();
             _centerFactoryTiles = new ObservableCollection<Tile>();
+            _startingPlayerTile = _gameManager._gameState.CenterFactory._startingPlayerTile;
+
+            _endGameText = "";
+            _gameHasEnded = false;
+            _isGameEndDraw = false;
 
             _debugTileBagText = UpdateDebugTileBagText();
             _debugTileBinText = UpdateDebugTileBinText();
@@ -160,7 +215,7 @@ namespace WPF_Azul.ViewModel
 
         private void InitPlayerViewModels()
         {
-            // TODO - change.
+            // TODO - change if you do player name input
             PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager.GetPlayer(GameConstants.STARTING_PLAYER_INDEX), ProductionLineClickCommand));
             PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager.GetPlayer(1), ProductionLineClickCommand));
         }
@@ -220,9 +275,10 @@ namespace WPF_Azul.ViewModel
         private void UpdateCenterFactory()
         {
             UpdateCollection(_gameManager._gameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
+            StartingPlayerTile = _gameManager._gameState.CenterFactory._startingPlayerTile;
         }
 
-        public void ProductionLineSelected(int productionTileIndex)
+        internal void ProductionLineSelected(int productionTileIndex)
         {
             // reset valid production lines
             foreach (ValidProductionTile validIndexes in PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ValidProductionTiles)
@@ -263,7 +319,7 @@ namespace WPF_Azul.ViewModel
             _gameManager.CheckForRoundEndAndProcess();
 
             // gameviewmodel checks for gamestate change. Is there a gamestate enum?
-            if (_gameManager.IsRoundOver())
+            if (_gameManager.IsRoundOver() || _gameManager.IsGameOver())
             {
                 // if yes model has already intiated end of round scoring calculations, refreshed playerboards and factories.
 
@@ -273,16 +329,63 @@ namespace WPF_Azul.ViewModel
                     PlayerViewModels[i].UpdateViewModelAfterRoundEnd();
                 }
 
-                UpdateFactories();
+                // check for game over
+                if (_gameManager.IsGameOver())
+                {
+                    //for (int i = 0; i < PlayerViewModels.Count; i++)
+                    //{
+                    //    PlayerViewModels[i].UpdateViewModelAfterGameEnd();
+                    //}
+
+                    switch (_gameManager._gameState._gamePhase)
+                    {
+                        case GamePhase.Player1Wins:
+                            UpdateViewModelForPlayerWin(GameConstants.STARTING_PLAYER_INDEX);
+                            break;
+                        case GamePhase.Player2Wins:
+                            UpdateViewModelForPlayerWin(1);
+                            break;
+                        case GamePhase.Draw:
+                            UpdateViewModelForDraw();
+                            break;
+                        default:
+                            UpdateViewModelForDraw();
+                            break;
+                    }
+                }
+                else
+                {
+                    UpdateFactories();
+
+                    //DebugTileBinText = UpdateDebugTileBinText();
+                    //DebugTileBagText = UpdateDebugTileBagText();
+                    _gameManager.StartNewRound();
+                    _gameManager.ChangePlayerTurn();
+                }
                 DebugTileBinText = UpdateDebugTileBinText();
                 DebugTileBagText = UpdateDebugTileBagText();
-                _gameManager.StartNewRound();
             }
-
-            _gameManager.ChangePlayerTurn();
+            else
+            {
+                _gameManager.ChangePlayerTurn();
+            }
         }
 
-        public void FactoryTileSelected(TileType selectedTileType, int factoriesIndex)
+        private void UpdateViewModelForPlayerWin(int playerIndex)
+        {
+            GameHasEnded = true;
+            EndGameText = UpdateEndGameText(playerIndex);
+        }
+
+        private void UpdateViewModelForDraw()
+        {
+            IsGameEndDraw = true;
+            GameHasEnded = false;
+            int noPlayerIndex = -1;
+            EndGameText = UpdateEndGameText(noPlayerIndex);
+        }
+
+        internal void FactoryTileSelected(TileType selectedTileType, int factoriesIndex)
         {
             //first get factory index and the tile type from the clicked on tile
             _selectedFactoryIndex = factoriesIndex;
@@ -321,6 +424,30 @@ namespace WPF_Azul.ViewModel
         private string UpdateDebugTileBagText()
         {
             return "TileBag: " + _gameManager.GetDebugTileBinCount();
+        }
+
+        private string UpdateEndGameText(int winningPlayerIndex)
+        {
+            StringBuilder endGameStringBuilder = new StringBuilder();
+
+            if (winningPlayerIndex < 0)
+            {
+                endGameStringBuilder.Append("DRAW! No one wins!");
+            }
+            else
+            {
+
+                endGameStringBuilder.Append("Player " + (winningPlayerIndex + 1) + " WINS!!");
+            }
+
+            return endGameStringBuilder.ToString();
+        }
+
+        internal void ResetGame()
+        {
+            GameHasEnded = false;
+            IsGameEndDraw = false;
+            // TODO - reset gameState.
         }
     }
 }

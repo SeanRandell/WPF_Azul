@@ -29,3 +29,8 @@ You can run the application from source in Visual Studio using the Local Windows
 ## Controls (TODO)
 - [ LMB ]  - Click factory tiles to select a tile click your production lines to place them.
 - [ RMB ] - Cancel factory tile selection.
+
+## Asset Credits
+
+- Puzzle Pack 2 by Kenney - https://kenney.nl/assets/puzzle-pack-2
+- Wood Texture Tiles by JCW - https://opengameart.org/content/wood-texture-tiles
