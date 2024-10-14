@@ -13,7 +13,7 @@ namespace WPF_Azul.View.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string tileFilePathStart = "../../ViewModel/Assets/Tile";
+            string tileFilePathStart = "../../ViewModel/Assets/tile";
             string TileColour = "";
             string imageFileType = ".png";
             string returnString;
@@ -45,7 +45,7 @@ namespace WPF_Azul.View.Converters
                         TileColour = "Yellow";
                         break;
                     case TileType.StartingPlayerMarker:
-                        TileColour = "Grey";
+                        TileColour = "StartingPlayerMarker";
                         break;
                     default:
                         TileColour = "";

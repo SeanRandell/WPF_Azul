@@ -9,23 +9,15 @@
     d:DesignWidth="50"
     mc:Ignorable="d"
     >
-    <Grid>
-        <Rectangle
-            x:Name="WallTileSlotUI"
-            RadiusX="5"
-            RadiusY="5"
-            >
-            <Rectangle.Stroke>
-                <SolidColorBrush Color="Black" />
-            </Rectangle.Stroke>
-
-            <Rectangle.Fill>
-                <SolidColorBrush Opacity="0.15" Color="{Binding Path=BackgroundColour}" />
-            </Rectangle.Fill>
-        </Rectangle>
-
-        <Grid.Background>
-            <ImageBrush ImageSource="{Binding Path=TileColour, TargetNullValue={x:Null}, Converter={StaticResource tileTypeToImageConverter}, Mode=Twoway}" />
-        </Grid.Background>
-    </Grid>
+    <Border
+        x:Name="WallTileSlotUI"
+        BorderBrush="Black"
+        BorderThickness="1"
+        CornerRadius="5"
+        >
+        <Border.Background>
+            <ImageBrush ImageSource="{Binding Path=BackgroundColour, TargetNullValue={x:Null}, Converter={StaticResource tileTypeToWallTileSlotConverter}, Mode=Twoway}" Opacity="0.35" />
+        </Border.Background>
+        <Grid />
+    </Border>
 </UserControl>

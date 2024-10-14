@@ -36,8 +36,8 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-        private List<List<Color>> _wallPattern;
-        public List<List<Color>> WallPattern
+        private List<List<TileType>> _wallPattern;
+        public List<List<TileType>> WallPattern
         {
             get { return _wallPattern; }
             set { _wallPattern = value; }
@@ -218,18 +218,18 @@ namespace WPF_Azul.ViewModel
             return returnList;
         }
 
-        private List<List<Color>> InitWallPattern()
+        private List<List<TileType>> InitWallPattern()
         {
             TileType[,] tileTypeArray = GameConstants.WALL_TILE_PATTERN;
 
-            List<List<Color>> returnList = new List<List<Color>>();
+            List<List<TileType>> returnList = new List<List<TileType>>();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
-                List<Color> currentRow = new List<Color>();
-                for (int j = 0; j < 5; j++)
+                List<TileType> currentRow = new List<TileType>();
+                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
                 {
-                    currentRow.Add((Color)ColorConverter.ConvertFromString(tileTypeArray[i, j].ToString()));
+                    currentRow.Add(GameConstants.WALL_TILE_PATTERN[i,j]);
                 }
                 returnList.Add(currentRow);
             }

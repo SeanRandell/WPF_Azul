@@ -5,4 +5,5 @@
     >
     <converters:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
     <converters:TileTypeToImageConverter x:Key="tileTypeToImageConverter" />
+    <converters:TileTypeToWallTileSlotConverter x:Key="tileTypeToWallTileSlotConverter" />
 </ResourceDictionary>

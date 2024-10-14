@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -18,40 +19,33 @@ namespace WPF_Azul.View.Converters
             string imageFileType = "Slot.png";
             string returnString;
 
-            if ((TileType)value == null)
+            TileType currentTileType = (TileType)value;
+            Trace.WriteLine("Current Wall tile Tile Type: " + currentTileType);
+            switch (currentTileType)
             {
-                returnString = "";
+                case TileType.Blue:
+                    TileColour = "Blue";
+                    break;
+                case TileType.Red:
+                    TileColour = "Red";
+                    break;
+                case TileType.Green:
+                    TileColour = "Green";
+                    break;
+                case TileType.Black:
+                    TileColour = "Black";
+                    break;
+                case TileType.Yellow:
+                    TileColour = "Yellow";
+                    break;
+                case TileType.StartingPlayerMarker:
+                    TileColour = "StartingPlayerMarker";
+                    break;
+                default:
+                    TileColour = "";
+                    break;
             }
-            else
-            {
-                TileType currentTileType = (TileType)value;
-                //TileType currentTileType = currentTile.TileType;
 
-                switch (currentTileType)
-                {
-                    case TileType.Blue:
-                        TileColour = "Blue";
-                        break;
-                    case TileType.Red:
-                        TileColour = "Red";
-                        break;
-                    case TileType.Green:
-                        TileColour = "Green";
-                        break;
-                    case TileType.Black:
-                        TileColour = "Black";
-                        break;
-                    case TileType.Yellow:
-                        TileColour = "Yellow";
-                        break;
-                    case TileType.StartingPlayerMarker:
-                        TileColour = "Grey";
-                        break;
-                    default:
-                        TileColour = "";
-                        break;
-                }
-            }
             returnString = tileFilePathStart + TileColour + imageFileType;
             return returnString;
         }
