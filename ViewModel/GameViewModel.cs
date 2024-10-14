@@ -360,7 +360,6 @@ namespace WPF_Azul.ViewModel
                     //DebugTileBinText = UpdateDebugTileBinText();
                     //DebugTileBagText = UpdateDebugTileBagText();
                     _gameManager.StartNewRound();
-                    _gameManager.ChangePlayerTurn();
                 }
                 DebugTileBinText = UpdateDebugTileBinText();
                 DebugTileBagText = UpdateDebugTileBagText();

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Azul.Model;
 
 namespace WPF_Azul.View.UserControls
 {
@@ -25,9 +26,9 @@ namespace WPF_Azul.View.UserControls
         /// <summary>
         /// Gets or sets the background colour of the tile
         /// </summary>
-        public Color BackgroundColour
+        public TileType BackgroundColour
         {
-            get { return (Color)GetValue(BackgroundColourProperty); }
+            get { return (TileType)GetValue(BackgroundColourProperty); }
             set
             {
                 SetValue(BackgroundColourProperty, value);
@@ -38,7 +39,7 @@ namespace WPF_Azul.View.UserControls
         /// Identified the BackgroundColour dependency property
         /// </summary>
         public static readonly DependencyProperty BackgroundColourProperty =
-            DependencyProperty.Register("BackgroundColour", typeof(Color),
+            DependencyProperty.Register("BackgroundColour", typeof(TileType),
               typeof(WallTileSlot), new PropertyMetadata(null));
 
         #endregion

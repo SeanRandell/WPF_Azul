@@ -110,8 +110,13 @@ namespace WPF_Azul.Model
 
         private void ProcessRoundEnd()
         {
+            int indexOfplayerWithStartingMarker = 0;
             for (int i = 0; i < _gameState.players.Count; i++)
             {
+                if (_gameState.players[i].PlayerBoard.ContainsStartingTileMarker())
+                {
+                    indexOfplayerWithStartingMarker = i;
+                }
                 //first update walltile scores and process them and empty production tiles
                 _gameState.players[i].PlayerBoard.CalculateProductionTileScores(_gameState.tileCollections);
                 _gameState.players[i].PlayerBoard.CalculateDroppedTileScores(_gameState.tileCollections);
@@ -121,6 +126,7 @@ namespace WPF_Azul.Model
 
                 _gameState.players[i].UpdatePlayerScore(_gameState.players[i].PlayerBoard.WallTileScores, _gameState.players[i].PlayerBoard.DroppedTileScore);
             }
+            _gameState.activePlayerTurnIndex = indexOfplayerWithStartingMarker;
 
             CheckForGameOverAndProcess();
 

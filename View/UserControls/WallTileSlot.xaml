@@ -23,5 +23,9 @@
                 <SolidColorBrush Opacity="0.15" Color="{Binding Path=BackgroundColour}" />
             </Rectangle.Fill>
         </Rectangle>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding Path=TileColour, TargetNullValue={x:Null}, Converter={StaticResource tileTypeToImageConverter}, Mode=Twoway}" />
+        </Grid.Background>
     </Grid>
 </UserControl>

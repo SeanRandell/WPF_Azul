@@ -396,5 +396,22 @@ namespace WPF_Azul.Model
 
             return returnScore;
         }
+
+        internal bool ContainsStartingTileMarker()
+        {
+            for (int i = 0; i < droppedTiles.Length; i++)
+            {
+                if (droppedTiles[i] == null)
+                {
+                    continue;
+                }
+
+                if (droppedTiles[i].TileType == TileType.StartingPlayerMarker)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
