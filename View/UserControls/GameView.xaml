@@ -150,7 +150,6 @@
                 />
 
             <!--  Center Factory view  -->
-
             <Grid
                 Grid.Row="0"
                 Grid.Column="2"
@@ -175,7 +174,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <!-- TODO - Add 1 to Grey Tile and add it as a new asset-->
+                    <!--  TODO - Add 1 to Grey Tile and add it as a new asset  -->
                     <local:TileView
                         Grid.Row="0"
                         Grid.Column="1"
@@ -183,17 +182,7 @@
                         TileColour="{Binding StartingPlayerTile}"
                         TileObject="{Binding StartingPlayerTile}"
                         />
-                    <!--<TextBlock 
-                        Text="1"
-                        FontSize="32"
-                        Foreground="DarkBlue"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
-                        MinWidth="30"
-                        MinHeight="30"/>-->
                 </Grid>
-
 
                 <ItemsControl
                     Grid.Row="1"
@@ -230,10 +219,53 @@
                 </ItemsControl>
             </Grid>
 
+            <!--  Currently Selected Tiles View  -->
+            <!--<ItemsControl
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    ItemsSource="{Binding CenterFactoryTiles}"
+                    >
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid
+                                Margin="0"
+                                VerticalAlignment="Top"
+                                Columns="3"
+                                Rows="5"
+                                />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:TileView
+                                Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                                MinWidth="30"
+                                MinHeight="30"
+                                Cursor="Hand"
+                                FactoryTileClickCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                TileColour="{Binding}"
+                                TileObject="{Binding}"
+                                />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>-->
+
             <!--  Debug Tile Collection Text  -->
-            <StackPanel Grid.Row="4" Grid.Column="0">
-                <TextBlock Text="{Binding DebugTileBagText}" Foreground="Aqua" FontSize="18"/>
-                <TextBlock Text="{Binding DebugTileBinText}" Foreground="Aqua" FontSize="18"/>
+            <StackPanel Grid.Row="1" Grid.Column="0">
+                <TextBlock
+                    FontSize="18"
+                    Foreground="Aqua"
+                    Text="{Binding DebugTileBagText}"
+                    />
+                <TextBlock
+                    FontSize="18"
+                    Foreground="Aqua"
+                    Text="{Binding DebugTileBinText}"
+                    />
             </StackPanel>
 
 

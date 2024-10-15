@@ -151,12 +151,35 @@ namespace WPF_Azul.Model
 
         private void TestCompletedColourScoringState()
         {
-            
+            //move all tiles out of factories and move to bin except 1 in the center factory that is needed to win.
+            int indexOfLastTile = tileCollections.tileBag.FindIndex(x => x.TileType == TileType.Red);
+            tileCollections.tileBag[indexOfLastTile].FactoriesIndex = GameConstants.CENTER_FACTORY_INDEX;
+            CenterFactory.AddFactoryTile(tileCollections.tileBag[indexOfLastTile]);
+            tileCollections.tileBag.RemoveAt(indexOfLastTile);
+
+            // make sure it is player 1s turn
+            activePlayerTurnIndex = GameConstants.STARTING_PLAYER_INDEX;
+
+            // fill the top row of the wall tiles except for the tile needed to complete a row.
+            TileType ExcludingRowTile = TileType.Red;
         }
 
-        private void FillPlayerColourExceptForOne()
+        private void FillPlayerColourExceptForOne(int currentPlayerIndex, TileType tileTypeToFill, int rowToExclude)
         {
+            int indexOfCurrentTileTypeInTileBag;
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
+                {
+                    if (j == GameConstants.GetWallTilePatternIndex(i, tileTypeToFill) && j != rowToExclude)
+                    {
+                        indexOfCurrentTileTypeInTileBag = tileCollections.tileBag.FindIndex(x => x.TileType == tileTypeToFill);
+                        players[currentPlayerIndex].PlayerBoard.WallTiles[i, j] = tileCollections.tileBag[indexOfCurrentTileTypeInTileBag];
+                        tileCollections.tileBag.RemoveAt(indexOfCurrentTileTypeInTileBag);
+                    }
+                }
 
+            }
         }
 
         private void FillRowExceptForOne(int playerIndex, int rowToFill, TileType tileTypeToExclude)
