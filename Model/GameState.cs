@@ -128,7 +128,7 @@ namespace WPF_Azul.Model
         {
             //make player score 100
             players[1].score = 100;
-            players[0].score = 118;
+            players[0].score = 117;
             //move all tiles out of factories and move to bin except 1 in the center factory that is needed to win.
             for (int i = 0; i < 4; i++)
             {
@@ -147,6 +147,16 @@ namespace WPF_Azul.Model
             int columnToFill = 1;
             FillRowExceptForOne(1, rowToFill, ExcludingRowTile);
             FillColumnExceptForOne(1, columnToFill, ExcludingRowTile);
+        }
+
+        private void TestCompletedColourScoringState()
+        {
+            
+        }
+
+        private void FillPlayerColourExceptForOne()
+        {
+
         }
 
         private void FillRowExceptForOne(int playerIndex, int rowToFill, TileType tileTypeToExclude)

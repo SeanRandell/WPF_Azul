@@ -234,11 +234,12 @@ namespace WPF_Azul.Model
                         if (j == 0)
                         {
                             wallTileSlotIndex = GameConstants.GetWallTilePatternIndex(i, productionTiles[i][j].TileType);
-                            wallTiles[i, wallTileSlotIndex] = productionTiles[i][j].DeepClone(i, wallTileSlotIndex);
+                            wallTiles[i, wallTileSlotIndex] = productionTiles[i][j];
                         }
                         else
                         {
-                            tileCollections.tileBin.Add(productionTiles[i][j].DeepClone());
+                            tileCollections.tileBin.Add(productionTiles[i][j]);
+
                         }
                         productionTiles[i][j] = null;
                     }
@@ -291,7 +292,7 @@ namespace WPF_Azul.Model
                 if (droppedTiles[i] != null)
                 {
                     totalScore += GameConstants.DROPPED_TILE_COSTS[i];
-                    tileCollections.tileBin.Add(droppedTiles[i].DeepClone());
+                    tileCollections.tileBin.Add(droppedTiles[i]);
                 }
                 droppedTiles[i] = null;
             }

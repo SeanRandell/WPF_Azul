@@ -50,11 +50,13 @@
                         Margin="0,0,0,0"
                         FontSize="16"
                         Text="End Scores:"
+                        Foreground="Aqua"
                         />
                     <TextBlock
                         Margin="0,0,0,0"
                         FontSize="16"
                         Text="{Binding EndGameScore}"
+                        Foreground="Aqua"
                         />
                 </StackPanel>
 
@@ -92,6 +94,7 @@
                 <ItemsControl
                     Grid.Row="1"
                     Grid.Column="1"
+                    Margin="0,0,10,0"
                     ItemsSource="{Binding ProductionTiles}"
                     >
 
@@ -130,6 +133,7 @@
                 <ItemsControl
                     Grid.Row="1"
                     Grid.Column="1"
+                    Margin="0,0,10,0"
                     ItemsSource="{Binding ProductionTiles}"
                     >
 
@@ -247,7 +251,6 @@
             </Grid>
 
             <!--  Player 1 - Dropped Tiles Slots  -->
-
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="6*" />
@@ -330,8 +333,10 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="2"
-                    Margin="0,20,0,0"
+                    Margin="0,0,0,0"
                     FontSize="32"
+                    Foreground="Aqua"
+                    VerticalAlignment="Top"
                     Text="{Binding DroppedTileScore}"
                     />
 
@@ -341,6 +346,8 @@
                     Grid.Column="3"
                     Margin="0,0,0,0"
                     FontSize="32"
+                    Foreground="Gold"
+                    FontWeight="Bold"
                     Text="{Binding TotalScore}"
                     />
 

@@ -232,8 +232,8 @@
 
             <!--  Debug Tile Collection Text  -->
             <StackPanel Grid.Row="4" Grid.Column="0">
-                <TextBlock Text="{Binding DebugTileBagText}" />
-                <TextBlock Text="{Binding DebugTileBinText}" />
+                <TextBlock Text="{Binding DebugTileBagText}" Foreground="Aqua" FontSize="18"/>
+                <TextBlock Text="{Binding DebugTileBinText}" Foreground="Aqua" FontSize="18"/>
             </StackPanel>
 
 
