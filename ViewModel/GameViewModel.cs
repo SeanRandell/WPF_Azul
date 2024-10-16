@@ -332,10 +332,10 @@ namespace WPF_Azul.ViewModel
                 // check for game over
                 if (_gameManager.IsGameOver())
                 {
-                    //for (int i = 0; i < PlayerViewModels.Count; i++)
-                    //{
-                    //    PlayerViewModels[i].UpdateViewModelAfterGameEnd();
-                    //}
+                    for (int i = 0; i < PlayerViewModels.Count; i++)
+                    {
+                        PlayerViewModels[i].UpdateViewModelAfterGameEnd();
+                    }
 
                     switch (_gameManager._gameState._gamePhase)
                     {

@@ -56,8 +56,8 @@ namespace WPF_Azul.Model
         internal void CalculateEndGameScores()
         {
             // TODO - EndGameScore is only for testing purposes. Evaulate later if it should be kept or not.
-            EndGameScore += playerBoard.CheckForFullRowsAndColumns() + playerBoard.CheckIfAllTilesOfTypeAreFilled() + playerBoard.CheckIfAllTilesOfTypeAreFilled();
-                score += EndGameScore;
+            EndGameScore += playerBoard.CheckForFullRowsAndColumns() + playerBoard.CheckIfAllTilesOfTypeAreFilled();
+            score += EndGameScore;
         }
     }
 }
