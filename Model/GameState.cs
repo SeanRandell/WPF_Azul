@@ -26,8 +26,8 @@ namespace WPF_Azul.Model
             _gamePhase = GamePhase.StartUp;
             InitPlayers();
             InitFactories();
-            SetupFactoriesForRound();
-            //DrawState();
+            //SetupFactoriesForRound();
+            TestCompletedColourScoringState();
         }
 
         internal void InitPlayers()
@@ -161,24 +161,30 @@ namespace WPF_Azul.Model
             activePlayerTurnIndex = GameConstants.STARTING_PLAYER_INDEX;
 
             // fill the top row of the wall tiles except for the tile needed to complete a row.
-            TileType ExcludingRowTile = TileType.Red;
+            TileType tileColourToFill = TileType.Red;
+            TileType otherColourToFill = TileType.Blue;
+            FillRowExceptForOne(GameConstants.STARTING_PLAYER_INDEX, 0, tileColourToFill);
+            FillPlayerColourExceptForOne(GameConstants.STARTING_PLAYER_INDEX, tileColourToFill, 0);
+            FillPlayerColourExceptForOne(GameConstants.STARTING_PLAYER_INDEX, otherColourToFill, -1);
+
+
         }
 
         private void FillPlayerColourExceptForOne(int currentPlayerIndex, TileType tileTypeToFill, int rowToExclude)
         {
             int indexOfCurrentTileTypeInTileBag;
-            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            for (int row = 0; row < GameConstants.MAIN_TILES_LENGTH; row++)
             {
-                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
+                for (int column = 0; column < GameConstants.MAIN_TILES_LENGTH; column++)
                 {
-                    if (j == GameConstants.GetWallTilePatternIndex(i, tileTypeToFill) && j != rowToExclude)
+                    if (row == GameConstants.GetWallTilePatternIndex(column, tileTypeToFill) && row != rowToExclude &&
+                        players[currentPlayerIndex].PlayerBoard.WallTiles[row, column] == null)
                     {
                         indexOfCurrentTileTypeInTileBag = tileCollections.tileBag.FindIndex(x => x.TileType == tileTypeToFill);
-                        players[currentPlayerIndex].PlayerBoard.WallTiles[i, j] = tileCollections.tileBag[indexOfCurrentTileTypeInTileBag];
+                        players[currentPlayerIndex].PlayerBoard.WallTiles[row, column] = tileCollections.tileBag[indexOfCurrentTileTypeInTileBag];
                         tileCollections.tileBag.RemoveAt(indexOfCurrentTileTypeInTileBag);
                     }
                 }
-
             }
         }
 
@@ -188,6 +194,11 @@ namespace WPF_Azul.Model
             int indexOfCurrentTileTypeInTileBag;
             for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
+                if (players[playerIndex].PlayerBoard.WallTiles[rowToFill, i] != null)
+                {
+                    continue;
+                }
+
                 currentTileType = GameConstants.WALL_TILE_PATTERN[rowToFill, i];
 
                 if (currentTileType == tileTypeToExclude)
@@ -207,6 +218,11 @@ namespace WPF_Azul.Model
             int indexOfCurrentTileTypeInTileBag;
             for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
+                if (players[playerIndex].PlayerBoard.WallTiles[i, columnToFill] != null)
+                {
+                    continue;
+                }
+
                 currentTileType = GameConstants.WALL_TILE_PATTERN[i, columnToFill];
 
                 if (currentTileType == tileTypeToExclude)
