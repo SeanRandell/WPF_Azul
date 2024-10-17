@@ -87,5 +87,15 @@ namespace WPF_Azul.Model
         {
             tileBin.AddRange(tilesToBin);
         }
+
+        internal void AddTileToTileBin(Tile tileToBin)
+        {
+            tileBin.Add(tileToBin);
+        }
+
+        internal void ResetBagAndBinForNewGame()
+        {
+            RefillBagFromBin();
+        }
     }
 }

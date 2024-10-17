@@ -211,7 +211,7 @@ namespace WPF_Azul.Model
             // first find the first null index and start adding tiles there
             int firstFreeIndex = Array.FindIndex(droppedTiles, t => t == null);
 
-            if(firstFreeIndex >= 0)
+            if (firstFreeIndex >= 0)
             {
                 droppedTiles[firstFreeIndex] = tileToAdd;
                 return true;
@@ -334,7 +334,7 @@ namespace WPF_Azul.Model
             {
                 if (IsFullColumn(column))
                 {
-                    score += GameConstants.COMPLETED_COLUMN_SCORE; 
+                    score += GameConstants.COMPLETED_COLUMN_SCORE;
                 }
             }
 
@@ -379,7 +379,7 @@ namespace WPF_Azul.Model
             {
                 for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
                 {
-                    if (WallTiles[i,j] != null)
+                    if (WallTiles[i, j] != null)
                     {
                         currentTileTypeIndex = (int)WallTiles[i, j].TileType;
                         listOfTileTypes[currentTileTypeIndex].Add(WallTiles[i, j].TileType);
@@ -413,6 +413,48 @@ namespace WPF_Azul.Model
                 }
             }
             return false;
+        }
+
+        internal void ClearWallTilesForGameEnd(TileCollections tileCollections)
+        {
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
+                {
+                    if (wallTiles[i, j] != null)
+                    {
+                        tileCollections.AddTileToTileBin(wallTiles[i, j]);
+                        wallTiles[i, j] = null;
+                    }
+                }
+            }
+        }
+
+        internal void ClearProductionTilesForGameEnd(TileCollections tileCollections)
+        {
+            for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
+            {
+                for (int j = 0; j < productionTiles[i].Length; j++)
+                {
+                    if (productionTiles[i][j] != null)
+                    {
+                        tileCollections.AddTileToTileBin(productionTiles[i][j]);
+                        productionTiles[i][j] = null;
+                    }
+                }
+            }
+        }
+
+        internal void ClearDroppedTilesForGameEnd(TileCollections tileCollections)
+        {
+            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
+            {
+                if (DroppedTiles[i] != null)
+                {
+                    tileCollections.AddTileToTileBin(DroppedTiles[i]);
+                    DroppedTiles[i] = null;
+                }
+            }
         }
     }
 }

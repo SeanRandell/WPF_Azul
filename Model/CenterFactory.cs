@@ -38,13 +38,6 @@ namespace WPF_Azul.Model
                     droppedTiles[i] = null;
                 }
             }
-
-            //if (droppedTiles.Any(t => t.TileType == TileType.StartingPlayerMarker))
-            //{
-            //    int startingTileindex = droppedTiles.FindIndex(t => t.TileType == TileType.StartingPlayerMarker);
-            //    _startingPlayerTile = droppedTiles[startingTileindex];
-            //    droppedTiles.RemoveAt(startingTileindex);
-            //}
         }
 
         internal bool ContainsStartingPlayerMarker()

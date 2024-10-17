@@ -235,5 +235,33 @@ namespace WPF_Azul.Model
                 tileCollections.tileBag.RemoveAt(indexOfCurrentTileTypeInTileBag);
             }
         }
+
+        internal void ResetGame()
+        {
+            for (int i = 0; i < players.Count; i++)
+            {
+                players[i].ResetPlayerScore();
+
+                players[i].PlayerBoard.ClearWallTilesForGameEnd(tileCollections);
+
+                players[i].PlayerBoard.ClearProductionTilesForGameEnd(tileCollections);
+
+                players[i].PlayerBoard.ClearDroppedTilesForGameEnd(tileCollections);
+
+                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
+                {
+                    players[i].PlayerBoard.WallTileScores[j] = 0;
+                }
+
+                players[i].PlayerBoard.DroppedTileScore = 0;
+                players[i].EndGameScore = 0;
+            }
+
+            CenterFactory.GetStartingPlayerTileFromTileBin(tileCollections.tileBin);
+
+            tileCollections.ResetBagAndBinForNewGame();
+
+            SetupFactoriesForRound();
+        }
     }
 }

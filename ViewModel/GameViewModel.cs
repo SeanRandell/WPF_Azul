@@ -238,7 +238,6 @@ namespace WPF_Azul.ViewModel
             UpdateFactories();
         }
 
-        // TODO - Update for to work for both players
         private void UpdateViewModelAfterPlayerTurn(int productionTileIndex)
         {
             if (_selectedFactoryIndex != GameConstants.CENTER_FACTORY_INDEX)
@@ -442,11 +441,26 @@ namespace WPF_Azul.ViewModel
             return endGameStringBuilder.ToString();
         }
 
+        private void UpdateViewModelForNewGame()
+        {
+            for (int i = 0; i < PlayerViewModels.Count; i++)
+            {
+                PlayerViewModels[i].UpdateViewModelAfterGameEnd();
+                PlayerViewModels[i].UpdateViewModelAfterRoundEnd();
+            }
+        }
+
         internal void ResetGame()
         {
             GameHasEnded = false;
             IsGameEndDraw = false;
-            // TODO - reset gameState.
+
+            _gameManager.RestartGame();
+
+            UpdateViewModelForNewGame();
+            UpdateFactories();
+            DebugTileBagText = UpdateDebugTileBagText();
+            DebugTileBinText = UpdateDebugTileBinText();
         }
     }
 }
