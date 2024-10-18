@@ -12,6 +12,7 @@ using WPF_Azul.ViewModel.Commands;
 using WPF_Azul.Model;
 using WPF_Azul.Stores;
 using WPF_Azul.View;
+using WPF_Azul.View.UserControls;
 
 namespace WPF_Azul.ViewModel
 {
@@ -29,6 +30,8 @@ namespace WPF_Azul.ViewModel
         public ICommand UndoFactoryTileClick { get; }
 
         public ICommand ReplayGameButtonCommand { get; }
+
+        public ICommand HowToPlayButtonCommand { get; }
 
         // TODO - Change to jsut use the wallpattern inside a player. See if an internal colour variable can be used.
 
@@ -193,6 +196,7 @@ namespace WPF_Azul.ViewModel
             ProductionLineClickCommand = new ProductionLineClickCommand(this);
             UndoFactoryTileClick = new UndoFactoryTileClick(this);
             ReplayGameButtonCommand = new ReplayGameCommand(this);
+            HowToPlayButtonCommand = new HowToPlayCommand(this);
 
             _playerViewModels = new List<PlayerBoardViewModel>();
             InitPlayerViewModels();
@@ -461,6 +465,12 @@ namespace WPF_Azul.ViewModel
             UpdateFactories();
             DebugTileBagText = UpdateDebugTileBagText();
             DebugTileBinText = UpdateDebugTileBinText();
+        }
+
+        internal void ShowHowToPlayWindow()
+        {
+            HowToPlayModal helpModal = new HowToPlayModal();
+            helpModal.ShowDialog();
         }
     }
 }

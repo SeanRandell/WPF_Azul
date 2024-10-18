@@ -46,6 +46,23 @@
                     Command="{Binding MainMenuCommand}"
                     Content="Main Menu"
                     />
+                <!--  Help Button  -->
+                <Button
+                    Grid.Row="0"
+                    Width="40"
+                    Height="40"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Background="LightGray"
+                    Command="{Binding HowToPlayButtonCommand}"
+                    Content="?"
+                    FontSize="26"
+                    FontWeight="Bold"
+                    ToolTip="Game Rules"
+                    ToolTipService.InitialShowDelay="0"
+                    ToolTipService.ShowOnDisabled="True"
+                    />
             </StackPanel>
         </Grid>
 
