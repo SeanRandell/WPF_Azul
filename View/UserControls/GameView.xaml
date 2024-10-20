@@ -160,7 +160,7 @@
             <!--  Undo Factory Click Button  -->
             <Button
                 Grid.Row="1"
-                Grid.Column="1"
+                Grid.Column="2"
                 Command="{Binding UndoFactoryTileClick}"
                 Content="Undo Tile Selection"
                 Visibility="{Binding IsFactoryTileSelected, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
@@ -237,39 +237,37 @@
             </Grid>
 
             <!--  Currently Selected Tiles View  -->
-            <!--<ItemsControl
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="0,0,0,0"
-                    ItemsSource="{Binding CenterFactoryTiles}"
-                    >
+            <ItemsControl
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,0,0"
+                ItemsSource="{Binding SelectedFactoryTiles}"
+                >
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid
-                                Margin="0"
-                                VerticalAlignment="Top"
-                                Columns="3"
-                                Rows="5"
-                                />
+                            Margin="0"
+                            VerticalAlignment="Top"
+                            Columns="5"
+                            Rows="3"
+                            />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <local:TileView
-                                Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
-                                MinWidth="30"
-                                MinHeight="30"
-                                Cursor="Hand"
-                                FactoryTileClickCommand="{Binding DataContext.FactoryTileClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                TileColour="{Binding}"
-                                TileObject="{Binding}"
-                                />
+                            Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                            MinWidth="30"
+                            MinHeight="30"
+                            TileColour="{Binding}"
+                            TileObject="{Binding}"
+                            />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
-            </ItemsControl>-->
+            </ItemsControl>
 
             <!--  Debug Tile Collection Text  -->
             <StackPanel Grid.Row="1" Grid.Column="0">

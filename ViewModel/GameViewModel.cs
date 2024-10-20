@@ -43,7 +43,19 @@ namespace WPF_Azul.ViewModel
             set { _selectedTileType = value; }
         }
 
-        private int _selectedFactoryIndex;
+        private ObservableCollection<Tile> _selectedFactoryTiles;
+
+        public ObservableCollection<Tile> SelectedFactoryTiles
+        {
+            get { return _selectedFactoryTiles; }
+            set
+            {
+                _selectedFactoryTiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int SelectedFactoryIndex;
 
         private ObservableCollection<ObservableCollection<Tile>> _factories;
 
@@ -188,8 +200,9 @@ namespace WPF_Azul.ViewModel
         internal GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
             _selectedTileType = TileType.Blue; // default value
+            _selectedFactoryTiles = new ObservableCollection<Tile>();
             _isFactoryTileSelected = false;
-            _selectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            SelectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             _gameManager = gameManager;
             MainMenuCommand = new MainMenuCommand(navigationStore);
             FactoryTileClickCommand = new FactoryTileClickCommand(_gameManager, this);
@@ -205,7 +218,7 @@ namespace WPF_Azul.ViewModel
 
             _factories = InitFactories();
             _centerFactoryTiles = new ObservableCollection<Tile>();
-            _startingPlayerTile = _gameManager._gameState.CenterFactory._startingPlayerTile;
+            _startingPlayerTile = _gameManager.GameState.CenterFactory._startingPlayerTile;
 
             _endGameText = "";
             _gameHasEnded = false;
@@ -238,18 +251,23 @@ namespace WPF_Azul.ViewModel
 
         private void UpdateViewModelFromModel()
         {
-            PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].UpdateViewModelFromModel();
+            for (int i = 0; i < PlayerViewModels.Count; i++)
+            {
+                PlayerViewModels[i].UpdateViewModelFromModel();
+            }
+
             UpdateFactories();
         }
 
         private void UpdateViewModelAfterPlayerTurn(int productionTileIndex)
         {
-            if (_selectedFactoryIndex != GameConstants.CENTER_FACTORY_INDEX)
+            if (SelectedFactoryIndex != GameConstants.CENTER_FACTORY_INDEX)
             {
-                UpdateFactory(_selectedFactoryIndex);
+                UpdateFactory(SelectedFactoryIndex);
             }
 
             UpdateCenterFactory();
+            UpdateSelectedFactoryTiles();
 
             if (productionTileIndex != GameConstants.DROPPED_TILE_ROW_INDEX)
             {
@@ -262,14 +280,14 @@ namespace WPF_Azul.ViewModel
 
         private void UpdateFactory(int selectedFactoryIndex)
         {
-            UpdateCollection(_gameManager._gameState.Factories[selectedFactoryIndex].FactoryTiles, Factories[selectedFactoryIndex]);
+            UpdateCollection(_gameManager.GameState.Factories[selectedFactoryIndex].FactoryTiles, Factories[selectedFactoryIndex]);
         }
 
         private void UpdateFactories()
         {
             for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
             {
-                UpdateCollection(_gameManager._gameState.Factories[i].FactoryTiles, Factories[i]);
+                UpdateCollection(_gameManager.GameState.Factories[i].FactoryTiles, Factories[i]);
             }
 
             UpdateCenterFactory();
@@ -277,8 +295,8 @@ namespace WPF_Azul.ViewModel
 
         private void UpdateCenterFactory()
         {
-            UpdateCollection(_gameManager._gameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
-            StartingPlayerTile = _gameManager._gameState.CenterFactory._startingPlayerTile;
+            UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
+            StartingPlayerTile = _gameManager.GameState.CenterFactory._startingPlayerTile;
         }
 
         internal void ProductionLineSelected(int productionTileIndex)
@@ -292,7 +310,7 @@ namespace WPF_Azul.ViewModel
             IsFactoryTileSelected = false;
             PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ActivatedDroppedTiles.IsEnabled = false;
 
-            _gameManager.ProductionTileSelected(productionTileIndex, _selectedTileType, _selectedFactoryIndex);
+            _gameManager.ProductionTileSelected(productionTileIndex, SelectedFactoryIndex);
 
             Trace.WriteLine("Production line index: " + productionTileIndex);
 
@@ -340,7 +358,7 @@ namespace WPF_Azul.ViewModel
                         PlayerViewModels[i].UpdateViewModelAfterGameEnd();
                     }
 
-                    switch (_gameManager._gameState._gamePhase)
+                    switch (_gameManager.GameState.GamePhase)
                     {
                         case GamePhase.Player1Wins:
                             UpdateViewModelForPlayerWin(GameConstants.STARTING_PLAYER_INDEX);
@@ -359,9 +377,6 @@ namespace WPF_Azul.ViewModel
                 else
                 {
                     UpdateFactories();
-
-                    //DebugTileBinText = UpdateDebugTileBinText();
-                    //DebugTileBagText = UpdateDebugTileBagText();
                     _gameManager.StartNewRound();
                 }
                 DebugTileBinText = UpdateDebugTileBinText();
@@ -390,8 +405,9 @@ namespace WPF_Azul.ViewModel
         internal void FactoryTileSelected(TileType selectedTileType, int factoriesIndex)
         {
             //first get factory index and the tile type from the clicked on tile
-            _selectedFactoryIndex = factoriesIndex;
+            SelectedFactoryIndex = factoriesIndex;
             _selectedTileType = selectedTileType;
+            _gameManager.UpdateSelectedFactoryTiles(selectedTileType, factoriesIndex);
             IsFactoryTileSelected = true;
 
             // pass theses details to gamemanager.
@@ -404,6 +420,17 @@ namespace WPF_Azul.ViewModel
                 Trace.WriteLine("Valid Production Tile index: " + validIndex);
             }
             PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ActivatedDroppedTiles.IsEnabled = true;
+
+            UpdateSelectedFactoryTiles();
+
+            if (factoriesIndex == GameConstants.CENTER_FACTORY_INDEX)
+            {
+                UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
+            }
+            else
+            {
+                UpdateCollection(_gameManager.GameState.Factories[factoriesIndex].FactoryTiles, Factories[factoriesIndex]);
+            }
         }
 
         internal void UndoFactoryTileSelected()
@@ -411,11 +438,23 @@ namespace WPF_Azul.ViewModel
             foreach (ValidProductionTile productionTile in PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ValidProductionTiles)
             {
                 productionTile.IsEnabled = false;
-                _selectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             }
             // ToDo change for both players
             PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ActivatedDroppedTiles.IsEnabled = false;
             IsFactoryTileSelected = false;
+            _gameManager.PlaceSelectedFactoryTilesBack(SelectedFactoryIndex);
+
+            UpdateSelectedFactoryTiles();
+            if (SelectedFactoryIndex == GameConstants.CENTER_FACTORY_INDEX)
+            {
+                UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
+            }
+            else
+            {
+                UpdateCollection(_gameManager.GameState.Factories[SelectedFactoryIndex].FactoryTiles, Factories[SelectedFactoryIndex]);
+            }
+
+            SelectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
         }
 
         private string UpdateDebugTileBinText()
@@ -425,7 +464,7 @@ namespace WPF_Azul.ViewModel
 
         private string UpdateDebugTileBagText()
         {
-            return "TileBag: " + _gameManager.GetDebugTileBinCount();
+            return "TileBin: " + _gameManager.GetDebugTileBinCount();
         }
 
         private string UpdateEndGameText(int winningPlayerIndex)
@@ -471,6 +510,11 @@ namespace WPF_Azul.ViewModel
         {
             HowToPlayModal helpModal = new HowToPlayModal();
             helpModal.ShowDialog();
+        }
+
+        private void UpdateSelectedFactoryTiles()
+        {
+            UpdateCollection(_gameManager.GameState.SelectedFactoryTiles, SelectedFactoryTiles);
         }
     }
 }

@@ -238,7 +238,7 @@ namespace WPF_Azul.ViewModel
 
         private void UpdatePlayerScores()
         {
-            TotalScore = _playerModel.score;
+            TotalScore = _playerModel.Score;
         }
 
         internal void UpdateDroppedTilesScores()

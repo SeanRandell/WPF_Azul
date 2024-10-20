@@ -49,14 +49,14 @@
                     <TextBlock
                         Margin="0,0,0,0"
                         FontSize="16"
-                        Text="End Scores:"
                         Foreground="Aqua"
+                        Text="End Scores:"
                         />
                     <TextBlock
                         Margin="0,0,0,0"
                         FontSize="16"
-                        Text="{Binding EndGameScore}"
                         Foreground="Aqua"
+                        Text="{Binding EndGameScore}"
                         />
                 </StackPanel>
 
@@ -289,7 +289,11 @@
                     >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Margin="5" Rows="1" />
+                            <UniformGrid
+                                Margin="5"
+                                Columns="7"
+                                Rows="1"
+                                />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
@@ -318,6 +322,7 @@
                             <UniformGrid
                                 Margin="5"
                                 VerticalAlignment="Top"
+                                Columns="7"
                                 Rows="1"
                                 />
                         </ItemsPanelTemplate>
@@ -334,9 +339,9 @@
                     Grid.Row="0"
                     Grid.Column="2"
                     Margin="0,0,0,0"
+                    VerticalAlignment="Top"
                     FontSize="32"
                     Foreground="Aqua"
-                    VerticalAlignment="Top"
                     Text="{Binding DroppedTileScore}"
                     />
 
@@ -346,8 +351,8 @@
                     Grid.Column="3"
                     Margin="0,0,0,0"
                     FontSize="32"
-                    Foreground="Gold"
                     FontWeight="Bold"
+                    Foreground="Gold"
                     Text="{Binding TotalScore}"
                     />
 

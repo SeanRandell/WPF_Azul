@@ -7,11 +7,11 @@ using System.Windows.Documents;
 
 namespace WPF_Azul.Model
 {
-    internal class CenterFactory : Factory
+    internal class CenterFactory : FactoryBase
     {
         internal Tile _startingPlayerTile { get; set; }
 
-        internal CenterFactory() : base()
+        internal CenterFactory(int factoryIndex) : base(factoryIndex)
         {
             _startingPlayerTile = new Tile(TileType.StartingPlayerMarker);
             _startingPlayerTile.FactoriesIndex = GameConstants.CENTER_FACTORY_INDEX;
@@ -19,13 +19,13 @@ namespace WPF_Azul.Model
 
         internal void ResetCenterFactoryForNewGame(TileCollections tileCollections)
         {
-            tileCollections.tileBag.AddRange(factoryTiles);
-            factoryTiles.Clear();
+            tileCollections.tileBag.AddRange(FactoryTiles);
+            FactoryTiles.Clear();
         }
 
-        internal void ResetCenterFactoryForRound(Tile[] droppedTiles)
+        internal void ResetCenterFactoryForRound(List<Tile> droppedTiles)
         {
-            for (int i = 0; i < droppedTiles.Length; i++)
+            for (int i = 0; i < droppedTiles.Count; i++)
             {
                 if (droppedTiles[i] != null)
                 {
@@ -35,7 +35,7 @@ namespace WPF_Azul.Model
                 if (droppedTiles[i].TileType == TileType.StartingPlayerMarker)
                 {
                     _startingPlayerTile = droppedTiles[i];
-                    droppedTiles[i] = null;
+                    droppedTiles.RemoveAt(i);
                 }
             }
         }

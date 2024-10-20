@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Azul.Model;
 
 namespace WPF_Azul.ViewModel
 {
@@ -19,21 +20,6 @@ namespace WPF_Azul.ViewModel
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void UpdateCollection<TModel>(TModel[] modelArray, ObservableCollection<TModel> ViewModelCollection)
-        {
-            if (modelArray == null || ViewModelCollection == null )
-            {
-                throw new ArgumentNullException();
-            }
-
-            ViewModelCollection.Clear();
-
-            foreach (var item in modelArray)
-            {
-                ViewModelCollection.Add(item);
-            }
         }
 
         public void UpdateCollection<TModel>(List<TModel> modelList, ObservableCollection<TModel> ViewModelCollection)
@@ -76,7 +62,7 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-        public static void UpdateJaggedCollection<T>(T[][] modelJagged2DArray, ObservableCollection<ObservableCollection<T>> ViewModel2DCollection)
+        public static void UpdateJaggedCollection<T>(List<List<T>> modelJagged2DArray, ObservableCollection<ObservableCollection<T>> ViewModel2DCollection)
         {
             if (modelJagged2DArray == null || ViewModel2DCollection == null)
             {

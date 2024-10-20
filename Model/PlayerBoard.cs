@@ -11,51 +11,45 @@ namespace WPF_Azul.Model
 {
     public class PlayerBoard
     {
-        private Tile[,] wallTiles;
         public Tile[,] WallTiles
         {
-            get { return wallTiles; }
-            set { wallTiles = value; }
+            get;
+            set;
         }
 
-        private Tile[][] productionTiles;
-        public Tile[][] ProductionTiles
+        public List<List<Tile>> ProductionTiles
         {
-            get { return productionTiles; }
-            set { productionTiles = value; }
+            get;
+            set;
         }
 
-        private Tile[] droppedTiles;
-        public Tile[] DroppedTiles
+        public List<Tile> DroppedTiles
         {
-            get { return droppedTiles; }
-            set { droppedTiles = value; }
+            get;
+            set;
         }
 
         //TODO - these score calculations may not need to be saved. Find a better way of getting them to the viewmodel only when needed.
-        private int[] _wallTileScores;
 
-        public int[] WallTileScores
+        public List<int> WallTileScores
         {
-            get { return _wallTileScores; }
-            set { _wallTileScores = value; }
+            get;
+            set;
         }
-
-        private int _droppedTileScore;
 
         public int DroppedTileScore
         {
-            get { return _droppedTileScore; }
-            set { _droppedTileScore = value; }
+            get;
+            set;
         }
 
         internal PlayerBoard()
         {
-            wallTiles = new Tile[GameConstants.MAIN_TILES_LENGTH, GameConstants.MAIN_TILES_LENGTH];
-            productionTiles = new Tile[GameConstants.MAIN_TILES_LENGTH][];
-            droppedTiles = new Tile[GameConstants.DROPPED_TILE_LENGTH];
-            _wallTileScores = new int[GameConstants.MAIN_TILES_LENGTH];
-            _droppedTileScore = 0;
+            WallTiles = new Tile[GameConstants.MAIN_TILES_LENGTH, GameConstants.MAIN_TILES_LENGTH];
+            ProductionTiles = new List<List<Tile>>(GameConstants.MAIN_TILES_LENGTH);
+            DroppedTiles = new List<Tile>(GameConstants.DROPPED_TILE_LENGTH);
+            WallTileScores = new List<int>(GameConstants.MAIN_TILES_LENGTH);
+            DroppedTileScore = 0;
 
             InitWallTiles();
             InitProductionTiles();
@@ -65,7 +59,13 @@ namespace WPF_Azul.Model
         {
             for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
-                productionTiles[i] = new Tile[i + 1];
+                List<Tile> newProdoctionTileRow = new List<Tile>();
+
+                for (int j = 0; j < i + 1; j++)
+                {
+                    newProdoctionTileRow.Add(null);
+                }
+                ProductionTiles.Add(newProdoctionTileRow);
             }
         }
 
@@ -75,12 +75,11 @@ namespace WPF_Azul.Model
             {
                 for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
                 {
-                    wallTiles[i, j] = null;
+                    WallTiles[i, j] = null;
                 }
             }
         }
 
-        // TODO - Find a way to optimise 
         internal List<int> GetValidProductionTilesIndexes(TileType selectedTileType)
         {
             List<int> resultList = new List<int>();
@@ -88,59 +87,28 @@ namespace WPF_Azul.Model
             for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
                 // first check if there is not already that tile type in the wall tile row
-                bool tileTypeExistsInWall = false;
-                foreach (Tile tile in GetRow(wallTiles, i))
-                {
-                    if (tile != null)
-                    {
-                        if (tile.TileType == selectedTileType)
-                        {
-                            tileTypeExistsInWall = true;
-                        }
-                    }
-                }
-                if (tileTypeExistsInWall)
+                if (GetRow(WallTiles, i).Any(tile => tile != null && tile.TileType == selectedTileType))
                 {
                     continue;
                 }
 
-                // check if the production line is full
-                if (Array.IndexOf(productionTiles[i], null) < 0)
+                bool doesTheProductionLineHaveEmptySpaces = ProductionTiles[i].Contains(null);
+                if (!doesTheProductionLineHaveEmptySpaces)
                 {
                     continue;
                 }
 
-                // if there space but there is already tiles in this row
-                // check if there is already the same type of tile in the production line
-                bool doesProductionLineMatchSelectedType = false;
-                for (int j = 0; j < productionTiles[i].Length; j++)
+                bool sameTileTypeInProductionLine = ProductionTiles[i].Any(tile => tile != null && tile.TileType == selectedTileType);
+                if (sameTileTypeInProductionLine && doesTheProductionLineHaveEmptySpaces)
                 {
-                    if (productionTiles[i][j] != null)
-                    {
-                        if (productionTiles[i][j].TileType == selectedTileType)
-                        {
-                            resultList.Add(i);
-                            doesProductionLineMatchSelectedType = true;
-                            break;
-                        }
-                    }
+                    resultList.Add(i);
+                    continue;
                 }
-                // if there is not matching tiles then check if production line is empty
-                if (!doesProductionLineMatchSelectedType)
+
+                bool isProductionLineEmpty = ProductionTiles[i].All(tile => tile == null);
+                if (isProductionLineEmpty)
                 {
-                    bool isProductionLineEmpty = true;
-                    for (int j = 0; j < productionTiles[i].Length; j++)
-                    {
-                        if (productionTiles[i][j] != null)
-                        {
-                            isProductionLineEmpty = false;
-                        }
-                    }
-                    if (isProductionLineEmpty)
-                    {
-                        resultList.Add(i);
-                        continue;
-                    }
+                    resultList.Add(i);
                 }
             }
             return resultList;
@@ -158,13 +126,13 @@ namespace WPF_Azul.Model
             if (productionTileIndex != GameConstants.DROPPED_TILE_ROW_INDEX)
             {
                 // loop through adding the selected tiles to production tiles until the production tiles are full and then when the selected tiles are empty.
-                int i = Array.IndexOf(productionTiles[productionTileIndex], null);
+                int i = ProductionTiles[productionTileIndex].FindIndex(tile => tile == null);
                 int tilesAddedToProductionCount = 0;
-                for (; i >= 0 && i < productionTiles[productionTileIndex].Length && tilesAddedToProductionCount < selectedFactoryTiles.Count; i++)
+                for (; i >= 0 && i < ProductionTiles[productionTileIndex].Count && tilesAddedToProductionCount < selectedFactoryTiles.Count; i++)
                 {
-                    if (productionTiles[productionTileIndex][i] == null)
+                    if (ProductionTiles[productionTileIndex][i] == null)
                     {
-                        productionTiles[productionTileIndex][i] = selectedFactoryTiles[tilesAddedToProductionCount];
+                        ProductionTiles[productionTileIndex][i] = selectedFactoryTiles[tilesAddedToProductionCount];
                         tilesAddedToProductionCount++;
                     }
                 }
@@ -187,17 +155,14 @@ namespace WPF_Azul.Model
         internal void AddTilesToDroppedTiles(List<Tile> selectedFactoryTiles)
         {
             // first find the first null index and start adding tiles there
-            int i = Array.FindIndex(droppedTiles, t => t == null);
+            int i = DroppedTiles.Count;
             Trace.WriteLine("First index of null value in dropped tiles is " + i);
 
             int tilesAddedToDroppedTiles = 0;
-            for (; i >= 0 && i < droppedTiles.Length && tilesAddedToDroppedTiles < selectedFactoryTiles.Count; i++)
+            for (; i >= 0 && i < GameConstants.DROPPED_TILE_LENGTH && tilesAddedToDroppedTiles < selectedFactoryTiles.Count; i++)
             {
-                if (droppedTiles[i] == null)
-                {
-                    droppedTiles[i] = selectedFactoryTiles[tilesAddedToDroppedTiles];
-                    tilesAddedToDroppedTiles++;
-                }
+                DroppedTiles.Add(selectedFactoryTiles[tilesAddedToDroppedTiles]);
+                tilesAddedToDroppedTiles++;
             }
 
             // once dropped tile is full or all tiles have been added. remove the added tiles from selected tiles
@@ -209,11 +174,9 @@ namespace WPF_Azul.Model
         internal bool TryToAddTileToDroppedTiles(Tile tileToAdd)
         {
             // first find the first null index and start adding tiles there
-            int firstFreeIndex = Array.FindIndex(droppedTiles, t => t == null);
-
-            if (firstFreeIndex >= 0)
+            if (DroppedTiles.Count < GameConstants.DROPPED_TILE_LENGTH)
             {
-                droppedTiles[firstFreeIndex] = tileToAdd;
+                DroppedTiles.Add(tileToAdd);
                 return true;
             }
             return false;
@@ -221,27 +184,27 @@ namespace WPF_Azul.Model
 
         internal void CalculateProductionTileScores(TileCollections tileCollections)
         {
-            int[] returnList = new int[GameConstants.MAIN_TILES_LENGTH];
+            List<int> returnList = new List<int>(GameConstants.MAIN_TILES_LENGTH);
 
             for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
                 // Move tiles out of productionTiles
-                if (Array.IndexOf(productionTiles[i], null) < 0)
+                if (!ProductionTiles[i].Contains(null))
                 {
                     int wallTileSlotIndex = 0;
-                    for (int j = 0; j < productionTiles[i].Length; j++)
+                    for (int j = 0; j < ProductionTiles[i].Count; j++)
                     {
                         if (j == 0)
                         {
-                            wallTileSlotIndex = GameConstants.GetWallTilePatternIndex(i, productionTiles[i][j].TileType);
-                            wallTiles[i, wallTileSlotIndex] = productionTiles[i][j];
+                            wallTileSlotIndex = GameConstants.GetWallTilePatternIndex(i, ProductionTiles[i][j].TileType);
+                            WallTiles[i, wallTileSlotIndex] = ProductionTiles[i][j];
                         }
                         else
                         {
-                            tileCollections.tileBin.Add(productionTiles[i][j]);
+                            tileCollections.tileBin.Add(ProductionTiles[i][j]);
 
                         }
-                        productionTiles[i][j] = null;
+                        ProductionTiles[i][j] = null;
                     }
 
                     // Check connected tiles in the row
@@ -255,11 +218,11 @@ namespace WPF_Azul.Model
                     columnscore += CountConnectedTiles(i, wallTileSlotIndex, -1, 0); // Check north
 
                     //Subtract 1 because the starting tile is counted twice.
-                    returnList[i] = (rowScore + columnscore - 1);
+                    returnList.Add(rowScore + columnscore - 1);
                 }
                 else
                 {
-                    returnList[i] = 0;
+                    returnList.Add(0);
                 }
             }
 
@@ -272,10 +235,10 @@ namespace WPF_Azul.Model
             int newX = x + xDirection;
             int newY = y + yDirection;
 
-            while (IsValidWallTile(newX, newY) && wallTiles[newX, newY] != null)
+            while (IsValidWallTile(newX, newY) && WallTiles[newX, newY] != null)
             {
                 Trace.WriteLine("WallTile[" + x + ", " + y + "] is the start");
-                Trace.WriteLine("WallTile[" + newX + "," + newY + "] = " + wallTiles[newX, newY].TileType);
+                Trace.WriteLine("WallTile[" + newX + "," + newY + "] = " + WallTiles[newX, newY].TileType);
                 count++;
                 newX += xDirection;
                 newY += yDirection;
@@ -287,21 +250,19 @@ namespace WPF_Azul.Model
         internal void CalculateDroppedTileScores(TileCollections tileCollections)
         {
             int totalScore = 0;
-            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
+            for (int i = 0; i < DroppedTiles.Count; i++)
             {
-                if (droppedTiles[i] != null)
-                {
-                    totalScore += GameConstants.DROPPED_TILE_COSTS[i];
-                    tileCollections.tileBin.Add(droppedTiles[i]);
-                }
-                droppedTiles[i] = null;
+                totalScore += GameConstants.DROPPED_TILE_COSTS[i];
+                tileCollections.tileBin.Add(DroppedTiles[i]);
+
+                DroppedTiles.RemoveAt(i);
             }
             DroppedTileScore = totalScore;
         }
 
         private bool IsValidWallTile(int x, int y)
         {
-            return x >= 0 && x < wallTiles.GetLength(0) && y >= 0 && y < wallTiles.GetLength(1);
+            return x >= 0 && x < WallTiles.GetLength(0) && y >= 0 && y < WallTiles.GetLength(1);
         }
 
         internal bool CheckIfPlayerEndedGame()
@@ -400,19 +361,7 @@ namespace WPF_Azul.Model
 
         internal bool ContainsStartingTileMarker()
         {
-            for (int i = 0; i < droppedTiles.Length; i++)
-            {
-                if (droppedTiles[i] == null)
-                {
-                    continue;
-                }
-
-                if (droppedTiles[i].TileType == TileType.StartingPlayerMarker)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return DroppedTiles.Any(tile => tile.TileType == TileType.StartingPlayerMarker);
         }
 
         internal void ClearWallTilesForGameEnd(TileCollections tileCollections)
@@ -421,10 +370,10 @@ namespace WPF_Azul.Model
             {
                 for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
                 {
-                    if (wallTiles[i, j] != null)
+                    if (WallTiles[i, j] != null)
                     {
-                        tileCollections.AddTileToTileBin(wallTiles[i, j]);
-                        wallTiles[i, j] = null;
+                        tileCollections.AddTileToTileBin(WallTiles[i, j]);
+                        WallTiles[i, j] = null;
                     }
                 }
             }
@@ -434,12 +383,12 @@ namespace WPF_Azul.Model
         {
             for (int i = 0; i < GameConstants.MAIN_TILES_LENGTH; i++)
             {
-                for (int j = 0; j < productionTiles[i].Length; j++)
+                for (int j = 0; j < ProductionTiles[i].Count; j++)
                 {
-                    if (productionTiles[i][j] != null)
+                    if (ProductionTiles[i][j] != null)
                     {
-                        tileCollections.AddTileToTileBin(productionTiles[i][j]);
-                        productionTiles[i][j] = null;
+                        tileCollections.AddTileToTileBin(ProductionTiles[i][j]);
+                        ProductionTiles[i][j] = null;
                     }
                 }
             }
@@ -447,14 +396,8 @@ namespace WPF_Azul.Model
 
         internal void ClearDroppedTilesForGameEnd(TileCollections tileCollections)
         {
-            for (int i = 0; i < GameConstants.DROPPED_TILE_LENGTH; i++)
-            {
-                if (DroppedTiles[i] != null)
-                {
-                    tileCollections.AddTileToTileBin(DroppedTiles[i]);
-                    DroppedTiles[i] = null;
-                }
-            }
+            tileCollections.AddTilesToTileBin(DroppedTiles);
+            DroppedTiles.Clear();
         }
     }
 }
