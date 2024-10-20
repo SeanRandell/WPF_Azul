@@ -249,54 +249,59 @@ namespace WPF_Azul.ViewModel
             return returnList;
         }
 
-        private void UpdateViewModelFromModel()
+        internal void FactoryTileSelected(TileType selectedTileType, int factoriesIndex)
         {
-            for (int i = 0; i < PlayerViewModels.Count; i++)
+            //first get factory index and the tile type from the clicked on tile
+            SelectedFactoryIndex = factoriesIndex;
+            _selectedTileType = selectedTileType;
+            _gameManager.UpdateSelectedFactoryTiles(selectedTileType, factoriesIndex);
+            IsFactoryTileSelected = true;
+
+            // pass theses details to gamemanager.
+            List<int> validProductionLineIndexes = _gameManager.GetValidProductionTiles(_selectedTileType);
+            foreach (int validIndex in validProductionLineIndexes)
             {
-                PlayerViewModels[i].UpdateViewModelFromModel();
+                //validProductionTilesPlayer1[validIndex] = new ValidProductionTile(validIndex,Visibility.Visible);
+                PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ValidProductionTiles[validIndex].IsEnabled = true;
+
+                Trace.WriteLine("Valid Production Tile index: " + validIndex);
             }
+            PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ActivatedDroppedTiles.IsEnabled = true;
 
-            UpdateFactories();
-        }
-
-        private void UpdateViewModelAfterPlayerTurn(int productionTileIndex)
-        {
-            if (SelectedFactoryIndex != GameConstants.CENTER_FACTORY_INDEX)
-            {
-                UpdateFactory(SelectedFactoryIndex);
-            }
-
-            UpdateCenterFactory();
             UpdateSelectedFactoryTiles();
 
-            if (productionTileIndex != GameConstants.DROPPED_TILE_ROW_INDEX)
+            if (factoriesIndex == GameConstants.CENTER_FACTORY_INDEX)
             {
-                PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].UpdateProductionTile(productionTileIndex);
+                UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
             }
-            PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].UpdateDroppedTiles();
-            DebugTileBagText = UpdateDebugTileBagText();
-            DebugTileBinText = UpdateDebugTileBinText();
-        }
-
-        private void UpdateFactory(int selectedFactoryIndex)
-        {
-            UpdateCollection(_gameManager.GameState.Factories[selectedFactoryIndex].FactoryTiles, Factories[selectedFactoryIndex]);
-        }
-
-        private void UpdateFactories()
-        {
-            for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
+            else
             {
-                UpdateCollection(_gameManager.GameState.Factories[i].FactoryTiles, Factories[i]);
+                UpdateCollection(_gameManager.GameState.Factories[factoriesIndex].FactoryTiles, Factories[factoriesIndex]);
             }
-
-            UpdateCenterFactory();
         }
 
-        private void UpdateCenterFactory()
+        internal void UndoFactoryTileSelected()
         {
-            UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
-            StartingPlayerTile = _gameManager.GameState.CenterFactory._startingPlayerTile;
+            foreach (ValidProductionTile productionTile in PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ValidProductionTiles)
+            {
+                productionTile.IsEnabled = false;
+            }
+            // ToDo change for both players
+            PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ActivatedDroppedTiles.IsEnabled = false;
+            IsFactoryTileSelected = false;
+            _gameManager.PlaceSelectedFactoryTilesBack(SelectedFactoryIndex);
+
+            UpdateSelectedFactoryTiles();
+            if (SelectedFactoryIndex == GameConstants.CENTER_FACTORY_INDEX)
+            {
+                UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
+            }
+            else
+            {
+                UpdateCollection(_gameManager.GameState.Factories[SelectedFactoryIndex].FactoryTiles, Factories[SelectedFactoryIndex]);
+            }
+
+            SelectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
         }
 
         internal void ProductionLineSelected(int productionTileIndex)
@@ -388,6 +393,19 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        internal void ResetGame()
+        {
+            GameHasEnded = false;
+            IsGameEndDraw = false;
+
+            _gameManager.RestartGame();
+
+            UpdateViewModelForNewGame();
+            UpdateFactories();
+            DebugTileBagText = UpdateDebugTileBagText();
+            DebugTileBinText = UpdateDebugTileBinText();
+        }
+
         private void UpdateViewModelForPlayerWin(int playerIndex)
         {
             GameHasEnded = true;
@@ -402,59 +420,34 @@ namespace WPF_Azul.ViewModel
             EndGameText = UpdateEndGameText(noPlayerIndex);
         }
 
-        internal void FactoryTileSelected(TileType selectedTileType, int factoriesIndex)
+
+        private void UpdateViewModelFromModel()
         {
-            //first get factory index and the tile type from the clicked on tile
-            SelectedFactoryIndex = factoriesIndex;
-            _selectedTileType = selectedTileType;
-            _gameManager.UpdateSelectedFactoryTiles(selectedTileType, factoriesIndex);
-            IsFactoryTileSelected = true;
-
-            // pass theses details to gamemanager.
-            List<int> validProductionLineIndexes = _gameManager.GetValidProductionTiles(_selectedTileType);
-            foreach (int validIndex in validProductionLineIndexes)
+            for (int i = 0; i < PlayerViewModels.Count; i++)
             {
-                //validProductionTilesPlayer1[validIndex] = new ValidProductionTile(validIndex,Visibility.Visible);
-                PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ValidProductionTiles[validIndex].IsEnabled = true;
-
-                Trace.WriteLine("Valid Production Tile index: " + validIndex);
+                PlayerViewModels[i].UpdateViewModelFromModel();
             }
-            PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ActivatedDroppedTiles.IsEnabled = true;
 
-            UpdateSelectedFactoryTiles();
-
-            if (factoriesIndex == GameConstants.CENTER_FACTORY_INDEX)
-            {
-                UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
-            }
-            else
-            {
-                UpdateCollection(_gameManager.GameState.Factories[factoriesIndex].FactoryTiles, Factories[factoriesIndex]);
-            }
+            UpdateFactories();
         }
 
-        internal void UndoFactoryTileSelected()
+        private void UpdateViewModelAfterPlayerTurn(int productionTileIndex)
         {
-            foreach (ValidProductionTile productionTile in PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ValidProductionTiles)
+            if (SelectedFactoryIndex != GameConstants.CENTER_FACTORY_INDEX)
             {
-                productionTile.IsEnabled = false;
+                UpdateFactory(SelectedFactoryIndex);
             }
-            // ToDo change for both players
-            PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ActivatedDroppedTiles.IsEnabled = false;
-            IsFactoryTileSelected = false;
-            _gameManager.PlaceSelectedFactoryTilesBack(SelectedFactoryIndex);
 
+            UpdateCenterFactory();
             UpdateSelectedFactoryTiles();
-            if (SelectedFactoryIndex == GameConstants.CENTER_FACTORY_INDEX)
-            {
-                UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
-            }
-            else
-            {
-                UpdateCollection(_gameManager.GameState.Factories[SelectedFactoryIndex].FactoryTiles, Factories[SelectedFactoryIndex]);
-            }
 
-            SelectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            if (productionTileIndex != GameConstants.DROPPED_TILE_ROW_INDEX)
+            {
+                PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].UpdateProductionTile(productionTileIndex);
+            }
+            PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].UpdateDroppedTiles();
+            DebugTileBagText = UpdateDebugTileBagText();
+            DebugTileBinText = UpdateDebugTileBinText();
         }
 
         private string UpdateDebugTileBinText()
@@ -493,17 +486,25 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-        internal void ResetGame()
+        private void UpdateFactory(int selectedFactoryIndex)
         {
-            GameHasEnded = false;
-            IsGameEndDraw = false;
+            UpdateCollection(_gameManager.GameState.Factories[selectedFactoryIndex].FactoryTiles, Factories[selectedFactoryIndex]);
+        }
 
-            _gameManager.RestartGame();
+        private void UpdateFactories()
+        {
+            for (int i = 0; i < GameConstants.FACTORY_COUNT; i++)
+            {
+                UpdateCollection(_gameManager.GameState.Factories[i].FactoryTiles, Factories[i]);
+            }
 
-            UpdateViewModelForNewGame();
-            UpdateFactories();
-            DebugTileBagText = UpdateDebugTileBagText();
-            DebugTileBinText = UpdateDebugTileBinText();
+            UpdateCenterFactory();
+        }
+
+        private void UpdateCenterFactory()
+        {
+            UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
+            StartingPlayerTile = _gameManager.GameState.CenterFactory._startingPlayerTile;
         }
 
         internal void ShowHowToPlayWindow()
