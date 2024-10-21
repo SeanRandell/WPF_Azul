@@ -15,7 +15,6 @@
 
     <Grid>
 
-
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseRightButtonDown">
                 <i:InvokeCommandAction Command="{Binding UndoFactoryTileClick}" />
@@ -237,37 +236,49 @@
             </Grid>
 
             <!--  Currently Selected Tiles View  -->
-            <ItemsControl
+            <Border
+                Background="DarkGray"
+                BorderBrush="Black"
+                BorderThickness="3"
+                CornerRadius="15"
                 Grid.Row="1"
                 Grid.Column="1"
+                >
+                <StackPanel
+                            >
+                    <TextBlock Text="Selected Tiles" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+                
+                <ItemsControl
                 Margin="0,0,0,0"
                 ItemsSource="{Binding SelectedFactoryTiles}"
                 >
 
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid
                             Margin="0"
                             VerticalAlignment="Top"
                             Columns="5"
                             Rows="3"
                             />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:TileView
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:TileView
                             Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                             MinWidth="30"
                             MinHeight="30"
                             TileColour="{Binding}"
                             TileObject="{Binding}"
                             />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
 
-            </ItemsControl>
+                </ItemsControl>
+                </StackPanel>
+            </Border>
 
             <!--  Debug Tile Collection Text  -->
             <StackPanel Grid.Row="1" Grid.Column="0">
