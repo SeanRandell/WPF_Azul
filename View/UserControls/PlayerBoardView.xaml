@@ -25,13 +25,11 @@
                 <RowDefinition Height="3.5*" />
             </Grid.RowDefinitions>
 
-            <!--  Player 1 Grid Layout  -->
+            <!--  Player Grid Layout  -->
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.5*" />
-                    <RowDefinition Height="6*" />
-                    <!--<RowDefinition Height="3.5*" />-->
-                    <!--<RowDefinition Height="1.5*" />-->
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="8.5*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -61,7 +59,7 @@
                 </StackPanel>
 
 
-                <!--  Player 1 selection Tiles  -->
+                <!--  Player selection Tiles  -->
                 <ItemsControl
                     Grid.Row="1"
                     Grid.Column="0"
@@ -90,7 +88,7 @@
 
                 </ItemsControl>
 
-                <!--  Player 1 Production Tiles with nullable test  -->
+                <!--  Player Production Tiles with nullable test  -->
                 <ItemsControl
                     Grid.Row="1"
                     Grid.Column="1"
@@ -169,7 +167,7 @@
 
                 </ItemsControl>
 
-                <!--  Player 1 Wall Tiles  -->
+                <!--  Player Wall Tiles  -->
                 <ItemsControl
                     Grid.Row="1"
                     Grid.Column="2"
@@ -226,7 +224,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!--  Player 1 Wall Tile Scores  -->
+                <!--  Player Wall Tile Scores  -->
                 <ItemsControl
                     Grid.Row="1"
                     Grid.Column="3"
@@ -250,7 +248,7 @@
 
             </Grid>
 
-            <!--  Player 1 - Dropped Tiles Slots  -->
+            <!--  Player - Dropped Tiles Slots  -->
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="6*" />
@@ -268,7 +266,7 @@
                     Text=" Player Dropped Tiles"
                     />-->
 
-                <!--  Player 1 Dropped Tiles selection Tiles  -->
+                <!--  Player Dropped Tiles selection Tiles  -->
                 <local:ValidProductionTileIndicator
                     Grid.Row="0"
                     Grid.Column="0"
@@ -281,7 +279,7 @@
                     Visibility="{Binding ActivatedDroppedTiles.IsEnabled, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
                     />
 
-                <!--  Player 1 Dropped Tile Slots and Values  -->
+                <!--  Player Dropped Tile Slots and Values  -->
                 <ItemsControl
                     Grid.Row="0"
                     Grid.Column="1"
@@ -311,7 +309,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!--  Player 1 - Dropped Tiles  -->
+                <!--  Player - Dropped Tiles  -->
                 <ItemsControl
                     Grid.Row="0"
                     Grid.Column="1"
@@ -334,7 +332,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!--  Player 1 Dropped tile score  -->
+                <!--  Player Dropped tile score  -->
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="2"
@@ -345,7 +343,7 @@
                     Text="{Binding DroppedTileScore}"
                     />
 
-                <!--  Player 1 Score  -->
+                <!--  Player Score  -->
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="3"

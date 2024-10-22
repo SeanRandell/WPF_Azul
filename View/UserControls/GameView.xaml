@@ -22,16 +22,17 @@
         </i:Interaction.Triggers>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="9*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="9.5*" />
         </Grid.RowDefinitions>
 
         <!--  Main Menu Button  -->
         <Grid Grid.Row="0">
             <StackPanel
-                Margin="0,25,0,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Orientation="Horizontal"
                 >
                 <TextBlock
                     HorizontalAlignment="Center"
@@ -68,9 +69,9 @@
         <!--  Grid Setup  -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="6*" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3.4*" />
@@ -83,28 +84,6 @@
             <Grid.Background>
                 <ImageBrush ImageSource="../../ViewModel/Assets/WoodTableTexture.jpg" />
             </Grid.Background>
-
-            <!--  Grid Section Labels  -->
-            <!--<TextBlock
-                Grid.Row="0"
-                Grid.Column="0"
-                Text="Player 1"
-                />
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="1"
-                Text="Factories"
-                />
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="2"
-                Text="Center Factory"
-                />
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="3"
-                Text="Player 2"
-                />-->
 
             <!--  Player 1 Grid Layout  -->
             <local:PlayerBoardView
@@ -237,46 +216,47 @@
 
             <!--  Currently Selected Tiles View  -->
             <Border
+                Grid.Row="1"
+                Grid.Column="1"
                 Background="DarkGray"
                 BorderBrush="Black"
                 BorderThickness="3"
                 CornerRadius="15"
-                Grid.Row="1"
-                Grid.Column="1"
+                Visibility="{Binding SelectedFactoryTiles.Count, Converter={StaticResource listHasContentToVisibilityConverter}}"
                 >
-                <StackPanel
-                            >
-                    <TextBlock Text="Selected Tiles" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-                
-                <ItemsControl
-                Margin="0,0,0,0"
-                ItemsSource="{Binding SelectedFactoryTiles}"
-                >
+                <StackPanel>
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        Text="Selected Tiles"
+                        />
 
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid
-                            Margin="0"
-                            VerticalAlignment="Top"
-                            Columns="5"
-                            Rows="3"
-                            />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                    <ItemsControl Margin="0,0,0,0" ItemsSource="{Binding SelectedFactoryTiles}">
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:TileView
-                            Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
-                            MinWidth="30"
-                            MinHeight="30"
-                            TileColour="{Binding}"
-                            TileObject="{Binding}"
-                            />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid
+                                    Margin="0"
+                                    VerticalAlignment="Top"
+                                    Columns="5"
+                                    Rows="3"
+                                    />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                </ItemsControl>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:TileView
+                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                                    MinWidth="30"
+                                    MinHeight="30"
+                                    TileColour="{Binding}"
+                                    TileObject="{Binding}"
+                                    />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
                 </StackPanel>
             </Border>
 

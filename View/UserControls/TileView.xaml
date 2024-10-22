@@ -11,29 +11,6 @@
     mc:Ignorable="d"
     >
     <Grid x:Name="TileViewUI">
-        <!--<Rectangle
-            x:Name="TileViewUI"
-            RadiusX="5"
-            RadiusY="5"
-            StrokeThickness="5"
-            >
-            <Rectangle.Stroke>
-                <SolidColorBrush Color="{Binding Path=TileColour}" />
-            </Rectangle.Stroke>
-
-            <Rectangle.Fill>
-                <SolidColorBrush Opacity=".75" Color="{Binding Path=TileColour}" />
-            </Rectangle.Fill>
-
-            <Rectangle.InputBindings>
-                <MouseBinding
-                    Command="{Binding Path=FactoryTileClickCommand}"
-                    CommandParameter="{Binding Path=TileObject}"
-                    Gesture="LeftClick"
-                    />
-            </Rectangle.InputBindings>
-        </Rectangle>-->
-
         <Grid.InputBindings>
             <MouseBinding
                 Command="{Binding Path=FactoryTileClickCommand}"

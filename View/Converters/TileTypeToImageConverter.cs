@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using WPF_Azul.Model;
 
@@ -20,7 +22,7 @@ namespace WPF_Azul.View.Converters
 
             if ((Tile)value == null)
             {
-                returnString = "";
+                return DependencyProperty.UnsetValue;
             }
             else
             {

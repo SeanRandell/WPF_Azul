@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,11 @@ namespace WPF_Azul.View.Converters
 {
     class ListHasContentToVisibilityConverter : IValueConverter
     {
-
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            List<Tile> listToCheckForContent = (List<Tile>)value;
-            if(listToCheckForContent.Count > 0)
+            int listCount = (int)value;
+
+            if (listCount > 0)
             {
                 return Visibility.Visible;
             }
