@@ -204,7 +204,7 @@ namespace WPF_Azul.ViewModel
             _isFactoryTileSelected = false;
             SelectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             _gameManager = gameManager;
-            MainMenuCommand = new MainMenuCommand(navigationStore);
+            MainMenuCommand = new MainMenuCommand(navigationStore, this);
             FactoryTileClickCommand = new FactoryTileClickCommand(_gameManager, this);
             ProductionLineClickCommand = new ProductionLineClickCommand(this);
             UndoFactoryTileClick = new UndoFactoryTileClick(this);
@@ -404,6 +404,11 @@ namespace WPF_Azul.ViewModel
             UpdateFactories();
             DebugTileBagText = UpdateDebugTileBagText();
             DebugTileBinText = UpdateDebugTileBinText();
+        }
+
+        internal void ResetGameFromAnyState()
+        {
+            _gameManager.GameState.ResetGameFromAnyState();
         }
 
         private void UpdateViewModelForPlayerWin(int playerIndex)

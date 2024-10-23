@@ -246,7 +246,7 @@ namespace WPF_Azul.Model
 
                 Players[i].PlayerBoard.ClearDroppedTilesForGameEnd(TileCollections);
 
-                for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
+                for (int j = 0; j < Players[i].PlayerBoard.WallTileScores.Count; j++)
                 {
                     Players[i].PlayerBoard.WallTileScores[j] = 0;
                 }
@@ -256,6 +256,42 @@ namespace WPF_Azul.Model
             }
 
             CenterFactory.GetStartingPlayerTileFromTileBin(TileCollections.tileBin);
+
+            TileCollections.ResetBagAndBinForNewGame();
+
+            SetupFactoriesForRound();
+        }
+
+        internal void ResetGameFromAnyState()
+        {
+            for (int i = 0; i < Players.Count; i++)
+            {
+                Players[i].ResetPlayerScore();
+
+                Players[i].PlayerBoard.ClearWallTilesForGameEnd(TileCollections);
+
+                Players[i].PlayerBoard.ClearProductionTilesForGameEnd(TileCollections);
+
+                Players[i].PlayerBoard.ClearDroppedTilesForGameEnd(TileCollections);
+
+                for (int j = 0; j < Players[i].PlayerBoard.WallTileScores.Count; j++)
+                {
+                    Players[i].PlayerBoard.WallTileScores[j] = 0;
+                }
+
+                Players[i].PlayerBoard.DroppedTileScore = 0;
+                Players[i].EndGameScore = 0;
+            }
+
+            for (int i = 0; i < Factories.Count; i++)
+            {
+                Factories[i].BinAllTiles(TileCollections);
+            }
+
+            if (!CenterFactory.ContainsStartingPlayerMarker())
+            {
+                CenterFactory.GetStartingPlayerTileFromTileBin(TileCollections.tileBin);
+            }
 
             TileCollections.ResetBagAndBinForNewGame();
 

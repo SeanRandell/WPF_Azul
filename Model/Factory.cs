@@ -35,5 +35,16 @@ namespace WPF_Azul.Model
             Trace.WriteLine("remaining tile count after removing factory tiles = " + remainingTiles.Count);
             return remainingTiles;
         }
+
+        internal void BinAllTiles(TileCollections tileCollections)
+        {
+            for (int i = 0; i < FactoryTiles.Count; i++)
+            {
+                FactoryTiles[i].FactoriesIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            }
+
+            tileCollections.AddTilesToTileBin(FactoryTiles);
+            FactoryTiles.Clear();
+        }
     }
 }
