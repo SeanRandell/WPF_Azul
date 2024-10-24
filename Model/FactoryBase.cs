@@ -22,11 +22,9 @@ namespace WPF_Azul.Model
             FactoryTiles = new List<Tile>();
         }
 
-        public int AddFactoryTile(Tile tile)
+        public void AddFactoryTile(Tile tile)
         {
-            int preAdditionIndex = FactoryTiles.Count;
             FactoryTiles.Add(tile);
-            return preAdditionIndex;
         }
 
         internal void AddTiles(List<Tile> tiles)
@@ -53,6 +51,17 @@ namespace WPF_Azul.Model
         public void ProcessFactoryTilesSelectedForProduction()
         {
             FactoryTiles.RemoveAll(tile => tile == null);
+        }
+
+        internal void BinAllTiles(TileCollections tileCollections)
+        {
+            for (int i = 0; i < FactoryTiles.Count; i++)
+            {
+                FactoryTiles[i].FactoriesIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
+            }
+
+            tileCollections.AddTilesToTileBin(FactoryTiles);
+            FactoryTiles.Clear();
         }
     }
 }

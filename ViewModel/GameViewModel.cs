@@ -409,6 +409,11 @@ namespace WPF_Azul.ViewModel
         internal void ResetGameFromAnyState()
         {
             _gameManager.GameState.ResetGameFromAnyState();
+
+            UpdateViewModelForNewGame();
+            UpdateFactories();
+            DebugTileBagText = UpdateDebugTileBagText();
+            DebugTileBinText = UpdateDebugTileBinText();
         }
 
         private void UpdateViewModelForPlayerWin(int playerIndex)

@@ -293,6 +293,8 @@ namespace WPF_Azul.Model
                 Factories[i].BinAllTiles(TileCollections);
             }
 
+            CenterFactory.BinAllTiles(TileCollections);
+
             if (!CenterFactory.ContainsStartingPlayerMarker())
             {
                 CenterFactory.GetStartingPlayerTileFromTileBin(TileCollections.tileBin);
