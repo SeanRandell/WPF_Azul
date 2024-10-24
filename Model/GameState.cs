@@ -31,8 +31,13 @@ namespace WPF_Azul.Model
 
             InitPlayers();
             InitFactories();
-            SetupFactoriesForRound();
             //TestCompletedColourScoringState();
+            InitNewGame();
+        }
+
+        internal void InitNewGame()
+        {
+            SetupFactoriesForRound();
         }
 
         internal void InitPlayers()
@@ -295,7 +300,7 @@ namespace WPF_Azul.Model
 
             TileCollections.ResetBagAndBinForNewGame();
 
-            SetupFactoriesForRound();
+            InitNewGame();
         }
     }
 }
