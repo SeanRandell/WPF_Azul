@@ -24,5 +24,15 @@ namespace WPF_Azul.View.UserControls
         {
             InitializeComponent();
         }
+
+        private void OnShowModalClick(object sender, RoutedEventArgs e)
+        {
+            Modal.IsOpen = true;
+        }
+
+        private void OnCloseModalClick(object sender, RoutedEventArgs e)
+        {
+            Modal.IsOpen = false;
+        }
     }
 }

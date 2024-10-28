@@ -251,12 +251,12 @@
             <!--  Player - Dropped Tiles Slots  -->
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="6*" />
-                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="7*" />
+                    <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.7*" />
-                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="6.3*" />
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
 

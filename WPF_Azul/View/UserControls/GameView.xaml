@@ -8,8 +8,8 @@
     xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:WPF_Azul.ViewModel"
-    d:DesignHeight="1000"
-    d:DesignWidth="1400"
+    d:DesignHeight="720"
+    d:DesignWidth="1280"
     mc:Ignorable="d"
     >
 
@@ -34,26 +34,27 @@
                 VerticalAlignment="Top"
                 Orientation="Horizontal"
                 >
-                <TextBlock
+                <!--<TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="18"
                     FontWeight="Bold"
                     Text="Game View"
-                    />
+                    />-->
                 <Button
                     Margin="2"
                     Command="{Binding MainMenuCommand}"
                     Content="Main Menu"
+                    FontSize="26"
+                    FontWeight="Bold"
+                    ToolTip="Main Menu"
                     />
+
                 <!--  Help Button  -->
                 <Button
                     Grid.Row="0"
-                    Width="40"
-                    Height="40"
-                    Margin="0,0,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
+                    MinWidth="30"
+                    MinHeight="30"
                     Background="LightGray"
                     Command="{Binding HowToPlayButtonCommand}"
                     Content="?"

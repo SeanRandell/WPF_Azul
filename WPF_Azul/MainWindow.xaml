@@ -8,8 +8,9 @@
     xmlns:view="clr-namespace:WPF_Azul.View.UserControls"
     xmlns:vms="clr-namespace:WPF_Azul.ViewModel"
     Title="Azul"
-    Width="1400"
-    Height="800"
+    Width="1280"
+    Height="720"
+    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d"
     >
@@ -22,7 +23,6 @@
                     Click="btnModal_Click"/>
             <TextBlock x:Name="txtblckPlayerName" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>-->
-        <!--<userControls:PlayerBoardView/>-->
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -40,30 +40,7 @@
             </DataTemplate>
         </Grid.Resources>
 
-        <!--<StackPanel Grid.Row="0" Grid.Column="0">-->
         <ContentControl Content="{Binding CurrentViewModel}" />
-        <!--</StackPanel>-->
-
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0"
-            Background="Beige"
-            AllowDrop="True"
-            DragOver="panel_DragOver"
-            Drop="panel_Drop">
-            <TextBox Width="Auto" Margin="2"
-             Text="green"/>
-            <ContentControl Content="{Binding CurrentViewModel}" Margin="2"/>
-            <ContentControl Content="{Binding CurrentViewModel}" Margin="2"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1"
-            Background="Bisque"
-            AllowDrop="True"
-            DragOver="panel_DragOver"
-            Drop="panel_Drop">
-        </StackPanel>-->
 
     </Grid>
 </Window>

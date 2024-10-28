@@ -20,6 +20,11 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="ModalControl">
+        <HintPath>..\ModalControl\bin\Debug\ModalControl.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 
 
 </Project>
