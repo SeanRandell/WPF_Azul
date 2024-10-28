@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:WPF_Azul.View.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Help"
-    Width="500"
-    Height="700"
+    Width="800"
+    Height="600"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d"
     >
@@ -18,16 +18,60 @@
             <SolidColorBrush Color="LightGray" />
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="3*" />
             <RowDefinition Height="4*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="0.5*" />
         </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="15"
+            FontWeight="Bold"
+            >
+            HOW TO PLAY
+        </TextBlock>
+
+        <!--Object of the game Text-->
+        <TextBlock
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="15"
+            FontWeight="Bold"
+            >
+            OBJECT OF THE GAME
+        </TextBlock>
+        
+        <!-- Gameplay -->
+        <TextBlock
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="15"
+            FontWeight="Bold"
+            >
+            GAMEPLAY
+        </TextBlock>
+        
+        <!-- Scoring -->
+        <TextBlock
+            Grid.Row="3"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="15"
+            FontWeight="Bold"
+            >
+            SCORING
+        </TextBlock>
 
         <!--  Ok Button  -->
         <Button
             x:Name="btnOk"
-            Grid.Row="3"
+            Grid.Row="4"
             Width="60"
             Height="40"
             Margin="10"
