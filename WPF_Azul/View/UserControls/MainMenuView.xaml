@@ -19,14 +19,18 @@
             Text="Main Menu"
             />
 
-        <custom:Modal x:Name="Modal" Panel.ZIndex="2">
+        <custom:Modal
+            x:Name="Modal"
+            Panel.ZIndex="2"
+            IsOpen="{Binding IsPlayerNameModalOpen}"
+            >
             <!--  TODO: include Grid.RowSpan="3" if modal is not stretching across multiple rows  -->
             <Grid Width="300" Height="300">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="Player 1 Name:" />
                     <!--  Player Input  -->
                     <TextBox
-                        x:Name="Player1Name"
+                        x:Name="Player1NameTextBox"
                         Width="220"
                         HorizontalAlignment="Center"
                         BorderBrush="DarkGray"
@@ -35,18 +39,25 @@
                         FontSize="48"
                         FontWeight="Bold"
                         MaxLength="5"
-                        Text="{Binding Player1Name, UpdateSourceTrigger=PropertyChanged}"
-                        >
-                        <TextBox.InputBindings>
-                            <KeyBinding Key="Enter" Command="{Binding SubmitAttemptCommand}" />
-                        </TextBox.InputBindings>
-                    </TextBox>
+                        Text="{Binding Player1Name, Mode=OneWayToSource}"
+                        />
                     <TextBlock Text="Player 2 Name:" />
-                    <TextBox />
+                    <TextBox
+                        x:Name="Player2NameTextBox"
+                        Width="220"
+                        HorizontalAlignment="Center"
+                        BorderBrush="DarkGray"
+                        BorderThickness="4"
+                        CharacterCasing="Upper"
+                        FontSize="48"
+                        FontWeight="Bold"
+                        MaxLength="5"
+                        Text="{Binding Player2Name, Mode=OneWayToSource}"
+                        />
                     <Button
                         x:Name="btnCloseModal"
                         Margin="2"
-                        Click="OnCloseModalClick"
+                        Command="{Binding SubmitPlayerNamesCommand}"
                         Content="Confirm"
                         />
                 </StackPanel>
@@ -63,12 +74,12 @@
                 Command="{Binding StartGameCommand}"
                 Content="Start"
                 />
-            <Button
+            <!--<Button
                 x:Name="btnShowModal"
                 Margin="2"
                 Click="OnShowModalClick"
                 Content="Open Modal"
-                />
+                />-->
             <Button
                 Margin="2"
                 Command="{Binding QuitCommand}"

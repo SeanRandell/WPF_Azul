@@ -37,12 +37,6 @@ namespace WPF_Azul.ViewModel
 
         private TileType _selectedTileType;
 
-        public TileType SelectedTileType
-        {
-            get { return _selectedTileType; }
-            set { _selectedTileType = value; }
-        }
-
         private ObservableCollection<Tile> _selectedFactoryTiles;
 
         public ObservableCollection<Tile> SelectedFactoryTiles
@@ -493,6 +487,7 @@ namespace WPF_Azul.ViewModel
             {
                 PlayerViewModels[i].UpdateViewModelAfterGameEnd();
                 PlayerViewModels[i].UpdateViewModelAfterRoundEnd();
+                PlayerViewModels[i].UpdatePlayerNameFromModel();
             }
         }
 
@@ -526,6 +521,21 @@ namespace WPF_Azul.ViewModel
         private void UpdateSelectedFactoryTiles()
         {
             UpdateCollection(_gameManager.GameState.SelectedFactoryTiles, SelectedFactoryTiles);
+        }
+
+        private void UpdatePlayerNames()
+        {
+            for (int i = 0; i < _gameManager.GameState.Players.Count; i++)
+            {
+                PlayerViewModels[i].UpdatePlayerNameFromModel();
+            }
+        }
+
+        internal void StartGame(List<string> playerNames)
+        {
+            _gameManager.SetPlayerNames(playerNames);
+            _gameManager.StartGame();
+            UpdatePlayerNames();
         }
     }
 }

@@ -41,12 +41,11 @@
                     FontWeight="Bold"
                     Text="Game View"
                     />-->
-                <!-- TODO - Install font as part of application-->
+                <!--  TODO - Install font as part of application  -->
                 <Button
                     Margin="2"
                     Command="{Binding MainMenuCommand}"
                     Content="Main Menu"
-                    FontSize="26"
                     FontWeight="Bold"
                     ToolTip="Main Menu"
                     />
@@ -54,16 +53,10 @@
                 <!--  Help Button  -->
                 <Button
                     Grid.Row="0"
-                    MinWidth="30"
-                    MinHeight="30"
                     Background="LightGray"
                     Command="{Binding HowToPlayButtonCommand}"
-                    Content="?"
-                    FontSize="26"
+                    Content="How To Play"
                     FontWeight="Bold"
-                    ToolTip="Game Rules"
-                    ToolTipService.InitialShowDelay="0"
-                    ToolTipService.ShowOnDisabled="True"
                     />
             </StackPanel>
         </Grid>

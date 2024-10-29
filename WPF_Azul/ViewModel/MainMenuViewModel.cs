@@ -30,8 +30,21 @@ namespace WPF_Azul.ViewModel
             set { _player2Name = value; }
         }
 
+        private bool _isPlayerNameModalOpen;
+
+        public bool IsPlayerNameModalOpen
+        {
+            get { return _isPlayerNameModalOpen; }
+            set
+            {
+                _isPlayerNameModalOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
         private readonly NavigationStore navigationStore;
-        private readonly GameManager gameManager;
+        private readonly GameViewModel gameViewModel;
+
         public string Name
         {
             get
@@ -40,23 +53,34 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        public ICommand SubmitPlayerNamesCommand { get; }
         public ICommand StartGameCommand { get; }
         public ICommand QuitCommand { get; }
 
-        public MainMenuViewModel(NavigationStore navigationStore, GameManager gameManager)
+        public MainMenuViewModel(NavigationStore navigationStore, GameViewModel gameViewModel)
         {
             this.navigationStore = navigationStore;
-            StartGameCommand = new StartGameCommand(navigationStore, gameManager);
+            this.gameViewModel = gameViewModel;
+            StartGameCommand = new StartGameCommand(this);
+            SubmitPlayerNamesCommand = new SubmitPlayerNamesCommand(navigationStore, gameViewModel, this);
             QuitCommand = new QuitCommand();
+
+            _isPlayerNameModalOpen = false;
 
             _player1Name = "";
             _player2Name = "";
         }
 
+        internal void OpenPlayerNameModal()
+        {
+            IsPlayerNameModalOpen = true;
+        }
+
         internal void SetPlayerNamesFromModal()
         {
-            List<string> playerNames = new List<string>{Player1Name, Player2Name};
-            gameManager.SetPlayerNames(playerNames);
+            IsPlayerNameModalOpen = false;
+            List<string> playerNames = new List<string> { Player1Name, Player2Name };
+            gameViewModel.StartGame(playerNames);
         }
 
     }

@@ -38,6 +38,17 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
+                <!--  Player Name Text  -->
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="0,0,0,0"
+                    FontSize="32"
+                    FontWeight="Bold"
+                    Foreground="Gold"
+                    Text="{Binding PlayerName}"
+                    />
+
                 <!--  EndGame Score  -->
                 <StackPanel
                     Grid.Row="0"

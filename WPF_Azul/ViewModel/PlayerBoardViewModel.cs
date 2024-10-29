@@ -115,6 +115,18 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        private string _playerName;
+
+        public string PlayerName
+        {
+            get { return _playerName; }
+            set
+            {
+                _playerName = value;
+                OnPropertyChanged();
+            }
+        }
+
         // These values do not change so they should not need to use OnProperyChanged()
         private int[] _droppedTileValues;
 
@@ -124,7 +136,6 @@ namespace WPF_Azul.ViewModel
             set
             {
                 _droppedTileValues = value;
-                OnPropertyChanged();
             }
         }
 
@@ -162,6 +173,9 @@ namespace WPF_Azul.ViewModel
 
             _validProductionTiles = InitValidProductionTiles();
             _activatedDroppedTiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
+            _playerName = "";
+
+            UpdatePlayerNameFromModel();
         }
 
         private ObservableCollection<ValidProductionTile> InitValidProductionTiles()
@@ -229,7 +243,7 @@ namespace WPF_Azul.ViewModel
                 List<TileType> currentRow = new List<TileType>();
                 for (int j = 0; j < GameConstants.MAIN_TILES_LENGTH; j++)
                 {
-                    currentRow.Add(GameConstants.WALL_TILE_PATTERN[i,j]);
+                    currentRow.Add(GameConstants.WALL_TILE_PATTERN[i, j]);
                 }
                 returnList.Add(currentRow);
             }
@@ -292,6 +306,11 @@ namespace WPF_Azul.ViewModel
         {
             EndGameScore = _playerModel.EndGameScore;
             UpdatePlayerScores();
+        }
+
+        internal void UpdatePlayerNameFromModel()
+        {
+            PlayerName = _playerModel.Name;
         }
     }
 }

@@ -10,19 +10,16 @@ namespace WPF_Azul.ViewModel.Commands
 {
     public class StartGameCommand : CommandBase
     {
-        private NavigationStore navigationStore;
-        private GameManager gameManager;
+        private MainMenuViewModel mainMenuViewModel;
 
-        public StartGameCommand(NavigationStore navigationStore, GameManager gameManager)
+        public StartGameCommand(MainMenuViewModel mainMenuViewModel)
         {
-            this.gameManager = gameManager;
-            this.navigationStore = navigationStore;
+            this.mainMenuViewModel = mainMenuViewModel;
         }
 
         public override void Execute(object? parameter)
         {
-            navigationStore.NavigateGameView();
-            gameManager.StartGame();
+            mainMenuViewModel.OpenPlayerNameModal();
         }
     }
 }
