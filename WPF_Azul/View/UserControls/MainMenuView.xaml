@@ -24,7 +24,23 @@
             <Grid Width="300" Height="300">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="Player 1 Name:" />
-                    <TextBox />
+                    <!--  Player Input  -->
+                    <TextBox
+                        x:Name="Player1Name"
+                        Width="220"
+                        HorizontalAlignment="Center"
+                        BorderBrush="DarkGray"
+                        BorderThickness="4"
+                        CharacterCasing="Upper"
+                        FontSize="48"
+                        FontWeight="Bold"
+                        MaxLength="5"
+                        Text="{Binding Player1Name, UpdateSourceTrigger=PropertyChanged}"
+                        >
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding SubmitAttemptCommand}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
                     <TextBlock Text="Player 2 Name:" />
                     <TextBox />
                     <Button

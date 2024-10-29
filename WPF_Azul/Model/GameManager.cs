@@ -263,5 +263,13 @@ namespace WPF_Azul.Model
                 }
             }
         }
+
+        internal void SetPlayerNames(List<string> playerNames)
+        {
+            for (int i = 0; i < GameState.Players.Count; i++)
+            {
+                GameState.Players[i].Name = playerNames[i];
+            }
+        }
     }
 }

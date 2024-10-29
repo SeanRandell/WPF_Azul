@@ -41,6 +41,7 @@
                     FontWeight="Bold"
                     Text="Game View"
                     />-->
+                <!-- TODO - Install font as part of application-->
                 <Button
                     Margin="2"
                     Command="{Binding MainMenuCommand}"
