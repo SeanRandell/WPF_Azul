@@ -27,6 +27,43 @@
             <RowDefinition Height="9.5*" />
         </Grid.RowDefinitions>
 
+        <!--  Game Menu Modal  -->
+        <custom:Modal
+            x:Name="GameMenuModal"
+            Grid.RowSpan="2"
+            Panel.ZIndex="3"
+            IsOpen="{Binding IsGameMenuOpen}"
+            >
+            <Grid>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!--  Resume Game  -->
+                    <Button
+                        Margin="2"
+                        Command="{Binding CloseGameMenu}"
+                        Content="Resume"
+                        />
+                    <!--  Restart Button  -->
+                    <Button
+                        Grid.Row="0"
+                        Background="LightGray"
+                        Command="{Binding OpenRestartCommand}"
+                        Content="Restart"
+                        FontWeight="Bold"
+                        />
+
+                    <!--  Help Button  -->
+                    <Button
+                        Grid.Row="0"
+                        Background="LightGray"
+                        Command="{Binding HowToPlayButtonCommand}"
+                        Content="How To Play"
+                        FontWeight="Bold"
+                        />
+                </StackPanel>
+            </Grid>
+        </custom:Modal>
+
+        <!--  Restart Menu Modal  -->
         <custom:Modal
             x:Name="RestartGameModal"
             Grid.RowSpan="2"
@@ -50,12 +87,12 @@
             </Grid>
         </custom:Modal>
 
+        <!--  How To Play Modal  -->
         <custom:Modal
             Grid.RowSpan="2"
             Panel.ZIndex="3"
             IsOpen="{Binding IsHowToPlayModalOpen}"
             >
-
             <Grid>
 
                 <!--  Grid Defintions  -->
@@ -137,13 +174,6 @@
                 VerticalAlignment="Top"
                 Orientation="Horizontal"
                 >
-                <!--<TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="18"
-                    FontWeight="Bold"
-                    Text="Game View"
-                    />-->
                 <!--  TODO - Install font as part of application  -->
                 <Button
                     Margin="2"
@@ -152,25 +182,6 @@
                     FontWeight="Bold"
                     ToolTip="Main Menu"
                     />
-
-                <!--  Restart Button  -->
-                <Button
-                    Grid.Row="0"
-                    Background="LightGray"
-                    Command="{Binding OpenRestartCommand}"
-                    Content="Restart"
-                    FontWeight="Bold"
-                    />
-
-                <!--  Help Button  -->
-                <Button
-                    Grid.Row="0"
-                    Background="LightGray"
-                    Command="{Binding HowToPlayButtonCommand}"
-                    Content="How To Play"
-                    FontWeight="Bold"
-                    />
-
             </StackPanel>
         </Grid>
 

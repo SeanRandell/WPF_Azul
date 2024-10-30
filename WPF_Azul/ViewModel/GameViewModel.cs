@@ -25,7 +25,9 @@ namespace WPF_Azul.ViewModel
 
         // TODO - move to a modal or other kind of menu
         public ICommand MainMenuCommand => new RelayCommand(execute => NavigateToMainMenu());
+
         public ICommand FactoryTileClickCommand { get; }
+
         public ICommand ProductionLineClickCommand { get; }
 
         public ICommand UndoFactoryTileClick { get; }
