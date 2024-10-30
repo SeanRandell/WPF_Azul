@@ -28,21 +28,105 @@
         </Grid.RowDefinitions>
 
         <custom:Modal
-            x:Name="Modal"
-            Panel.ZIndex="2"
+            x:Name="RestartGameModal"
+            Grid.RowSpan="2"
+            Panel.ZIndex="3"
             IsOpen="{Binding IsRestartMenuOpen}"
             >
-            <Grid Width="300" Height="300">
+            <Grid>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="Reset Game to the start with current the current players?" />
                     <Button
-                x:Name="btnCloseModal"
-                Margin="2"
-                Command="{Binding ResetGameCommand}"
-                Content="Confirm"
-                />
+                        Margin="2"
+                        Command="{Binding CancelRestartGameCommand}"
+                        Content="Cancel"
+                        />
+                    <Button
+                        Margin="2"
+                        Command="{Binding RestartGameCommand}"
+                        Content="Confirm"
+                        />
                 </StackPanel>
             </Grid>
+        </custom:Modal>
+
+        <custom:Modal
+            Grid.RowSpan="2"
+            Panel.ZIndex="3"
+            IsOpen="{Binding IsHowToPlayModalOpen}"
+            >
+
+            <Grid>
+
+                <!--  Grid Defintions  -->
+                <Grid.Background>
+                    <SolidColorBrush Color="LightGray" />
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="0.5*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    >
+                    HOW TO PLAY
+                </TextBlock>
+
+                <!--  Object of the game Text  -->
+                <TextBlock
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    >
+                    OBJECT OF THE GAME
+                </TextBlock>
+
+                <!--  Gameplay  -->
+                <TextBlock
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    >
+                    GAMEPLAY
+                </TextBlock>
+
+                <!--  Scoring  -->
+                <TextBlock
+                    Grid.Row="3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    >
+                    SCORING
+                </TextBlock>
+
+                <!--  Ok Button  -->
+                <Button
+                    x:Name="btnOk"
+                    Grid.Row="4"
+                    Width="60"
+                    Height="40"
+                    Margin="10"
+                    VerticalAlignment="Center"
+                    Command="{Binding HideHowToPlayCommand}"
+                    Content="OK"
+                    />
+
+            </Grid>
+
         </custom:Modal>
 
         <!--  Main Menu Button  -->
@@ -69,6 +153,15 @@
                     ToolTip="Main Menu"
                     />
 
+                <!--  Restart Button  -->
+                <Button
+                    Grid.Row="0"
+                    Background="LightGray"
+                    Command="{Binding OpenRestartCommand}"
+                    Content="Restart"
+                    FontWeight="Bold"
+                    />
+
                 <!--  Help Button  -->
                 <Button
                     Grid.Row="0"
@@ -77,6 +170,7 @@
                     Content="How To Play"
                     FontWeight="Bold"
                     />
+
             </StackPanel>
         </Grid>
 

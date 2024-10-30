@@ -53,17 +53,16 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-        public ICommand SubmitPlayerNamesCommand { get; }
-        public ICommand StartGameCommand { get; }
-        public ICommand QuitCommand { get; }
+        public ICommand SubmitPlayerNamesCommand => new RelayCommand(execute => SubmitNamesAndStartGame());
+
+        public ICommand StartGameCommand => new RelayCommand(execute => OpenPlayerNameModal());
+
+        public ICommand QuitCommand => new RelayCommand(execute => QuitGame());
 
         public MainMenuViewModel(NavigationStore navigationStore, GameViewModel gameViewModel)
         {
             this.navigationStore = navigationStore;
             this.gameViewModel = gameViewModel;
-            StartGameCommand = new StartGameCommand(this);
-            SubmitPlayerNamesCommand = new SubmitPlayerNamesCommand(navigationStore, gameViewModel, this);
-            QuitCommand = new QuitCommand();
 
             _isPlayerNameModalOpen = false;
 
@@ -83,5 +82,15 @@ namespace WPF_Azul.ViewModel
             gameViewModel.StartGame(playerNames);
         }
 
+        internal void QuitGame()
+        {
+            App.Current.Shutdown();
+        }
+
+        internal void SubmitNamesAndStartGame()
+        {
+            SetPlayerNamesFromModal();
+            navigationStore.NavigateGameView();
+        }
     }
 }

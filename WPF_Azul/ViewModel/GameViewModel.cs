@@ -21,19 +21,26 @@ namespace WPF_Azul.ViewModel
         //private readonly NavigationStore navigationStore;
 
         private readonly GameManager _gameManager;
+        private readonly NavigationStore _navigationStore;
 
         // TODO - move to a modal or other kind of menu
-        public ICommand MainMenuCommand { get; }
+        public ICommand MainMenuCommand => new RelayCommand(execute => NavigateToMainMenu());
         public ICommand FactoryTileClickCommand { get; }
         public ICommand ProductionLineClickCommand { get; }
 
         public ICommand UndoFactoryTileClick { get; }
 
-        public ICommand ReplayGameButtonCommand { get; }
+        public ICommand HowToPlayButtonCommand => new RelayCommand(execute => ShowHowToPlayModal());
 
-        public ICommand HowToPlayButtonCommand { get; }
+        public ICommand HideHowToPlayCommand => new RelayCommand(execute => HideHowToPlayModal());
 
-        // TODO - Change to jsut use the wallpattern inside a player. See if an internal colour variable can be used.
+
+        public RelayCommand OpenRestartCommand => new RelayCommand(execute => OpenRestartMenu());
+        public RelayCommand RestartGameCommand => new RelayCommand(execute => ConfirmRestartGameCommand());
+
+        public RelayCommand CancelRestartGameCommand => new RelayCommand(execute => CloseRestartMenu());
+
+        public RelayCommand ReplayGameButtonCommand => new RelayCommand(execute => ResetGame());
 
         private TileType _selectedTileType;
 
@@ -191,6 +198,30 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        private bool _isRestartMenuOpen;
+
+        public bool IsRestartMenuOpen
+        {
+            get { return _isRestartMenuOpen; }
+            set
+            {
+                _isRestartMenuOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isHowToPlayModalOpen;
+
+        public bool IsHowToPlayModalOpen
+        {
+            get { return _isHowToPlayModalOpen; }
+            set
+            {
+                _isHowToPlayModalOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
         internal GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
             _selectedTileType = TileType.Blue; // default value
@@ -198,12 +229,10 @@ namespace WPF_Azul.ViewModel
             _isFactoryTileSelected = false;
             SelectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             _gameManager = gameManager;
-            MainMenuCommand = new MainMenuCommand(navigationStore, this);
+            _navigationStore = navigationStore;
             FactoryTileClickCommand = new FactoryTileClickCommand(_gameManager, this);
             ProductionLineClickCommand = new ProductionLineClickCommand(this);
             UndoFactoryTileClick = new UndoFactoryTileClick(this);
-            ReplayGameButtonCommand = new ReplayGameCommand(this);
-            HowToPlayButtonCommand = new HowToPlayCommand(this);
 
             _playerViewModels = new List<PlayerBoardViewModel>();
             InitPlayerViewModels();
@@ -217,6 +246,9 @@ namespace WPF_Azul.ViewModel
             _endGameText = "";
             _gameHasEnded = false;
             _isGameEndDraw = false;
+
+            _isRestartMenuOpen = false;
+            _isHowToPlayModalOpen = false;
 
             _debugTileBagText = UpdateDebugTileBagText();
             _debugTileBinText = UpdateDebugTileBinText();
@@ -512,10 +544,14 @@ namespace WPF_Azul.ViewModel
             StartingPlayerTile = _gameManager.GameState.CenterFactory._startingPlayerTile;
         }
 
-        internal void ShowHowToPlayWindow()
+        internal void ShowHowToPlayModal()
         {
-            HowToPlayModal helpModal = new HowToPlayModal();
-            helpModal.ShowDialog();
+            IsHowToPlayModalOpen = true;
+        }
+
+        internal void HideHowToPlayModal()
+        {
+            IsHowToPlayModalOpen = false;
         }
 
         private void UpdateSelectedFactoryTiles()
@@ -536,6 +572,29 @@ namespace WPF_Azul.ViewModel
             _gameManager.SetPlayerNames(playerNames);
             _gameManager.StartGame();
             UpdatePlayerNames();
+        }
+
+        internal void OpenRestartMenu()
+        {
+            IsRestartMenuOpen = true;
+        }
+
+        internal void CloseRestartMenu()
+        {
+            IsRestartMenuOpen = false;
+        }
+
+        internal void ConfirmRestartGameCommand()
+        {
+            IsRestartMenuOpen = false;
+            ResetGameFromAnyState();
+        }
+
+        internal void NavigateToMainMenu()
+        {
+            // TODO - place an are you sure modal here warnng that the game will be reset.
+            ResetGameFromAnyState();
+            _navigationStore.NavigateMainMenu();
         }
     }
 }
