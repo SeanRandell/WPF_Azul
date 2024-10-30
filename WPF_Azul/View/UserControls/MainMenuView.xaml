@@ -32,7 +32,7 @@
                     <TextBox
                         x:Name="Player1NameTextBox"
                         Width="220"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Center" 
                         BorderBrush="DarkGray"
                         BorderThickness="4"
                         CharacterCasing="Upper"
