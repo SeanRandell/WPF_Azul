@@ -151,11 +151,19 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        private int _playerIndex;
+
+        public int PlayerIndex
+        {
+            get { return _playerIndex; }
+            set { _playerIndex = value; }
+        }
+
         private Player _playerModel;
 
         public ICommand ProductionLineClickCommand { get; }
 
-        public PlayerBoardViewModel(Player playerModel, ICommand ProductionLineClickCommand)
+        internal PlayerBoardViewModel(Player playerModel, ICommand ProductionLineClickCommand)
         {
             _playerModel = playerModel;
             this.ProductionLineClickCommand = ProductionLineClickCommand;
@@ -174,6 +182,7 @@ namespace WPF_Azul.ViewModel
             _validProductionTiles = InitValidProductionTiles();
             _activatedDroppedTiles = new ValidProductionTile(GameConstants.DROPPED_TILE_ROW_INDEX, false);
             _playerName = "";
+            _playerIndex = playerModel.PlayerIndex;
 
             UpdatePlayerNameFromModel();
         }

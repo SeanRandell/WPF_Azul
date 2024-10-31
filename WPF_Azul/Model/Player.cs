@@ -6,25 +6,27 @@ using System.Threading.Tasks;
 
 namespace WPF_Azul.Model
 {
-    public class Player
+    internal class Player
     {
-        public string Name { get; set; }
+        internal string Name { get; set; }
 
-        public int Score { get; set; }
+        internal int Score { get; set; }
 
-        public PlayerBoard PlayerBoard
+        internal PlayerBoard PlayerBoard
         {
             get;
             set;
         }
 
-        public int EndGameScore
+        internal int EndGameScore
         {
             get;
             set;
         }
 
-        public Player(string name)
+        internal int PlayerIndex { get; set; }
+
+        internal Player(string name)
         {
             this.Name = name;
             Score = GameConstants.STARTING_PLAYER_SCORE;
@@ -32,12 +34,12 @@ namespace WPF_Azul.Model
             EndGameScore = 0;
         }
 
-        public void ResetPlayerScore()
+        internal void ResetPlayerScore()
         {
             Score = GameConstants.STARTING_PLAYER_SCORE; 
         }
 
-        public void UpdatePlayerScore(List<int> WallTileScore, int droppedTileScore)
+        internal void UpdatePlayerScore(List<int> WallTileScore, int droppedTileScore)
         {
             int totalToAdd = 0;
             totalToAdd += WallTileScore.Sum() + droppedTileScore;

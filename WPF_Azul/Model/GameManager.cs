@@ -13,24 +13,25 @@ namespace WPF_Azul.Model
     public class GameManager
     {
         internal GameState GameState { get; set; }
-        public GameManager()
+
+        internal GameManager()
         {
             GameState = new GameState();
         }
 
-        public Player GetPlayer(int index)
+        internal Player GetPlayer(int index)
         {
             return GameState.Players[index];
         }
 
-        public List<int> GetValidProductionTiles(TileType selectedTileType)
+        internal List<int> GetValidProductionTiles(TileType selectedTileType)
         {
             List<int> resultList = GameState.Players[GameState.ActivePlayerTurnIndex].PlayerBoard.GetValidProductionTilesIndexes(selectedTileType);
 
             return resultList;
         }
 
-        public void ProductionTileSelected(int productionTileIndex, int selectedFactoryIndex)
+        internal void ProductionTileSelected(int productionTileIndex, int selectedFactoryIndex)
         {
             // get list of tiles being moved from factory and remove them
             if (selectedFactoryIndex == GameConstants.CENTER_FACTORY_INDEX)
@@ -58,12 +59,12 @@ namespace WPF_Azul.Model
             }
         }
 
-        public void ClearSelectedFactoryTiles()
+        internal void ClearSelectedFactoryTiles()
         {
             GameState.SelectedFactoryTiles.Clear();
         }
 
-        public int GetDebugTileBagCount()
+        internal int GetDebugTileBagCount()
         {
             return GameState.TileCollections.tileBag.Count;
         }

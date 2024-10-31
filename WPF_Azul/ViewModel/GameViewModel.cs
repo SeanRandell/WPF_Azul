@@ -19,12 +19,13 @@ namespace WPF_Azul.ViewModel
 {
     public class GameViewModel : ViewModelBase
     {
-        //private readonly NavigationStore navigationStore;
-
         private readonly GameManager _gameManager;
         private readonly NavigationStore _navigationStore;
 
-        // TODO - move to a modal or other kind of menu
+        public ICommand OpenGameMenuCommand => new RelayCommand(execute => OpenGameMenu());
+
+        public ICommand CloseGameMenuCommand => new RelayCommand(execute => CloseGameMenu());
+
         public ICommand MainMenuCommand => new RelayCommand(execute => NavigateToMainMenu());
 
         public ICommand FactoryTileClickCommand => new RelayCommand(selectedTile => FactoryTileSelected(selectedTile));
@@ -225,6 +226,18 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        private bool _isGameMenuOpen;
+
+        public bool IsGameMenuOpen
+        {
+            get { return _isGameMenuOpen; }
+            set
+            {
+                _isGameMenuOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
         internal GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
             _selectedTileType = TileType.Blue; // default value
@@ -249,6 +262,7 @@ namespace WPF_Azul.ViewModel
 
             _isRestartMenuOpen = false;
             _isHowToPlayModalOpen = false;
+            _isGameMenuOpen = false;
 
             _debugTileBagText = UpdateDebugTileBagText();
             _debugTileBinText = UpdateDebugTileBinText();
@@ -568,12 +582,14 @@ namespace WPF_Azul.ViewModel
 
         internal void ShowHowToPlayModal()
         {
+            CloseGameMenu();
             IsHowToPlayModalOpen = true;
         }
 
         internal void HideHowToPlayModal()
         {
             IsHowToPlayModalOpen = false;
+            OpenGameMenu();
         }
 
         private void UpdateSelectedFactoryTiles()
@@ -598,11 +614,13 @@ namespace WPF_Azul.ViewModel
 
         internal void OpenRestartMenu()
         {
+            CloseGameMenu();
             IsRestartMenuOpen = true;
         }
 
         internal void CloseRestartMenu()
         {
+            OpenGameMenu();
             IsRestartMenuOpen = false;
         }
 
@@ -615,8 +633,19 @@ namespace WPF_Azul.ViewModel
         internal void NavigateToMainMenu()
         {
             // TODO - place an are you sure modal here warnng that the game will be reset.
+            CloseGameMenu();
             ResetGameFromAnyState();
             _navigationStore.NavigateMainMenu();
+        }
+
+        internal void OpenGameMenu()
+        {
+            IsGameMenuOpen = true;
+        }
+
+        internal void CloseGameMenu()
+        {
+            IsGameMenuOpen = false;
         }
     }
 }

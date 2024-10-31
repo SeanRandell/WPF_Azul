@@ -39,16 +39,8 @@
                     <!--  Resume Game  -->
                     <Button
                         Margin="2"
-                        Command="{Binding CloseGameMenu}"
+                        Command="{Binding CloseGameMenuCommand}"
                         Content="Resume"
-                        />
-                    <!--  Restart Button  -->
-                    <Button
-                        Grid.Row="0"
-                        Background="LightGray"
-                        Command="{Binding OpenRestartCommand}"
-                        Content="Restart"
-                        FontWeight="Bold"
                         />
 
                     <!--  Help Button  -->
@@ -58,6 +50,24 @@
                         Command="{Binding HowToPlayButtonCommand}"
                         Content="How To Play"
                         FontWeight="Bold"
+                        />
+
+                    <!--  Restart Button  -->
+                    <Button
+                        Grid.Row="0"
+                        Background="LightGray"
+                        Command="{Binding OpenRestartCommand}"
+                        Content="Restart"
+                        FontWeight="Bold"
+                        />
+
+                    <!--  Main Menu Button  -->
+                    <Button
+                        Margin="2"
+                        Command="{Binding MainMenuCommand}"
+                        Content="Main Menu"
+                        FontWeight="Bold"
+                        ToolTip="Quit to Main Menu"
                         />
                 </StackPanel>
             </Grid>
@@ -177,7 +187,7 @@
                 <!--  TODO - Install font as part of application  -->
                 <Button
                     Margin="2"
-                    Command="{Binding MainMenuCommand}"
+                    Command="{Binding OpenGameMenuCommand}"
                     Content="Main Menu"
                     FontWeight="Bold"
                     ToolTip="Main Menu"
