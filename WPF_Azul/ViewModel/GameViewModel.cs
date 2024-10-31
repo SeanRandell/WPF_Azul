@@ -13,6 +13,7 @@ using WPF_Azul.Model;
 using WPF_Azul.Stores;
 using WPF_Azul.View;
 using WPF_Azul.View.UserControls;
+using System.Reflection.Metadata;
 
 namespace WPF_Azul.ViewModel
 {
@@ -26,11 +27,11 @@ namespace WPF_Azul.ViewModel
         // TODO - move to a modal or other kind of menu
         public ICommand MainMenuCommand => new RelayCommand(execute => NavigateToMainMenu());
 
-        public ICommand FactoryTileClickCommand { get; }
+        public ICommand FactoryTileClickCommand => new RelayCommand(selectedTile => FactoryTileSelected(selectedTile));
 
-        public ICommand ProductionLineClickCommand { get; }
+        public ICommand ProductionLineClickCommand => new RelayCommand(selectedProductionLine => ProductionLineSelected(selectedProductionLine));
 
-        public ICommand UndoFactoryTileClick { get; }
+        public ICommand UndoFactoryTileClick => new RelayCommand(execute => UndoFactoryTileSelected());
 
         public ICommand HowToPlayButtonCommand => new RelayCommand(execute => ShowHowToPlayModal());
 
@@ -232,9 +233,6 @@ namespace WPF_Azul.ViewModel
             SelectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
             _gameManager = gameManager;
             _navigationStore = navigationStore;
-            FactoryTileClickCommand = new FactoryTileClickCommand(_gameManager, this);
-            ProductionLineClickCommand = new ProductionLineClickCommand(this);
-            UndoFactoryTileClick = new UndoFactoryTileClick(this);
 
             _playerViewModels = new List<PlayerBoardViewModel>();
             InitPlayerViewModels();
@@ -277,12 +275,19 @@ namespace WPF_Azul.ViewModel
             return returnList;
         }
 
-        internal void FactoryTileSelected(TileType selectedTileType, int factoriesIndex)
+        internal void FactoryTileSelected(object? parameter)
         {
+            if (parameter is null)
+            {
+                return;
+            }
+
+            Tile selectedFactoryTile = (Tile)parameter;
+
             //first get factory index and the tile type from the clicked on tile
-            SelectedFactoryIndex = factoriesIndex;
-            _selectedTileType = selectedTileType;
-            _gameManager.UpdateSelectedFactoryTiles(selectedTileType, factoriesIndex);
+            SelectedFactoryIndex = selectedFactoryTile.FactoriesIndex;
+            _selectedTileType = selectedFactoryTile.TileType;
+            _gameManager.UpdateSelectedFactoryTiles(_selectedTileType, SelectedFactoryIndex);
             IsFactoryTileSelected = true;
 
             // pass theses details to gamemanager.
@@ -298,18 +303,25 @@ namespace WPF_Azul.ViewModel
 
             UpdateSelectedFactoryTiles();
 
-            if (factoriesIndex == GameConstants.CENTER_FACTORY_INDEX)
+            if (SelectedFactoryIndex == GameConstants.CENTER_FACTORY_INDEX)
             {
                 UpdateCollection(_gameManager.GameState.CenterFactory.FactoryTiles, CenterFactoryTiles);
             }
             else
             {
-                UpdateCollection(_gameManager.GameState.Factories[factoriesIndex].FactoryTiles, Factories[factoriesIndex]);
+                UpdateCollection(_gameManager.GameState.Factories[SelectedFactoryIndex].FactoryTiles, Factories[SelectedFactoryIndex]);
             }
         }
 
         internal void UndoFactoryTileSelected()
         {
+            if (!IsFactoryTileSelected)
+            {
+                return;
+            }
+
+            Trace.WriteLine("Undo Command triggered");
+
             foreach (ValidProductionTile productionTile in PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ValidProductionTiles)
             {
                 productionTile.IsEnabled = false;
@@ -332,8 +344,16 @@ namespace WPF_Azul.ViewModel
             SelectedFactoryIndex = GameConstants.TILE_NOT_IN_LIST_INDEX;
         }
 
-        internal void ProductionLineSelected(int productionTileIndex)
+        internal void ProductionLineSelected(object? parameter)
         {
+            if (parameter is null)
+            {
+                return;
+            }
+
+            ValidProductionTile clickedProductionTile = (ValidProductionTile)parameter;
+            int productionTileIndex = clickedProductionTile.ProductionTileIndex;
+
             // reset valid production lines
             foreach (ValidProductionTile validIndexes in PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ValidProductionTiles)
             {
