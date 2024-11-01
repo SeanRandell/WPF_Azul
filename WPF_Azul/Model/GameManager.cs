@@ -49,7 +49,7 @@ namespace WPF_Azul.Model
             //add as many tiles as you can from the list to the production tile and if factory tile count > 0 then add them to next null dropped tile index
             GameState.Players[GameState.ActivePlayerTurnIndex].PlayerBoard.AddTilesToProductionTiles(productionTileIndex, GameState.SelectedFactoryTiles);
 
-            // TODO - manage edge case of a full dropped tiles list. Tiles that do not fit in the list get added to tile bin. Playerboard does not manage this. TileCollections does.
+            // manage edge case of a full dropped tiles list. Tiles that do not fit in the list get added to tile bin. Playerboard does not manage this. TileCollections does.
             if (GameState.SelectedFactoryTiles.Count > 0)
             {
                 Trace.WriteLine(GameState.SelectedFactoryTiles.Count + " tiles to be added to tile bin");

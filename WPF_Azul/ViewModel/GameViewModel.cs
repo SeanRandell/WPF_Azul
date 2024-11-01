@@ -272,9 +272,10 @@ namespace WPF_Azul.ViewModel
 
         private void InitPlayerViewModels()
         {
-            // TODO - change if you do player name input
-            PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager.GetPlayer(GameConstants.STARTING_PLAYER_INDEX), ProductionLineClickCommand));
-            PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager.GetPlayer(1), ProductionLineClickCommand));
+            for (int i = 0; i < GameConstants.DEFAULT_PLAYER_COUNT; i++)
+            {
+                PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager.GetPlayer(i), ProductionLineClickCommand, i));
+            }
         }
 
         private ObservableCollection<ObservableCollection<Tile>> InitFactories()
@@ -340,7 +341,7 @@ namespace WPF_Azul.ViewModel
             {
                 productionTile.IsEnabled = false;
             }
-            // ToDo change for both players
+
             PlayerViewModels[_gameManager.GetCurrentPlayerIndex()].ActivatedDroppedTiles.IsEnabled = false;
             IsFactoryTileSelected = false;
             _gameManager.PlaceSelectedFactoryTilesBack(SelectedFactoryIndex);

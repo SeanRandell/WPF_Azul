@@ -298,7 +298,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <!--  TODO - Add 1 to Grey Tile and add it as a new asset  -->
+                    
                     <local:TileView
                         Grid.Row="0"
                         Grid.Column="1"
