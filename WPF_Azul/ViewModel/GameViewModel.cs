@@ -28,7 +28,7 @@ namespace WPF_Azul.ViewModel
 
         public ICommand MainMenuCommand => new RelayCommand(execute => NavigateToMainMenu());
 
-        public ICommand FactoryTileClickCommand => new RelayCommand(selectedTile => FactoryTileSelected(selectedTile));
+        public ICommand FactoryTileClickCommand => new RelayCommand(selectedTile => FactoryTileSelected(selectedTile), CanFactoryTileClickCommandBeExeceuted);
 
         public ICommand ProductionLineClickCommand => new RelayCommand(selectedProductionLine => ProductionLineSelected(selectedProductionLine));
 
@@ -647,6 +647,11 @@ namespace WPF_Azul.ViewModel
         internal void CloseGameMenu()
         {
             IsGameMenuOpen = false;
+        }
+
+        internal bool CanFactoryTileClickCommandBeExeceuted(object? parameter)
+        {
+            return SelectedFactoryTiles.Count == 0;
         }
     }
 }

@@ -7,5 +7,5 @@
     <converters:TileTypeToImageConverter x:Key="tileTypeToImageConverter" />
     <converters:TileTypeToWallTileSlotConverter x:Key="tileTypeToWallTileSlotConverter" />
     <converters:ListHasContentToVisibilityConverter x:Key="listHasContentToVisibilityConverter" />
-    <converters:PlayerIndexToScaleXConverter x:Key="playerIndexToScaleXConverter"/>
+    <converters:PlayerIndexToScaleXConverter x:Key="playerIndexToScaleXConverter" />
 </ResourceDictionary>

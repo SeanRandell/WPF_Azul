@@ -19,14 +19,22 @@
         BorderThickness="3"
         CornerRadius="15"
         >
+        <Border.RenderTransformOrigin>
+            <Point X=".5" Y=".5" />
+        </Border.RenderTransformOrigin>
+        <Border.RenderTransform>
+            <ScaleTransform ScaleX="{Binding PlayerIndex, Converter={StaticResource playerIndexToScaleXConverter}}" />
+        </Border.RenderTransform>
+
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="6*" />
+                <RowDefinition Height="6.5*" />
                 <RowDefinition Height="3.5*" />
             </Grid.RowDefinitions>
 
             <!--  Player Grid Layout  -->
             <Grid>
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1.5*" />
                     <RowDefinition Height="8.5*" />
@@ -47,7 +55,14 @@
                     FontWeight="Bold"
                     Foreground="Gold"
                     Text="{Binding PlayerName}"
-                    />
+                    >
+                    <TextBlock.RenderTransformOrigin>
+                        <Point X=".5" Y=".5" />
+                    </TextBlock.RenderTransformOrigin>
+                    <TextBlock.RenderTransform>
+                        <ScaleTransform ScaleX="{Binding DataContext.PlayerIndex, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                    </TextBlock.RenderTransform>
+                </TextBlock>
 
                 <!--  EndGame Score  -->
                 <StackPanel
@@ -55,16 +70,23 @@
                     Grid.Column="2"
                     Orientation="Horizontal"
                     >
+                    <StackPanel.RenderTransform>
+                        <ScaleTransform ScaleX="{Binding PlayerIndex, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                    </StackPanel.RenderTransform>
+
                     <TextBlock
                         Margin="0,0,0,0"
                         FontSize="16"
-                        Foreground="Aqua"
+                        FontWeight="Bold"
+                        Foreground="Maroon"
                         Text="End Scores:"
                         />
+
                     <TextBlock
                         Margin="0,0,0,0"
                         FontSize="16"
-                        Foreground="Aqua"
+                        FontWeight="Bold"
+                        Foreground="Maroon"
                         Text="{Binding EndGameScore}"
                         />
                 </StackPanel>
@@ -74,7 +96,7 @@
                 <ItemsControl
                     Grid.Row="1"
                     Grid.Column="0"
-                    Margin="0,0,0,0"
+                    Margin="5,0,5,0"
                     ItemsSource="{Binding ValidProductionTiles}"
                     >
 
@@ -88,7 +110,7 @@
                         <DataTemplate>
                             <local:ValidProductionTileIndicator
                                 Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
-                                Margin="6"
+                                Margin="0,0,0,0"
                                 Cursor="Hand"
                                 ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 ValidProductionLine="{Binding}"
@@ -239,7 +261,8 @@
                 <ItemsControl
                     Grid.Row="1"
                     Grid.Column="3"
-                    Margin="0,10,0,0"
+                    Margin="0,0,0,0"
+                    VerticalAlignment="Top"
                     ItemsSource="{Binding WallTileScores}"
                     >
 
@@ -251,7 +274,21 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock FontSize="32" Text="{Binding}" />
+                            <TextBlock
+                                Margin="0,1,0,0"
+                                HorizontalAlignment="Center"
+                                FontSize="28"
+                                FontWeight="Bold"
+                                Foreground="DarkGreen"
+                                Text="{Binding}"
+                                >
+                                <TextBlock.RenderTransformOrigin>
+                                    <Point X=".5" Y=".5" />
+                                </TextBlock.RenderTransformOrigin>
+                                <TextBlock.RenderTransform>
+                                    <ScaleTransform ScaleX="{Binding DataContext.PlayerIndex, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
@@ -262,27 +299,20 @@
             <!--  Player - Dropped Tiles Slots  -->
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="7*" />
-                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="8*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.7*" />
-                    <ColumnDefinition Width="6.3*" />
-                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="0.9*" />
+                    <ColumnDefinition Width="5.9*" />
+                    <ColumnDefinition Width="3.2*" />
                 </Grid.ColumnDefinitions>
-
-                <!--<TextBlock
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Text=" Player Dropped Tiles"
-                    />-->
 
                 <!--  Player Dropped Tiles selection Tiles  -->
                 <local:ValidProductionTileIndicator
                     Grid.Row="0"
                     Grid.Column="0"
                     Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
-                    Margin="0,10,0,0"
+                    Margin="5,10,5,0"
                     VerticalAlignment="Top"
                     Cursor="Hand"
                     ProductionLineCommandClick="{Binding DataContext.ProductionLineClickCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -294,26 +324,26 @@
                 <ItemsControl
                     Grid.Row="0"
                     Grid.Column="1"
+                    Margin="0,8,0,0"
                     ItemsSource="{Binding DroppedTileValues}"
                     >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid
-                                Margin="5"
-                                Columns="7"
-                                Rows="1"
-                                />
+                            <UniformGrid Columns="7" Rows="1" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
+                            <StackPanel Margin="0,0,2,0">
                                 <local:TileSlot Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}" />
-                                <TextBlock
-                                    Margin="0,0,12,0"
-                                    FontSize="32"
-                                    Text="{Binding}"
-                                    />
+                                <TextBlock FontSize="32" Text="{Binding}">
+                                    <TextBlock.RenderTransformOrigin>
+                                        <Point X=".5" Y=".5" />
+                                    </TextBlock.RenderTransformOrigin>
+                                    <TextBlock.RenderTransform>
+                                        <ScaleTransform ScaleX="{Binding DataContext.PlayerIndex, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
                             </StackPanel>
 
                         </DataTemplate>
@@ -324,21 +354,22 @@
                 <ItemsControl
                     Grid.Row="0"
                     Grid.Column="1"
+                    Margin="0,8,0,0"
+                    VerticalAlignment="Top"
                     ItemsSource="{Binding DroppedTiles}"
                     >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid
-                                Margin="5"
-                                VerticalAlignment="Top"
-                                Columns="7"
-                                Rows="1"
-                                />
+                            <UniformGrid Columns="7" Rows="1" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:TileView Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}" TileColour="{Binding}" />
+                            <local:TileView
+                                Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
+                                Margin="0,0,2,0"
+                                TileColour="{Binding}"
+                                />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -350,20 +381,36 @@
                     Margin="0,0,0,0"
                     VerticalAlignment="Top"
                     FontSize="32"
-                    Foreground="Aqua"
+                    FontWeight="Bold"
+                    Foreground="Maroon"
                     Text="{Binding DroppedTileScore}"
-                    />
+                    >
+                    <TextBlock.RenderTransformOrigin>
+                        <Point X=".1" Y=".1" />
+                    </TextBlock.RenderTransformOrigin>
+                    <TextBlock.RenderTransform>
+                        <ScaleTransform ScaleX="{Binding PlayerIndex, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                    </TextBlock.RenderTransform>
+                </TextBlock>
 
                 <!--  Player Score  -->
                 <TextBlock
-                    Grid.Row="2"
-                    Grid.Column="3"
+                    Grid.Row="0"
+                    Grid.Column="2"
                     Margin="0,0,0,0"
+                    VerticalAlignment="Bottom"
                     FontSize="32"
                     FontWeight="Bold"
                     Foreground="Gold"
                     Text="{Binding TotalScore}"
-                    />
+                    >
+                    <TextBlock.RenderTransformOrigin>
+                        <Point X=".1" Y=".1" />
+                    </TextBlock.RenderTransformOrigin>
+                    <TextBlock.RenderTransform>
+                        <ScaleTransform ScaleX="{Binding PlayerIndex, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                    </TextBlock.RenderTransform>
+                </TextBlock>
 
             </Grid>
 
