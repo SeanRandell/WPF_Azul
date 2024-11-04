@@ -45,7 +45,8 @@
         <!--  Game Menu Modal  -->
         <custom:Modal
             x:Name="GameMenuModal"
-            Grid.RowSpan="2"
+            Grid.RowSpan="5"
+            Grid.ColumnSpan="4"
             Panel.ZIndex="3"
             IsOpen="{Binding IsGameMenuOpen}"
             >
@@ -255,7 +256,6 @@
             Grid.Column="1"
             Grid.ColumnSpan="2"
             HorizontalAlignment="Stretch"
-            Click="Button_Click"
             Command="{Binding UndoFactoryTileClick}"
             Content="Undo Tile Selection"
             Style="{StaticResource bubbleButton}"
