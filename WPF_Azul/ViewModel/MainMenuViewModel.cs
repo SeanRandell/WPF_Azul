@@ -9,6 +9,9 @@ using WPF_Azul.ViewModel.Commands;
 using WPF_Azul.Model;
 using WPF_Azul.Stores;
 using WPF_Azul.View;
+using System.Collections.ObjectModel;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace WPF_Azul.ViewModel
 {
@@ -19,7 +22,11 @@ namespace WPF_Azul.ViewModel
         public string Player1Name
         {
             get { return _player1Name; }
-            set { _player1Name = value; }
+            set
+            {
+                _player1Name = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _player2Name;
@@ -27,7 +34,11 @@ namespace WPF_Azul.ViewModel
         public string Player2Name
         {
             get { return _player2Name; }
-            set { _player2Name = value; }
+            set
+            {
+                _player2Name = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isPlayerNameModalOpen;
@@ -54,6 +65,8 @@ namespace WPF_Azul.ViewModel
         }
 
         public ICommand SubmitPlayerNamesCommand => new RelayCommand(execute => SubmitNamesAndStartGame());
+
+        public ICommand CancelPlayerNamesCommand => new RelayCommand(execute => CancelPlayerNames());
 
         public ICommand StartGameCommand => new RelayCommand(execute => OpenPlayerNameModal());
 
@@ -91,6 +104,13 @@ namespace WPF_Azul.ViewModel
         {
             SetPlayerNamesFromModal();
             navigationStore.NavigateGameView();
+        }
+
+        private void CancelPlayerNames()
+        {
+            Player1Name = "";
+            Player2Name = "";
+            IsPlayerNameModalOpen = false;
         }
     }
 }

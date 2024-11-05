@@ -33,4 +33,4 @@ You can run the application from source in Visual Studio using the Local Windows
 ## Asset Credits
 
 - Puzzle Pack 2 by Kenney - https://kenney.nl/assets/puzzle-pack-2
-- Wood Texture Tiles by JCW - https://opengameart.org/content/wood-texture-tiles
+- Wood Texture by foxarthappy on Vecteezy - https://www.vecteezy.com/free-vector/wooden-texture">

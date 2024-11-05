@@ -47,22 +47,19 @@
                 </Grid.ColumnDefinitions>
 
                 <!--  Player Name Text  -->
-                <TextBlock
+                <ContentPresenter
                     Grid.Row="0"
                     Grid.Column="1"
-                    Margin="0,0,0,0"
-                    FontSize="32"
-                    FontWeight="Bold"
-                    Foreground="Gold"
-                    Text="{Binding PlayerName}"
+                    Content="{Binding Path=PlayerName, Mode=OneWay}"
+                    ContentTemplate="{StaticResource borderedTextboxTemplate}"
                     >
-                    <TextBlock.RenderTransformOrigin>
-                        <Point X=".5" Y=".5" />
-                    </TextBlock.RenderTransformOrigin>
-                    <TextBlock.RenderTransform>
+                    <ContentPresenter.RenderTransformOrigin>
+                        <Point X=".99" Y=".99" />
+                    </ContentPresenter.RenderTransformOrigin>
+                    <ContentPresenter.RenderTransform>
                         <ScaleTransform ScaleX="{Binding DataContext.PlayerIndex, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource playerIndexToScaleXConverter}}" />
-                    </TextBlock.RenderTransform>
-                </TextBlock>
+                    </ContentPresenter.RenderTransform>
+                </ContentPresenter>
 
                 <!--  EndGame Score  -->
                 <StackPanel
@@ -77,16 +74,14 @@
                     <TextBlock
                         Margin="0,0,0,0"
                         FontSize="16"
-                        FontWeight="Bold"
-                        Foreground="Maroon"
+                        Style="{StaticResource debugText}"
                         Text="End Scores:"
                         />
 
                     <TextBlock
                         Margin="0,0,0,0"
                         FontSize="16"
-                        FontWeight="Bold"
-                        Foreground="Maroon"
+                        Style="{StaticResource debugText}"
                         Text="{Binding EndGameScore}"
                         />
                 </StackPanel>
@@ -369,7 +364,14 @@
                                 Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
                                 Margin="0,0,2,0"
                                 TileColour="{Binding}"
-                                />
+                                >
+                                <local:TileView.RenderTransformOrigin>
+                                    <Point X=".5" Y=".5" />
+                                </local:TileView.RenderTransformOrigin>
+                                <local:TileView.RenderTransform>
+                                    <ScaleTransform ScaleX="{Binding DataContext.PlayerIndex, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                                </local:TileView.RenderTransform>
+                            </local:TileView>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -381,8 +383,7 @@
                     Margin="0,0,0,0"
                     VerticalAlignment="Top"
                     FontSize="32"
-                    FontWeight="Bold"
-                    Foreground="Maroon"
+                    Style="{StaticResource debugText}"
                     Text="{Binding DroppedTileScore}"
                     >
                     <TextBlock.RenderTransformOrigin>
@@ -394,23 +395,20 @@
                 </TextBlock>
 
                 <!--  Player Score  -->
-                <TextBlock
+                <ContentPresenter
                     Grid.Row="0"
                     Grid.Column="2"
-                    Margin="0,0,0,0"
                     VerticalAlignment="Bottom"
-                    FontSize="32"
-                    FontWeight="Bold"
-                    Foreground="Gold"
-                    Text="{Binding TotalScore}"
+                    Content="{Binding Path=TotalScore, Mode=OneWay}"
+                    ContentTemplate="{StaticResource borderedTextboxTemplate}"
                     >
-                    <TextBlock.RenderTransformOrigin>
+                    <ContentPresenter.RenderTransformOrigin>
                         <Point X=".1" Y=".1" />
-                    </TextBlock.RenderTransformOrigin>
-                    <TextBlock.RenderTransform>
-                        <ScaleTransform ScaleX="{Binding PlayerIndex, Converter={StaticResource playerIndexToScaleXConverter}}" />
-                    </TextBlock.RenderTransform>
-                </TextBlock>
+                    </ContentPresenter.RenderTransformOrigin>
+                    <ContentPresenter.RenderTransform>
+                        <ScaleTransform ScaleX="{Binding DataContext.PlayerIndex, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                    </ContentPresenter.RenderTransform>
+                </ContentPresenter>
 
             </Grid>
 

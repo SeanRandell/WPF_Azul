@@ -1,0 +1,79 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    >
+
+    <Style x:Key="debugText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Maroon" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <Style x:Key="playerNameTextStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Gold" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="playerNameBorderStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="Gold" />
+        <Setter Property="BorderThickness" Value="4" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Margin" Value="2" />
+    </Style>
+
+    <DataTemplate x:Key="borderedTextboxTemplate" DataType="{x:Type sys:String}">
+        <Border Style="{StaticResource playerNameBorderStyle}">
+            <TextBlock Style="{StaticResource playerNameTextStyle}" Text="{Binding Mode=OneWay}" />
+        </Border>
+    </DataTemplate>
+
+    <Style x:Key="AnimatedGradientTextBlock" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="48" />
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <LinearGradientBrush x:Name="animatedGradientBrush" StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="#0472b3" />
+                    <GradientStop Offset="0.5" Color="#800080" />
+                    <GradientStop Offset="1.0" Color="#00FFFF" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+                        <ColorAnimation
+                            AutoReverse="True"
+                            Storyboard.TargetProperty="(TextBlock.Foreground).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                            From="#0472b3"
+                            To="#800080"
+                            Duration="0:0:3"
+                            />
+                        <ColorAnimation
+                            AutoReverse="True"
+                            Storyboard.TargetProperty="(TextBlock.Foreground).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                            From="#800080"
+                            To="#00FFFF"
+                            Duration="0:0:3"
+                            />
+                        <ColorAnimation
+                            AutoReverse="True"
+                            Storyboard.TargetProperty="(TextBlock.Foreground).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
+                            From="#00FFFF"
+                            To="#0472b3"
+                            Duration="0:0:3"
+                            />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -39,7 +39,7 @@
 
         <!--  Game View background  -->
         <Grid.Background>
-            <ImageBrush ImageSource="../../ViewModel/Assets/WoodTableTexture.jpg" />
+            <ImageBrush ImageSource="../../ViewModel/Assets/WoodTableTexture.jpg" Opacity="1.5" />
         </Grid.Background>
 
         <!--  Game Menu Modal  -->
@@ -50,50 +50,56 @@
             Panel.ZIndex="3"
             IsOpen="{Binding IsGameMenuOpen}"
             >
-            <Grid>
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <!--  Resume Game  -->
+            <Grid Background="DarkGray">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3.3*" />
+                    <ColumnDefinition Width="3.3*" />
+                    <ColumnDefinition Width="3.3*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Resume Game  -->
+                <UniformGrid Columns="1" Rows="4">
                     <Button
-                        Margin="2"
+                        Margin="4"
                         Command="{Binding CloseGameMenuCommand}"
-                        Content="Resume"
+                        Content="RESUME"
+                        Style="{StaticResource bubbleButton2}"
                         />
 
                     <!--  Help Button  -->
                     <Button
-                        Grid.Row="0"
-                        Background="LightGray"
+                        Margin="4"
                         Command="{Binding HowToPlayButtonCommand}"
-                        Content="How To Play"
-                        FontWeight="Bold"
+                        Content="HOW TO PLAY"
+                        Style="{StaticResource bubbleButton2}"
                         />
 
                     <!--  Restart Button  -->
                     <Button
-                        Grid.Row="0"
-                        Background="LightGray"
+                        Margin="4"
                         Command="{Binding OpenRestartCommand}"
-                        Content="Restart"
-                        FontWeight="Bold"
+                        Content="RESTART"
+                        Style="{StaticResource bubbleButton2}"
                         />
 
                     <!--  Main Menu Button  -->
                     <Button
-                        Margin="2"
+                        Margin="4"
                         Command="{Binding MainMenuCommand}"
-                        Content="Main Menu"
-                        FontWeight="Bold"
+                        Content="MAIN MENU"
+                        Style="{StaticResource bubbleButton2}"
                         ToolTip="Quit to Main Menu"
                         />
-                </StackPanel>
+                </UniformGrid>
             </Grid>
         </custom:Modal>
 
         <!--  Restart Menu Modal  -->
         <custom:Modal
             x:Name="RestartGameModal"
-            Grid.RowSpan="2"
-            Panel.ZIndex="3"
+            Grid.RowSpan="5"
+            Grid.ColumnSpan="4"
             IsOpen="{Binding IsRestartMenuOpen}"
             >
             <Grid>
@@ -115,7 +121,8 @@
 
         <!--  How To Play Modal  -->
         <custom:Modal
-            Grid.RowSpan="2"
+            Grid.RowSpan="5"
+            Grid.ColumnSpan="4"
             Panel.ZIndex="3"
             IsOpen="{Binding IsHowToPlayModalOpen}"
             >
@@ -133,15 +140,15 @@
                     <RowDefinition Height="0.5*" />
                 </Grid.RowDefinitions>
 
+                <!--  How To Play Heading  -->
                 <TextBlock
                     Grid.Row="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="15"
                     FontWeight="Bold"
-                    >
-                    HOW TO PLAY
-                </TextBlock>
+                    Text="HOW TO PLAY"
+                    />
 
                 <!--  Object of the game Text  -->
                 <TextBlock
@@ -150,9 +157,8 @@
                     VerticalAlignment="Center"
                     FontSize="15"
                     FontWeight="Bold"
-                    >
-                    OBJECT OF THE GAME
-                </TextBlock>
+                    Text="OBJECT OF THE GAME"
+                    />
 
                 <!--  Gameplay  -->
                 <TextBlock
@@ -161,9 +167,8 @@
                     VerticalAlignment="Center"
                     FontSize="15"
                     FontWeight="Bold"
-                    >
-                    GAMEPLAY
-                </TextBlock>
+                    Text="GAMEPLAY"
+                    />
 
                 <!--  Scoring  -->
                 <TextBlock
@@ -172,18 +177,15 @@
                     VerticalAlignment="Center"
                     FontSize="15"
                     FontWeight="Bold"
-                    >
-                    SCORING
-                </TextBlock>
+                    Text="SCORING"
+                    />
 
                 <!--  Ok Button  -->
                 <Button
                     x:Name="btnOk"
                     Grid.Row="4"
-                    Width="60"
-                    Height="40"
-                    Margin="10"
-                    VerticalAlignment="Center"
+                    Margin="2"
+                    HorizontalAlignment="Center"
                     Command="{Binding HideHowToPlayCommand}"
                     Content="OK"
                     />
@@ -197,11 +199,11 @@
         <Button
             Grid.Row="0"
             Grid.Column="0"
-            Margin="2"
+            Margin="5,2,2,2"
+            HorizontalAlignment="Left"
             Command="{Binding OpenGameMenuCommand}"
-            Content="Main Menu"
-            FontWeight="Bold"
-            ToolTip="Main Menu"
+            Content="MENU"
+            Style="{StaticResource bubbleButton2}"
             />
 
         <!--  Player 1 Grid Layout  -->
@@ -347,6 +349,8 @@
                 <TextBlock
                     Margin="0,0,0,10"
                     HorizontalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="Bold"
                     Text="Selected Tiles"
                     />
 
@@ -378,14 +382,12 @@
         <StackPanel Grid.Row="2" Grid.Column="0">
             <TextBlock
                 FontSize="28"
-                FontWeight="Bold"
-                Foreground="Maroon"
+                Style="{StaticResource debugText}"
                 Text="{Binding DebugTileBagText}"
                 />
             <TextBlock
                 FontSize="28"
-                FontWeight="Bold"
-                Foreground="Maroon"
+                Style="{StaticResource debugText}"
                 Text="{Binding DebugTileBinText}"
                 />
         </StackPanel>

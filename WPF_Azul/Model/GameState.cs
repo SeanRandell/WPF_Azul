@@ -239,6 +239,8 @@ namespace WPF_Azul.Model
             }
         }
 
+
+        // TODO - refactor restart game code
         internal void ResetGame()
         {
             for (int i = 0; i < Players.Count; i++)
@@ -263,6 +265,8 @@ namespace WPF_Azul.Model
             CenterFactory.GetStartingPlayerTileFromTileBin(TileCollections.tileBin);
 
             TileCollections.ResetBagAndBinForNewGame();
+
+            GamePhase = GamePhase.PlayingRound;
 
             SetupFactoriesForRound();
         }
@@ -301,6 +305,7 @@ namespace WPF_Azul.Model
             }
 
             TileCollections.ResetBagAndBinForNewGame();
+            GamePhase = GamePhase.PlayingRound;
 
             InitNewGame();
         }

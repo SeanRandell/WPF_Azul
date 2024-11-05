@@ -55,6 +55,7 @@ namespace WPF_Azul.Model
                 Trace.WriteLine(GameState.SelectedFactoryTiles.Count + " tiles to be added to tile bin");
                 Trace.WriteLine("TileBin Count = " + GameState.TileCollections.tileBin.Count);
                 GameState.TileCollections.AddTilesToTileBin(GameState.SelectedFactoryTiles);
+                GameState.SelectedFactoryTiles.Clear();
                 Trace.WriteLine("TileBin Count = " + GameState.TileCollections.tileBin.Count);
             }
         }

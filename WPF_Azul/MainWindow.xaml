@@ -18,11 +18,6 @@
         <Grid.Background>
             <SolidColorBrush Color="LightGray" />
         </Grid.Background>
-        <!--<StackPanel>
-            <Button Name="btnModal" Width="100" Height="40" Content="Modal" Margin="5"
-                    Click="btnModal_Click"/>
-            <TextBlock x:Name="txtblckPlayerName" HorizontalAlignment="Center"></TextBlock>
-        </StackPanel>-->
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />

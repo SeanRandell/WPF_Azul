@@ -250,13 +250,13 @@ namespace WPF_Azul.Model
         internal void CalculateDroppedTileScores(TileCollections tileCollections)
         {
             int totalScore = 0;
-            for (int i = 0; i < DroppedTiles.Count; i++)
+            int i = 0;
+            for (; i < DroppedTiles.Count; i++)
             {
                 totalScore += GameConstants.DROPPED_TILE_COSTS[i];
                 tileCollections.tileBin.Add(DroppedTiles[i]);
-
-                DroppedTiles.RemoveAt(i);
             }
+            DroppedTiles.RemoveRange(0, i);
             DroppedTileScore = totalScore;
         }
 

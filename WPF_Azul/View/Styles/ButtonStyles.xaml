@@ -43,4 +43,43 @@
         </Setter>
     </Style>
 
+    <Style x:Key="bubbleButton2" TargetType="Button">
+        <Setter Property="Background" Value="#5abbd1" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="BorderBrush" Value="#0484b3" />
+        <Setter Property="BorderThickness" Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10"
+                            />
+
+                        <Viewbox HorizontalAlignment="Stretch" StretchDirection="Both">
+                            <ContentPresenter
+                                Grid.Column="0"
+                                Margin="15,5,15,5"
+                                Content="{TemplateBinding Content}"
+                                />
+                        </Viewbox>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#0455b3" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#0472b3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
