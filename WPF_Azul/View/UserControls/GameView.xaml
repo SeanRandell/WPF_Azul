@@ -150,7 +150,7 @@
                     Text="HOW TO PLAY"
                     />
 
-                <!--  Object of the game Text  -->
+                <!--  Object of the game Heading  -->
                 <TextBlock
                     Grid.Row="1"
                     HorizontalAlignment="Center"
@@ -159,8 +159,18 @@
                     FontWeight="Bold"
                     Text="OBJECT OF THE GAME"
                     />
+                
+                <!-- Object of the game text-->
+                <TextBlock 
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FontSize="15"
+                    Text="To be the player with the most points at the end of the game.
+The game ends after the round in which at least one player has
+completed a horizontal line of 5 consecutive tiles on her wall."/>
 
-                <!--  Gameplay  -->
+                <!--  Gameplay Heading  -->
                 <TextBlock
                     Grid.Row="2"
                     HorizontalAlignment="Center"
@@ -169,8 +179,41 @@
                     FontWeight="Bold"
                     Text="GAMEPLAY"
                     />
+                
+                <!-- Gameplay Text -->
+                <TextBlock
+                     Grid.Row="2"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     FontSize="15"
+                     Text="On your turn, you must pick tiles in one of the following ways:
+                        EITHER
+                        - Pick all tiles of the same color from any one Factory display
+                        and then move the remaining tiles from this Factory display
+                        to the center of the table.
+                        OR
+                        - Pick all tiles of the same color from the center of the table.
+                        If you are the first player in this round to pick tiles from the
+                        center of the table, also take the starting player marker and
+                        place it onto the leftmost free space of your floor line.   
+                        Then, add the tiles you picked to one of the 5 pattern lines on
+                        your player board (the first line has 1 space to hold 1 tile, the fifth
+                        line has 5).
+                        • Place the tiles, one by one, from right
+                        to left in your chosen pattern line.
+                        • If the pattern line already
+                        holds tiles, you may only
+                        add tiles of the same color to it.
+                        • Once all spaces of a pattern line are
+                        filled, that line is considered complete. If you have picked up
+                        more tiles than you can place in your chosen pattern line, you
+                        must place the excess tiles in the floor line
+                        You are not allowed to place tiles of a certain color in
+                        a pattern line whose corresponding line of your wall already
+                        holds a tile of that color."
+                 />
 
-                <!--  Scoring  -->
+                <!--  Scoring Heading -->
                 <TextBlock
                     Grid.Row="3"
                     HorizontalAlignment="Center"
