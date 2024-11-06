@@ -163,11 +163,23 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        private bool _showDebug;
+
+        public bool ShowDebug
+        {
+            get { return _showDebug; }
+            set
+            {
+                _showDebug = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Player _playerModel;
 
         public ICommand ProductionLineClickCommand { get; }
 
-        internal PlayerBoardViewModel(Player playerModel, ICommand ProductionLineClickCommand, int playerIndex)
+        internal PlayerBoardViewModel(Player playerModel, ICommand ProductionLineClickCommand, int playerIndex, bool showDebugText)
         {
             _playerModel = playerModel;
             this.ProductionLineClickCommand = ProductionLineClickCommand;
@@ -188,8 +200,12 @@ namespace WPF_Azul.ViewModel
             _playerName = "";
             _playerIndex = playerIndex;
 
+            _showDebug = showDebugText;
+
             UpdatePlayerNameFromModel();
         }
+
+
 
         private ObservableCollection<ValidProductionTile> InitValidProductionTiles()
         {
@@ -324,6 +340,11 @@ namespace WPF_Azul.ViewModel
         internal void UpdatePlayerNameFromModel()
         {
             PlayerName = _playerModel.Name;
+        }
+
+        internal void UpdateDebugToggle(bool debugToggleToSet)
+        {
+            ShowDebug = debugToggleToSet;
         }
     }
 }

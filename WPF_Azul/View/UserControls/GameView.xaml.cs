@@ -23,6 +23,9 @@ namespace WPF_Azul.View.UserControls
         public GameView()
         {
             InitializeComponent();
+            // TODO - revisit this after learning more about keyboard focus to see if there is a better way.
+            Focusable = true;
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
     }
 }

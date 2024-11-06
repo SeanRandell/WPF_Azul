@@ -76,6 +76,7 @@
                         FontSize="16"
                         Style="{StaticResource debugText}"
                         Text="End Scores:"
+                        Visibility="{Binding ShowDebug, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
                         />
 
                     <TextBlock
@@ -83,6 +84,7 @@
                         FontSize="16"
                         Style="{StaticResource debugText}"
                         Text="{Binding EndGameScore}"
+                        Visibility="{Binding ShowDebug, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
                         />
                 </StackPanel>
 
@@ -385,6 +387,7 @@
                     FontSize="32"
                     Style="{StaticResource debugText}"
                     Text="{Binding DroppedTileScore}"
+                    Visibility="{Binding ShowDebug, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
                     >
                     <TextBlock.RenderTransformOrigin>
                         <Point X=".1" Y=".1" />

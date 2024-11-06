@@ -38,13 +38,14 @@ namespace WPF_Azul.ViewModel
 
         public ICommand HideHowToPlayCommand => new RelayCommand(execute => HideHowToPlayModal());
 
+        public ICommand ToggleDebugCommand => new RelayCommand(execute => ToggleDebugText());
 
-        public RelayCommand OpenRestartCommand => new RelayCommand(execute => OpenRestartMenu());
-        public RelayCommand RestartGameCommand => new RelayCommand(execute => ConfirmRestartGameCommand());
+        public ICommand OpenRestartCommand => new RelayCommand(execute => OpenRestartMenu());
+        public ICommand RestartGameCommand => new RelayCommand(execute => ConfirmRestartGameCommand());
 
-        public RelayCommand CancelRestartGameCommand => new RelayCommand(execute => CloseRestartMenu());
+        public ICommand CancelRestartGameCommand => new RelayCommand(execute => CloseRestartMenu());
 
-        public RelayCommand ReplayGameButtonCommand => new RelayCommand(execute => ResetGame());
+        public ICommand ReplayGameButtonCommand => new RelayCommand(execute => ResetGame());
 
         private TileType _selectedTileType;
 
@@ -238,6 +239,18 @@ namespace WPF_Azul.ViewModel
             }
         }
 
+        private bool _showDebug;
+
+        public bool ShowDebug
+        {
+            get { return _showDebug; }
+            set
+            {
+                _showDebug = value;
+                OnPropertyChanged();
+            }
+        }
+
         internal GameViewModel(GameManager gameManager, NavigationStore navigationStore)
         {
             _selectedTileType = TileType.Blue; // default value
@@ -263,6 +276,7 @@ namespace WPF_Azul.ViewModel
             _isRestartMenuOpen = false;
             _isHowToPlayModalOpen = false;
             _isGameMenuOpen = false;
+            _showDebug = _gameManager.GameState.ToggleDebugText;
 
             _debugTileBagText = UpdateDebugTileBagText();
             _debugTileBinText = UpdateDebugTileBinText();
@@ -274,7 +288,7 @@ namespace WPF_Azul.ViewModel
         {
             for (int i = 0; i < GameConstants.DEFAULT_PLAYER_COUNT; i++)
             {
-                PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager.GetPlayer(i), ProductionLineClickCommand, i));
+                PlayerViewModels.Add(new PlayerBoardViewModel(_gameManager.GetPlayer(i), ProductionLineClickCommand, i, _gameManager.GameState.ToggleDebugText));
             }
         }
 
@@ -652,6 +666,19 @@ namespace WPF_Azul.ViewModel
         internal bool CanFactoryTileClickCommandBeExeceuted(object? parameter)
         {
             return SelectedFactoryTiles.Count == 0;
+        }
+
+        internal void ToggleDebugText()
+        {
+            Trace.WriteLine("Test");
+            _gameManager.GameState.ToggleDebugText = !_gameManager.GameState.ToggleDebugText;
+
+            ShowDebug = _gameManager.GameState.ToggleDebugText;
+
+            for (int i = 0; i < PlayerViewModels.Count; i++)
+            {
+                PlayerViewModels[i].UpdateDebugToggle(_gameManager.GameState.ToggleDebugText);
+            }
         }
     }
 }

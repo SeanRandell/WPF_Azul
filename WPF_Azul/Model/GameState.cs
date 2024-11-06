@@ -18,16 +18,22 @@ namespace WPF_Azul.Model
 
         internal List<Tile> SelectedFactoryTiles { get; set; }
 
+        internal bool ToggleDebugText { get; set; }
+
         internal GameState()
         {
             Players = new List<Player>();
             TileCollections = new TileCollections();
             Factories = new List<Factory>();
+            SelectedFactoryTiles = new List<Tile>();
+
             CenterFactory = new CenterFactory(GameConstants.CENTER_FACTORY_INDEX);
+
             ActivePlayerTurnIndex = GameConstants.STARTING_PLAYER_INDEX;
+
             GamePhase = GamePhase.StartUp;
 
-            SelectedFactoryTiles = new List<Tile>();
+            ToggleDebugText = true;
 
             InitPlayers();
             InitFactories();
@@ -268,6 +274,11 @@ namespace WPF_Azul.Model
 
             GamePhase = GamePhase.PlayingRound;
 
+            for (int i = 0; i < Players.Count; i++)
+            {
+                Players[i].Name = "";
+            }
+
             SetupFactoriesForRound();
         }
 
@@ -306,6 +317,11 @@ namespace WPF_Azul.Model
 
             TileCollections.ResetBagAndBinForNewGame();
             GamePhase = GamePhase.PlayingRound;
+
+            for (int i = 0;i < Players.Count; i++)
+            {
+                Players[i].Name = "";
+            }
 
             InitNewGame();
         }
