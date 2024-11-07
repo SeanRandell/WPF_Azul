@@ -34,6 +34,31 @@
         </Border>
     </DataTemplate>
 
+    <Style x:Key="playerScoreTextStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Gold" />
+        <!--<Setter Property="FontSize" Value="20" />-->
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontFamily" Value="Arial" />
+    </Style>
+
+    <Style x:Key="playerScoreBorderStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="Gold" />
+        <Setter Property="BorderThickness" Value="4" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Margin" Value="2" />
+    </Style>
+
+    <DataTemplate x:Key="stretchBorderTextboxTemplate" DataType="{x:Type sys:String}">
+        <Border Style="{StaticResource playerScoreBorderStyle}">
+            <StackPanel>
+            <TextBlock Style="{StaticResource playerScoreTextStyle}" Text="{Binding Mode=OneWay}" />
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
     <Style x:Key="AnimatedGradientTextBlock" TargetType="TextBlock">
         <Setter Property="FontSize" Value="48" />
         <Setter Property="Foreground">
