@@ -11,6 +11,10 @@
 
     <Style x:Key="playerNameTextStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="Gold" />
+        <!--
+            TODO - Not a fan of setting the font size directly. See if there is a better way to
+            scale text to fit defined scalable area. May need to look at order transform application.
+        -->
         <Setter Property="FontSize" Value="20" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontFamily" Value="Arial" />
@@ -53,9 +57,13 @@
 
     <DataTemplate x:Key="stretchBorderTextboxTemplate" DataType="{x:Type sys:String}">
         <Border Style="{StaticResource playerScoreBorderStyle}">
-            <StackPanel>
-            <TextBlock Style="{StaticResource playerScoreTextStyle}" Text="{Binding Mode=OneWay}" />
-            </StackPanel>
+            <Viewbox>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource playerScoreTextStyle}"
+                    Text="{Binding Mode=OneWay}"
+                    />
+            </Viewbox>
         </Border>
     </DataTemplate>
 

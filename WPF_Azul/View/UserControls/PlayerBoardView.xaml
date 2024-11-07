@@ -378,46 +378,60 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <Grid                     Grid.Row="0"
-                    Grid.Column="2">
+                <Grid Grid.Row="0" Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="5*" />
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
                     <!--  Player Dropped tile score  -->
-                <TextBlock
-                    Grid.Row="0"
-                    Margin="0,0,0,0"
-                    VerticalAlignment="Top"
-                    FontSize="32"
-                    Style="{StaticResource debugText}"
-                    Text="{Binding DroppedTileScore}"
-                    Visibility="{Binding ShowDebug, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
-                    >
-                    <TextBlock.RenderTransformOrigin>
-                        <Point X=".1" Y=".1" />
-                    </TextBlock.RenderTransformOrigin>
-                    <TextBlock.RenderTransform>
-                        <ScaleTransform ScaleX="{Binding PlayerIndex, Converter={StaticResource playerIndexToScaleXConverter}}" />
-                    </TextBlock.RenderTransform>
-                </TextBlock>
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,0,0,0"
+                        VerticalAlignment="Top"
+                        FontSize="32"
+                        Style="{StaticResource debugText}"
+                        Text="{Binding DroppedTileScore}"
+                        Visibility="{Binding ShowDebug, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
+                        >
+                        <TextBlock.RenderTransformOrigin>
+                            <Point X=".1" Y=".1" />
+                        </TextBlock.RenderTransformOrigin>
+                        <TextBlock.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding PlayerIndex, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
 
-                <!--  Player Score  -->
-                <ContentPresenter
-                    Grid.Row="1"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Stretch"
-                    Content="{Binding Path=TotalScore, Mode=OneWay}"
-                    ContentTemplate="{StaticResource stretchBorderTextboxTemplate}"
-                    >
-                    <ContentPresenter.RenderTransformOrigin>
-                        <Point X=".5" Y=".5" />
-                    </ContentPresenter.RenderTransformOrigin>
-                    <ContentPresenter.RenderTransform>
-                        <ScaleTransform ScaleX="{Binding DataContext.PlayerIndex, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource playerIndexToScaleXConverter}}" />
-                    </ContentPresenter.RenderTransform>
-                </ContentPresenter>
+                    <!--  Player Score  -->
+                    <Grid Grid.Row="1" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="8*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+
+                        <ContentPresenter
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Content="{Binding Path=TotalScore, Mode=OneWay}"
+                            ContentTemplate="{StaticResource stretchBorderTextboxTemplate}"
+                            >
+                            <ContentPresenter.RenderTransformOrigin>
+                                <Point X=".5" Y=".5" />
+                            </ContentPresenter.RenderTransformOrigin>
+                            <ContentPresenter.RenderTransform>
+                                <ScaleTransform ScaleX="{Binding DataContext.PlayerIndex, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource playerIndexToScaleXConverter}}" />
+                            </ContentPresenter.RenderTransform>
+                        </ContentPresenter>
+                    </Grid>
                 </Grid>
             </Grid>
 
