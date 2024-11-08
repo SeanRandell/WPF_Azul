@@ -47,8 +47,13 @@
             IsOpen="{Binding IsPlayerNameModalOpen}"
             >
             <!--  TODO: include Grid.RowSpan="3" if modal is not stretching across multiple rows  -->
-            <Grid MinWidth="300" MinHeight="300">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3.3*" />
+                    <ColumnDefinition Width="3.3*" />
+                    <ColumnDefinition Width="3.3*" />
+                </Grid.ColumnDefinitions>
+                <UniformGrid Grid.Row="1" Columns="2" Rows="3">
                     <TextBlock Text="Player 1 Name:" />
                     <!--  Player Input  -->
                     <TextBox
@@ -65,27 +70,23 @@
                     <TextBlock Text="Player 2 Name:" />
                     <TextBox
                         x:Name="Player2NameTextBox"
-                        Width="220"
-                        HorizontalAlignment="Center"
-                        BorderBrush="DarkGray"
-                        BorderThickness="4"
-                        FontSize="48"
-                        FontWeight="Bold"
-                        MaxLength="10"
+                        Style="{StaticResource PlayerNameTextBox}"
                         Text="{Binding Player2Name, Mode=TwoWay}"
+                        />
+                    <Button
+                        Margin="2"
+                        Command="{Binding CancelPlayerNamesCommand}"
+                        Style="{StaticResource bubbleButton2}"
+                        Content="Cancel"
                         />
                     <Button
                         x:Name="btnCloseModal"
                         Margin="2"
                         Command="{Binding SubmitPlayerNamesCommand}"
+                        Style="{StaticResource bubbleButton2}"
                         Content="Confirm"
                         />
-                    <Button
-                        Margin="2"
-                        Command="{Binding CancelPlayerNamesCommand}"
-                        Content="Cancel"
-                        />
-                </StackPanel>
+                </UniformGrid>
             </Grid>
         </custom:Modal>
 
