@@ -12,9 +12,13 @@
     >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5.33*" />
-            <RowDefinition Height="3.33*" />
-            <RowDefinition Height="1.33*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="0.4*" />
+            <RowDefinition Height="0.6*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3.33*" />
@@ -23,79 +27,161 @@
         </Grid.ColumnDefinitions>
 
         <Grid.Background>
-            <ImageBrush ImageSource="../../ViewModel/Assets/MainMenuBackground.png" Opacity="0.8" />
+            <ImageBrush ImageSource="../../ViewModel/Assets/MainMenuBackground.png" />
         </Grid.Background>
 
-        <TextBlock
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="DarkGray"
-            FontSize="60"
-            FontWeight="Bold"
-            Style="{StaticResource AnimatedGradientTextBlock}"
-            Text="WPF AZUL"
+        <!--  Game Title Background  -->
+        <Rectangle
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Margin="2"
+            Fill="LightBlue"
+            RadiusX="15"
+            RadiusY="15"
             />
 
+        <!--  Game Title Border  -->
+        <Border
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            BorderThickness="5"
+            CornerRadius="15"
+            Style="{StaticResource AnimatedGradientBorder}"
+            />
+
+        <!--  WPF Title Text  -->
+        <Grid
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3.33*" />
+                <ColumnDefinition Width="3.33*" />
+                <ColumnDefinition Width="3.33*" />
+            </Grid.ColumnDefinitions>
+
+            <!--  WPF Text  -->
+            <ContentPresenter
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Panel.ZIndex="2"
+                Content="WPF"
+                ContentTemplate="{StaticResource TitleBorderTextboxTemplate}"
+                />
+
+            <!--  WPF Text background  -->
+            <Rectangle
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="2"
+                Panel.ZIndex="0"
+                Fill="LightBlue"
+                RadiusX="15"
+                RadiusY="15"
+                />
+
+            <!--  WPF Text Border  -->
+            <Border
+                Grid.Row="1"
+                Grid.Column="1"
+                BorderThickness="5"
+                CornerRadius="15"
+                Style="{StaticResource AnimatedGradientBorder}"
+                />
+        </Grid>
+
+        <!--  Game Title Text  -->
+        <ContentPresenter
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Margin="15"
+            Content="AZUL"
+            ContentTemplate="{StaticResource TitleBorderTextboxTemplate}"
+            />
+
+        <!--  Player Name Input Modal  -->
         <custom:Modal
-            x:Name="PlayerNameModal"
-            Grid.RowSpan="3"
+            Grid.RowSpan="7"
             Grid.ColumnSpan="3"
             Panel.ZIndex="2"
             IsOpen="{Binding IsPlayerNameModalOpen}"
             >
-            <!--  TODO: include Grid.RowSpan="3" if modal is not stretching across multiple rows  -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3.3*" />
-                    <ColumnDefinition Width="3.3*" />
-                    <ColumnDefinition Width="3.3*" />
-                </Grid.ColumnDefinitions>
-                <UniformGrid Grid.Row="1" Columns="2" Rows="3">
-                    <TextBlock Text="Player 1 Name:" />
-                    <!--  Player Input  -->
-                    <TextBox
-                        x:Name="Player1NameTextBox"
-                        Width="220"
-                        HorizontalAlignment="Center"
-                        BorderBrush="DarkGray"
-                        BorderThickness="4"
-                        FontSize="48"
-                        FontWeight="Bold"
-                        MaxLength="10"
-                        Text="{Binding Player1Name, Mode=TwoWay}"
-                        />
-                    <TextBlock Text="Player 2 Name:" />
-                    <TextBox
-                        x:Name="Player2NameTextBox"
-                        Style="{StaticResource PlayerNameTextBox}"
-                        Text="{Binding Player2Name, Mode=TwoWay}"
-                        />
-                    <Button
-                        Margin="2"
-                        Command="{Binding CancelPlayerNamesCommand}"
-                        Style="{StaticResource bubbleButton2}"
-                        Content="Cancel"
-                        />
-                    <Button
-                        x:Name="btnCloseModal"
-                        Margin="2"
-                        Command="{Binding SubmitPlayerNamesCommand}"
-                        Style="{StaticResource bubbleButton2}"
-                        Content="Confirm"
-                        />
-                </UniformGrid>
-            </Grid>
+            <Border BorderBrush="#0484b3" BorderThickness="5">
+                <Grid Background="LightBlue">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3.3*" />
+                        <ColumnDefinition Width="3.3*" />
+                        <ColumnDefinition Width="3.3*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3.3*" />
+                        <RowDefinition Height="3.3*" />
+                        <RowDefinition Height="3.3*" />
+                    </Grid.RowDefinitions>
+
+                    <UniformGrid
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Columns="2"
+                        Rows="3"
+                        >
+
+                        <!--  Player 1 Name Label  -->
+                        <TextBlock Text="Player 1 Name:" />
+
+                        <!--  Player 1 Name Input  -->
+                        <ContentPresenter Content="{Binding Player1Name, Mode=TwoWay}" ContentTemplate="{StaticResource borderedTextboxTemplate}" />
+
+                        <!--  Player 2 Name Label  -->
+                        <TextBlock Text="Player 2 Name:" />
+
+                        <!--  Player 2 Name Input  -->
+                        <TextBox
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Style="{StaticResource PlayerNameTextBox}"
+                            Text="{Binding Player2Name, Mode=TwoWay}"
+                            />
+
+                        <!--  Cancel Button  -->
+                        <Button
+                            Margin="2"
+                            Command="{Binding CancelPlayerNamesCommand}"
+                            Content="Cancel"
+                            Style="{StaticResource bubbleButton2}"
+                            />
+
+                        <!--  Confirm Button  -->
+                        <Button
+                            Margin="2"
+                            Command="{Binding SubmitPlayerNamesCommand}"
+                            Content="Confirm"
+                            Style="{StaticResource bubbleButton2}"
+                            />
+                    </UniformGrid>
+
+                </Grid>
+            </Border>
         </custom:Modal>
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <!--  Main Menu Options  -->
+        <Grid Grid.Row="5" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*" />
                 <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
 
+            <!--  Start Game Button  -->
             <Button
                 Grid.Row="0"
                 Margin="2"
@@ -103,6 +189,8 @@
                 Content="START"
                 Style="{StaticResource bubbleButton2}"
                 />
+
+            <!--  Quit Command Button  -->
             <Button
                 Grid.Row="1"
                 Margin="2"

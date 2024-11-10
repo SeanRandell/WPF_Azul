@@ -61,9 +61,19 @@
                     <ColumnDefinition Width="3.3*" />
                     <ColumnDefinition Width="3.3*" />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3.3*" />
+                    <RowDefinition Height="3.3*" />
+                    <RowDefinition Height="3.3*" />
+                </Grid.RowDefinitions>
 
                 <!--  Resume Game  -->
-                <UniformGrid Columns="1" Rows="4">
+                <UniformGrid
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Columns="1"
+                    Rows="4"
+                    >
                     <Button
                         Margin="4"
                         Command="{Binding CloseGameMenuCommand}"

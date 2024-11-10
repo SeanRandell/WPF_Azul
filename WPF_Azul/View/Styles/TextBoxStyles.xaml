@@ -1,12 +1,28 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    >
     <Style x:Key="PlayerNameTextBox" TargetType="TextBox">
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="MaxLength" Value="10"/>
-        <Setter Property="Margin" Value="2"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="MaxLength" Value="10" />
+        <Setter Property="Margin" Value="2" />
         <Setter Property="FontFamily" Value="Arial" />
         <Setter Property="BorderBrush" Value="Gold" />
         <Setter Property="BorderThickness" Value="4" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+
+        <!--  TODO: figure out better solution  -->
+        <!--<Setter Property="MinWidth" Value="200" />
+        <Setter Property="MinHeight" Value="200" />-->
     </Style>
+
+    <DataTemplate x:Key="borderedTextboxTemplate" DataType="{x:Type sys:String}">
+        <!--<Border Style="{StaticResource playerNameBorderStyle}">-->
+        <Viewbox Stretch="Fill" StretchDirection="Both">
+            <TextBox Style="{StaticResource PlayerNameTextBox}" Text="{Binding Mode=OneWay}" />
+        </Viewbox>
+        <!--</Border>-->
+    </DataTemplate>
 </ResourceDictionary>

@@ -15,7 +15,7 @@
             TODO - Not a fan of setting the font size directly. See if there is a better way to
             scale text to fit defined scalable area. May need to look at order transform application.
         -->
-        <Setter Property="FontSize" Value="20" />
+        <!--<Setter Property="FontSize" Value="20" />-->
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontFamily" Value="Arial" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -32,7 +32,7 @@
         <Setter Property="Margin" Value="2" />
     </Style>
 
-    <DataTemplate x:Key="borderedTextboxTemplate" DataType="{x:Type sys:String}">
+    <DataTemplate x:Key="borderedTextBlockTemplate" DataType="{x:Type sys:String}">
         <Border Style="{StaticResource playerNameBorderStyle}">
             <TextBlock Style="{StaticResource playerNameTextStyle}" Text="{Binding Mode=OneWay}" />
         </Border>
@@ -40,7 +40,6 @@
 
     <Style x:Key="playerScoreTextStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="Gold" />
-        <!--<Setter Property="FontSize" Value="20" />-->
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontFamily" Value="Arial" />
     </Style>
@@ -68,13 +67,13 @@
     </DataTemplate>
 
     <Style x:Key="AnimatedGradientTextBlock" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="48" />
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground">
             <Setter.Value>
-                <LinearGradientBrush x:Name="animatedGradientBrush" StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Offset="0.0" Color="#0472b3" />
-                    <GradientStop Offset="0.5" Color="#800080" />
-                    <GradientStop Offset="1.0" Color="#00FFFF" />
+                <LinearGradientBrush x:Name="animatedGradient" StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="#CC0000" />
+                    <GradientStop Offset="0.5" Color="#CCCC00" />
+                    <GradientStop Offset="1.0" Color="#00CC00" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
@@ -82,31 +81,112 @@
             <EventTrigger RoutedEvent="Loaded">
                 <BeginStoryboard>
                     <Storyboard RepeatBehavior="Forever">
-                        <ColorAnimation
-                            AutoReverse="True"
-                            Storyboard.TargetProperty="(TextBlock.Foreground).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
-                            From="#0472b3"
-                            To="#800080"
-                            Duration="0:0:3"
-                            />
-                        <ColorAnimation
-                            AutoReverse="True"
-                            Storyboard.TargetProperty="(TextBlock.Foreground).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
-                            From="#800080"
-                            To="#00FFFF"
-                            Duration="0:0:3"
-                            />
-                        <ColorAnimation
-                            AutoReverse="True"
-                            Storyboard.TargetProperty="(TextBlock.Foreground).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
-                            From="#00FFFF"
-                            To="#0472b3"
-                            Duration="0:0:3"
-                            />
+
+                        <!--  Animate GradientStop 1  -->
+                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)">
+                            <LinearColorKeyFrame KeyTime="0:0:0" Value="#CC0000" />
+                            <LinearColorKeyFrame KeyTime="0:0:2" Value="#CC00CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:4" Value="#0000CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:6" Value="#00CCCC" />
+                            <LinearColorKeyFrame KeyTime="0:0:8" Value="#00CC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:10" Value="#CCCC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:12" Value="#CC0000" />
+                        </ColorAnimationUsingKeyFrames>
+
+                        <!--  Animate GradientStop 2  -->
+                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)">
+                            <LinearColorKeyFrame KeyTime="0:0:0" Value="#CCCC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:2" Value="#CC0000" />
+                            <LinearColorKeyFrame KeyTime="0:0:4" Value="#CC00CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:6" Value="#0000CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:8" Value="#00CCCC" />
+                            <LinearColorKeyFrame KeyTime="0:0:10" Value="#00CC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:12" Value="#CCCC00" />
+                        </ColorAnimationUsingKeyFrames>
+
+                        <!--  Animate GradientStop 3  -->
+                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)">
+                            <LinearColorKeyFrame KeyTime="0:0:0" Value="#00CC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:2" Value="#CCCC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:4" Value="#CC0000" />
+                            <LinearColorKeyFrame KeyTime="0:0:6" Value="#CC00CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:8" Value="#0000CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:10" Value="#00CCCC" />
+                            <LinearColorKeyFrame KeyTime="0:0:12" Value="#00CC00" />
+                        </ColorAnimationUsingKeyFrames>
+
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="AnimatedGradientBorder" TargetType="Border">
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush x:Name="animatedGradient" StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="#CC0000" />
+                    <GradientStop Offset="0.5" Color="#CCCC00" />
+                    <GradientStop Offset="1.0" Color="#00CC00" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+
+                        <!--  Animate GradientStop 1  -->
+                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)">
+                            <LinearColorKeyFrame KeyTime="0:0:0" Value="#CC0000" />
+                            <LinearColorKeyFrame KeyTime="0:0:2" Value="#CC00CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:4" Value="#0000CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:6" Value="#00CCCC" />
+                            <LinearColorKeyFrame KeyTime="0:0:8" Value="#00CC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:10" Value="#CCCC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:12" Value="#CC0000" />
+                        </ColorAnimationUsingKeyFrames>
+
+                        <!--  Animate GradientStop 2  -->
+                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)">
+                            <LinearColorKeyFrame KeyTime="0:0:0" Value="#CCCC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:2" Value="#CC0000" />
+                            <LinearColorKeyFrame KeyTime="0:0:4" Value="#CC00CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:6" Value="#0000CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:8" Value="#00CCCC" />
+                            <LinearColorKeyFrame KeyTime="0:0:10" Value="#00CC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:12" Value="#CCCC00" />
+                        </ColorAnimationUsingKeyFrames>
+
+                        <!--  Animate GradientStop 3  -->
+                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)">
+                            <LinearColorKeyFrame KeyTime="0:0:0" Value="#00CC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:2" Value="#CCCC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:4" Value="#CC0000" />
+                            <LinearColorKeyFrame KeyTime="0:0:6" Value="#CC00CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:8" Value="#0000CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:10" Value="#00CCCC" />
+                            <LinearColorKeyFrame KeyTime="0:0:12" Value="#00CC00" />
+                        </ColorAnimationUsingKeyFrames>
+
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <DataTemplate x:Key="TitleBorderTextboxTemplate" DataType="{x:Type sys:String}">
+        <Border Style="{StaticResource AnimatedGradientBorder}">
+            <Viewbox>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource AnimatedGradientTextBlock}"
+                    Text="{Binding Mode=OneWay}"
+                    />
+            </Viewbox>
+        </Border>
+    </DataTemplate>
+
+
 
 </ResourceDictionary>

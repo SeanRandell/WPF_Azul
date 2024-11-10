@@ -51,7 +51,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Content="{Binding Path=PlayerName, Mode=OneWay}"
-                    ContentTemplate="{StaticResource borderedTextboxTemplate}"
+                    ContentTemplate="{StaticResource borderedTextBlockTemplate}"
                     >
                     <ContentPresenter.RenderTransformOrigin>
                         <Point X=".99" Y=".99" />
