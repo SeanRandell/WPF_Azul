@@ -25,7 +25,7 @@ namespace WPF_Azul.View.UserControls
         #region TileColour DP
 
         /// <summary>
-        /// Gets or sets the background colour of the tile
+        /// Gets or sets the colour of the tile
         /// </summary>
         public Tile TileColour
         {
@@ -37,13 +37,15 @@ namespace WPF_Azul.View.UserControls
         }
 
         /// <summary>
-        /// Identified the BackgroundColour dependency property
+        /// Identifies the TileColour dependency property
         /// </summary>
         public static readonly DependencyProperty TileColourProperty =
             DependencyProperty.Register("TileColour", typeof(Tile),
               typeof(TileView), new PropertyMetadata(null));
 
         #endregion
+
+        #region FactoryTileClickCommand DP
 
         public ICommand FactoryTileClickCommand
         {
@@ -58,6 +60,10 @@ namespace WPF_Azul.View.UserControls
             DependencyProperty.Register("FactoryTileClickCommand", typeof(ICommand),
               typeof(TileView), new PropertyMetadata(null));
 
+        #endregion
+
+        #region TileObject DP
+
         public object TileObject
         {
             get { return (object)GetValue(TileObjectProperty); }
@@ -71,11 +77,16 @@ namespace WPF_Azul.View.UserControls
             DependencyProperty.Register("TileObject", typeof(object),
               typeof(TileView), new PropertyMetadata(null));
 
+        #endregion
+
         public TileView()
         {
             InitializeComponent();
             TileViewUI.DataContext = this;
         }
+
+
+        #region Tile Drag and Drop Testing
 
         //protected override void OnMouseMove(MouseEventArgs e)
         //{
@@ -204,5 +215,7 @@ namespace WPF_Azul.View.UserControls
         //    // Undo the preview that was applied in OnDragEnter.
         //    rectangleUI.Fill = _previousFill;
         //}
+
+        #endregion
     }
 }

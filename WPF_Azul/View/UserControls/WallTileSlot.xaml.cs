@@ -16,17 +16,14 @@ using WPF_Azul.Model;
 
 namespace WPF_Azul.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for WallTileSlot.xaml
-    /// </summary>
     public partial class WallTileSlot : UserControl
     {
-        #region BackgroundColour DP
+        #region TileType DP
 
         /// <summary>
-        /// Gets or sets the background colour of the tile
+        /// Gets or sets the Tile Type of the wall tile
         /// </summary>
-        public TileType BackgroundColour
+        public TileType WallTileType
         {
             get { return (TileType)GetValue(BackgroundColourProperty); }
             set
@@ -36,20 +33,17 @@ namespace WPF_Azul.View.UserControls
         }
 
         /// <summary>
-        /// Identified the BackgroundColour dependency property
+        /// Identifies the Tile Type dependency property
         /// </summary>
         public static readonly DependencyProperty BackgroundColourProperty =
-            DependencyProperty.Register("BackgroundColour", typeof(TileType),
+            DependencyProperty.Register("WallTileType", typeof(TileType),
               typeof(WallTileSlot), new PropertyMetadata(null));
 
         #endregion
 
-        //private Color defaultColour;
-
         public WallTileSlot()
         {
             InitializeComponent();
-            //defaultColour = Colors.Transparent;
             WallTileSlotUI.DataContext = this;
         }
     }

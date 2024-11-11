@@ -218,7 +218,7 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <local:WallTileSlot Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}" BackgroundColour="{Binding}" />
+                                        <local:WallTileSlot Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}" WallTileType="{Binding}" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

@@ -16,11 +16,10 @@ using WPF_Azul.ViewModel;
 
 namespace WPF_Azul.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for ValidProductionTileIndicator.xaml
-    /// </summary>
     public partial class ValidProductionTileIndicator : UserControl
     {
+        #region ProductionLineCommandClick DP
+
         public ICommand ProductionLineCommandClick
         {
             get { return (ICommand)GetValue(ProductionLineCommandClickProperty); }
@@ -30,12 +29,13 @@ namespace WPF_Azul.View.UserControls
             }
         }
 
-        /// <summary>
-        /// Identified the BackgroundColour dependency property
-        /// </summary>
         public static readonly DependencyProperty ProductionLineCommandClickProperty =
             DependencyProperty.Register("ProductionLineCommandClick", typeof(ICommand),
               typeof(ValidProductionTileIndicator), new PropertyMetadata(null));
+
+        #endregion
+
+        #region ValidProductionLine DP
 
         public object ValidProductionLine
         {
@@ -46,12 +46,12 @@ namespace WPF_Azul.View.UserControls
             }
         }
 
-        /// <summary>
-        /// Identified the BackgroundColour dependency property
-        /// </summary>
         public static readonly DependencyProperty ValidProductionLineProperty =
             DependencyProperty.Register("ValidProductionLine", typeof(object),
               typeof(ValidProductionTileIndicator), new PropertyMetadata(null));
+
+        #endregion
+
         public ValidProductionTileIndicator()
         {
             InitializeComponent();

@@ -16,7 +16,7 @@
         CornerRadius="5"
         >
         <Border.Background>
-            <ImageBrush ImageSource="{Binding Path=BackgroundColour, TargetNullValue={x:Null}, Converter={StaticResource tileTypeToWallTileSlotConverter}, Mode=Twoway}" Opacity="0.35" />
+            <ImageBrush ImageSource="{Binding Path=WallTileType, TargetNullValue={x:Null}, Converter={StaticResource tileTypeToWallTileSlotConverter}, Mode=Twoway}" Opacity="0.35" />
         </Border.Background>
         <Grid />
     </Border>

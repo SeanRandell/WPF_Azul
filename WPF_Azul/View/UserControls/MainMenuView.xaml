@@ -110,20 +110,20 @@
             />
 
         <!--  Player Name Input Modal  -->
-        <!-- Testing IsOpen-->
-        <!--             IsOpen="{Binding IsPlayerNameModalOpen}" -->
+        <!--  Testing IsOpen  -->
+        <!--  IsOpen="{Binding IsPlayerNameModalOpen}"  -->
         <custom:Modal
             Grid.RowSpan="7"
             Grid.ColumnSpan="3"
             Panel.ZIndex="2"
-            IsOpen="{Binding IsPlayerNameModalOpen}"
+            IsOpen="true"
             >
             <Border BorderBrush="#0484b3" BorderThickness="5">
                 <Grid Background="LightBlue">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3.3*" />
-                        <ColumnDefinition Width="3.3*" />
-                        <ColumnDefinition Width="3.3*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="6*" />
+                        <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3.3*" />
@@ -131,32 +131,66 @@
                         <RowDefinition Height="3.3*" />
                     </Grid.RowDefinitions>
 
-                    <UniformGrid
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Columns="2"
-                        Rows="3"
-                        >
+                    <!--
+                        TODO - As there is no minLength property. Create logic for it in the view model
+                        and bind the confirm command to whether the input is valid
+                    -->
+                    <Grid Grid.Row="1" Grid.Column="1">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3.3*" />
+                            <RowDefinition Height="3.3*" />
+                            <RowDefinition Height="3.3*" />
+                        </Grid.RowDefinitions>
 
                         <!--  Player 1 Name Label  -->
-                        <TextBlock Text="Player 1 Name:" />
+                        <Viewbox
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            >
+                            <TextBlock Text="Player 1 Name:" />
+                        </Viewbox>
 
                         <!--  Player 1 Name Input  -->
-                        <ContentPresenter Content="{Binding Player1Name, Mode=TwoWay}" ContentTemplate="{StaticResource borderedTextboxTemplate}" />
+                        <ContentPresenter
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="4"
+                            Content="{Binding Player1Name, Mode=TwoWay}"
+                            ContentTemplate="{StaticResource borderedTextboxTemplate}"
+                            />
 
                         <!--  Player 2 Name Label  -->
-                        <TextBlock Text="Player 2 Name:" />
+                        <Viewbox
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            >
+                            <TextBlock Text="Player 2 Name:" />
+                        </Viewbox>
 
                         <!--  Player 2 Name Input  -->
                         <TextBox
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="4"
                             Style="{StaticResource PlayerNameTextBox}"
                             Text="{Binding Player2Name, Mode=TwoWay}"
                             />
 
                         <!--  Cancel Button  -->
                         <Button
+                            Grid.Row="2"
+                            Grid.Column="2"
                             Margin="2"
                             Command="{Binding CancelPlayerNamesCommand}"
                             Content="Cancel"
@@ -165,12 +199,14 @@
 
                         <!--  Confirm Button  -->
                         <Button
+                            Grid.Row="2"
+                            Grid.Column="3"
                             Margin="2"
                             Command="{Binding SubmitPlayerNamesCommand}"
                             Content="Confirm"
                             Style="{StaticResource bubbleButton2}"
                             />
-                    </UniformGrid>
+                    </Grid>
 
                 </Grid>
             </Border>
