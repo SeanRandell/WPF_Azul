@@ -8,11 +8,12 @@
         <Setter Property="MaxLength" Value="10" />
         <Setter Property="Margin" Value="2" />
         <Setter Property="FontFamily" Value="Arial" />
-        <Setter Property="BorderBrush" Value="Gold" />
-        <Setter Property="BorderThickness" Value="4" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <!--<Setter Property="BorderBrush" Value="Gold" />
+        <Setter Property="BorderThickness" Value="4" />-->
+        <!--<Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>-->
         <!--  TODO: figure out better solution  -->
         <!--<Setter Property="MinWidth" Value="200" />
         <Setter Property="MinHeight" Value="200" />-->
@@ -20,7 +21,7 @@
 
     <DataTemplate x:Key="borderedTextboxTemplate" DataType="{x:Type sys:String}">
         <!--<Border Style="{StaticResource playerNameBorderStyle}">-->
-        <Viewbox Stretch="Fill" StretchDirection="Both">
+        <Viewbox Stretch="UniformToFill" StretchDirection="Both">
             <TextBox Style="{StaticResource PlayerNameTextBox}" Text="{Binding Mode=OneWay}" />
         </Viewbox>
         <!--</Border>-->

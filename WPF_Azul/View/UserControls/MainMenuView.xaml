@@ -110,6 +110,8 @@
             />
 
         <!--  Player Name Input Modal  -->
+        <!-- Testing IsOpen-->
+        <!--             IsOpen="{Binding IsPlayerNameModalOpen}" -->
         <custom:Modal
             Grid.RowSpan="7"
             Grid.ColumnSpan="3"
