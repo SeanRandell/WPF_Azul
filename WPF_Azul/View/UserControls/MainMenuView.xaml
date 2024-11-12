@@ -133,7 +133,8 @@
 
                     <!--
                         TODO - As there is no minLength property. Create logic for it in the view model
-                        and bind the confirm command to whether the input is valid
+                        and bind the confirm command to whether the input is valid.
+                    Decided that a relaycommand in viewmodel is best approach for this 
                     -->
                     <Grid Grid.Row="1" Grid.Column="1">
 
@@ -165,7 +166,7 @@
                             Grid.Row="0"
                             Grid.Column="2"
                             Grid.ColumnSpan="4"
-                            Content="{Binding Player1Name, Mode=TwoWay}"
+                            Content="{Binding Player1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             ContentTemplate="{StaticResource borderedTextboxTemplate}"
                             />
 
@@ -184,7 +185,7 @@
                             Grid.Column="2"
                             Grid.ColumnSpan="4"
                             Style="{StaticResource PlayerNameTextBox}"
-                            Text="{Binding Player2Name, Mode=TwoWay}"
+                            Text="{Binding Player2Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             />
 
                         <!--  Cancel Button  -->
@@ -195,7 +196,8 @@
                             Command="{Binding CancelPlayerNamesCommand}"
                             Content="Cancel"
                             Style="{StaticResource bubbleButton2}"
-                            />
+                            >
+                        </Button>
 
                         <!--  Confirm Button  -->
                         <Button

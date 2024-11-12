@@ -76,6 +76,9 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="#0472b3" />
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#2f334a" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
