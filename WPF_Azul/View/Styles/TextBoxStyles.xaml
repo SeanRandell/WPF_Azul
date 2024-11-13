@@ -23,7 +23,7 @@
     <DataTemplate x:Key="borderedTextboxTemplate" DataType="{x:Type sys:String}">
         <!--<Border Style="{StaticResource playerNameBorderStyle}">-->
         <Viewbox Stretch="UniformToFill" StretchDirection="Both">
-            <TextBox Style="{StaticResource PlayerNameTextBox}" Text="{Binding Mode=OneWay}" />
+            <TextBox Style="{StaticResource PlayerNameTextBox}" Text="{Binding Mode=TwoWay, Path=.}" />
         </Viewbox>
         <!--</Border>-->
     </DataTemplate>

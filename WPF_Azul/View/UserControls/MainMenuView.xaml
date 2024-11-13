@@ -116,7 +116,7 @@
             Grid.RowSpan="7"
             Grid.ColumnSpan="3"
             Panel.ZIndex="2"
-            IsOpen="true"
+            IsOpen="{Binding IsPlayerNameModalOpen}"
             >
             <Border BorderBrush="#0484b3" BorderThickness="5">
                 <Grid Background="LightBlue">
@@ -162,12 +162,20 @@
                         </Viewbox>
 
                         <!--  Player 1 Name Input  -->
-                        <ContentPresenter
+                        <!--<ContentPresenter
                             Grid.Row="0"
                             Grid.Column="2"
                             Grid.ColumnSpan="4"
-                            Content="{Binding Player1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Content="{Binding Path=Player1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             ContentTemplate="{StaticResource borderedTextboxTemplate}"
+                            />-->
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="4"
+                            Style="{StaticResource PlayerNameTextBox}"
+                            Text="{Binding Player1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             />
 
                         <!--  Player 2 Name Label  -->
@@ -200,6 +208,7 @@
                         </Button>
 
                         <!--  Confirm Button  -->
+                        <!-- IsEnabled="{Binding ArePlayerNamesValid}"-->
                         <Button
                             Grid.Row="2"
                             Grid.Column="3"

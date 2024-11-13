@@ -12,6 +12,7 @@ using WPF_Azul.View;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Diagnostics;
 
 namespace WPF_Azul.ViewModel
 {
@@ -26,6 +27,7 @@ namespace WPF_Azul.ViewModel
             {
                 _player1Name = value;
                 OnPropertyChanged();
+                CheckIfPlayerNameInputIsValid();
             }
         }
 
@@ -38,6 +40,7 @@ namespace WPF_Azul.ViewModel
             {
                 _player2Name = value;
                 OnPropertyChanged();
+                CheckIfPlayerNameInputIsValid();
             }
         }
 
@@ -52,6 +55,19 @@ namespace WPF_Azul.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        private bool _arePlayerNamesValid;
+
+        public bool ArePlayerNamesValid
+        {
+            get { return _arePlayerNamesValid; }
+            set
+            {
+                _arePlayerNamesValid = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private readonly NavigationStore navigationStore;
         private readonly GameViewModel gameViewModel;
@@ -111,6 +127,18 @@ namespace WPF_Azul.ViewModel
             Player1Name = "";
             Player2Name = "";
             IsPlayerNameModalOpen = false;
+        }
+
+        private void CheckIfPlayerNameInputIsValid()
+        {
+            Trace.WriteLine("Player1Name: " + Player1Name);
+            Trace.WriteLine("Player2Name: " + Player2Name);
+
+            if(Player1Name.Length >= 2 && Player2Name.Length >= 2)
+            {
+                ArePlayerNamesValid = true;
+            }
+            ArePlayerNamesValid = false;
         }
     }
 }
