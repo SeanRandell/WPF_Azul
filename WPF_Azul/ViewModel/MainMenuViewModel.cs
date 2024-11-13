@@ -27,7 +27,6 @@ namespace WPF_Azul.ViewModel
             {
                 _player1Name = value;
                 OnPropertyChanged();
-                CheckIfPlayerNameInputIsValid();
             }
         }
 
@@ -40,7 +39,6 @@ namespace WPF_Azul.ViewModel
             {
                 _player2Name = value;
                 OnPropertyChanged();
-                CheckIfPlayerNameInputIsValid();
             }
         }
 
@@ -68,7 +66,6 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-
         private readonly NavigationStore navigationStore;
         private readonly GameViewModel gameViewModel;
 
@@ -80,7 +77,7 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-        public ICommand SubmitPlayerNamesCommand => new RelayCommand(execute => SubmitNamesAndStartGame());
+        public ICommand SubmitPlayerNamesCommand => new RelayCommand(execute => SubmitNamesAndStartGame(), CheckIfPlayerNameInputIsValid);
 
         public ICommand CancelPlayerNamesCommand => new RelayCommand(execute => CancelPlayerNames());
 
@@ -94,6 +91,7 @@ namespace WPF_Azul.ViewModel
             this.gameViewModel = gameViewModel;
 
             _isPlayerNameModalOpen = false;
+            ArePlayerNamesValid = false;
 
             _player1Name = "";
             _player2Name = "";
@@ -129,16 +127,13 @@ namespace WPF_Azul.ViewModel
             IsPlayerNameModalOpen = false;
         }
 
-        private void CheckIfPlayerNameInputIsValid()
+        private bool CheckIfPlayerNameInputIsValid(object? parameter)
         {
-            Trace.WriteLine("Player1Name: " + Player1Name);
-            Trace.WriteLine("Player2Name: " + Player2Name);
-
             if(Player1Name.Length >= 2 && Player2Name.Length >= 2)
             {
-                ArePlayerNamesValid = true;
+                return true;
             }
-            ArePlayerNamesValid = false;
+            return false;
         }
     }
 }

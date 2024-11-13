@@ -131,11 +131,6 @@
                         <RowDefinition Height="3.3*" />
                     </Grid.RowDefinitions>
 
-                    <!--
-                        TODO - As there is no minLength property. Create logic for it in the view model
-                        and bind the confirm command to whether the input is valid.
-                    Decided that a relaycommand in viewmodel is best approach for this 
-                    -->
                     <Grid Grid.Row="1" Grid.Column="1">
 
                         <Grid.ColumnDefinitions>
@@ -162,20 +157,12 @@
                         </Viewbox>
 
                         <!--  Player 1 Name Input  -->
-                        <!--<ContentPresenter
+                        <ContentPresenter
                             Grid.Row="0"
                             Grid.Column="2"
                             Grid.ColumnSpan="4"
-                            Content="{Binding Path=Player1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Content="{Binding Player1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             ContentTemplate="{StaticResource borderedTextboxTemplate}"
-                            />-->
-
-                        <TextBox
-                            Grid.Row="0"
-                            Grid.Column="2"
-                            Grid.ColumnSpan="4"
-                            Style="{StaticResource PlayerNameTextBox}"
-                            Text="{Binding Player1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             />
 
                         <!--  Player 2 Name Label  -->
@@ -188,12 +175,12 @@
                         </Viewbox>
 
                         <!--  Player 2 Name Input  -->
-                        <TextBox
+                        <ContentPresenter
                             Grid.Row="1"
                             Grid.Column="2"
                             Grid.ColumnSpan="4"
-                            Style="{StaticResource PlayerNameTextBox}"
-                            Text="{Binding Player2Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Content="{Binding Player2Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ContentTemplate="{StaticResource borderedTextboxTemplate}"
                             />
 
                         <!--  Cancel Button  -->
@@ -204,11 +191,9 @@
                             Command="{Binding CancelPlayerNamesCommand}"
                             Content="Cancel"
                             Style="{StaticResource bubbleButton2}"
-                            >
-                        </Button>
+                            />
 
                         <!--  Confirm Button  -->
-                        <!-- IsEnabled="{Binding ArePlayerNamesValid}"-->
                         <Button
                             Grid.Row="2"
                             Grid.Column="3"
