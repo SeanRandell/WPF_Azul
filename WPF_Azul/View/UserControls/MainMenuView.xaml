@@ -190,7 +190,7 @@
                             Margin="2"
                             Command="{Binding CancelPlayerNamesCommand}"
                             Content="Cancel"
-                            Style="{StaticResource bubbleButton2}"
+                            Style="{StaticResource MenuButton}"
                             />
 
                         <!--  Confirm Button  -->
@@ -200,7 +200,7 @@
                             Margin="2"
                             Command="{Binding SubmitPlayerNamesCommand}"
                             Content="Confirm"
-                            Style="{StaticResource bubbleButton2}"
+                            Style="{StaticResource MenuButton}"
                             />
                     </Grid>
 
@@ -221,7 +221,7 @@
                 Margin="2"
                 Command="{Binding StartGameCommand}"
                 Content="START"
-                Style="{StaticResource bubbleButton2}"
+                Style="{StaticResource MenuButton}"
                 />
 
             <!--  Quit Command Button  -->
@@ -230,7 +230,7 @@
                 Margin="2"
                 Command="{Binding QuitCommand}"
                 Content="QUIT"
-                Style="{StaticResource bubbleButton2}"
+                Style="{StaticResource MenuButton}"
                 />
         </Grid>
     </Grid>

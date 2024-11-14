@@ -11,7 +11,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="bubbleButton" TargetType="Button">
+    <Style x:Key="UndoButton" TargetType="Button">
         <Setter Property="Background" Value="#FFFCB900" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="28" />
@@ -43,11 +43,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="bubbleButton2" TargetType="Button">
+    <Style x:Key="MenuButton" TargetType="Button">
         <Setter Property="Background" Value="#5abbd1" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="#4169E1" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="BorderBrush" Value="#0484b3" />
         <Setter Property="BorderThickness" Value="5" />
         <Setter Property="Template">
             <Setter.Value>
@@ -83,6 +83,26 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#1E90FF" />
+                <Setter Property="BorderBrush" Value="#104E8B" />
+                <Setter Property="Foreground" Value="#FFFFFF" />
+            </Trigger>
+
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="#1E90FF" />
+                <Setter Property="BorderBrush" Value="#104E8B" />
+                <Setter Property="Foreground" Value="#FFFFFF" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="#B0C4DE" />
+                <Setter Property="BorderBrush" Value="#A9A9A9" />
+                <Setter Property="Foreground" Value="#D3D3D3" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

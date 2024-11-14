@@ -78,7 +78,7 @@
                         Margin="4"
                         Command="{Binding CloseGameMenuCommand}"
                         Content="RESUME"
-                        Style="{StaticResource bubbleButton2}"
+                        Style="{StaticResource MenuButton}"
                         />
 
                     <!--  Help Button  -->
@@ -86,7 +86,7 @@
                         Margin="4"
                         Command="{Binding HowToPlayButtonCommand}"
                         Content="HOW TO PLAY"
-                        Style="{StaticResource bubbleButton2}"
+                        Style="{StaticResource MenuButton}"
                         />
 
                     <!--  Restart Button  -->
@@ -94,7 +94,7 @@
                         Margin="4"
                         Command="{Binding OpenRestartCommand}"
                         Content="RESTART"
-                        Style="{StaticResource bubbleButton2}"
+                        Style="{StaticResource MenuButton}"
                         />
 
                     <!--  Main Menu Button  -->
@@ -102,7 +102,7 @@
                         Margin="4"
                         Command="{Binding MainMenuCommand}"
                         Content="MAIN MENU"
-                        Style="{StaticResource bubbleButton2}"
+                        Style="{StaticResource MenuButton}"
                         ToolTip="Quit to Main Menu"
                         />
                 </UniformGrid>
@@ -235,7 +235,7 @@
             HorizontalAlignment="Left"
             Command="{Binding OpenGameMenuCommand}"
             Content="MENU"
-            Style="{StaticResource bubbleButton2}"
+            Style="{StaticResource MenuButton}"
             />
 
         <!--  Player 1 Grid Layout  -->
@@ -292,7 +292,7 @@
             HorizontalAlignment="Stretch"
             Command="{Binding UndoFactoryTileClick}"
             Content="Undo Tile Selection"
-            Style="{StaticResource bubbleButton}"
+            Style="{StaticResource UndoButton}"
             Visibility="{Binding IsFactoryTileSelected, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
             />
 
