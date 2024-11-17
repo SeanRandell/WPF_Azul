@@ -12,12 +12,14 @@
     </Style>
 
     <Style x:Key="UndoButton" TargetType="Button">
-        <Setter Property="Background" Value="#FFFCB900" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="FontSize" Value="28" />
-        <Setter Property="Padding" Value="10" />
-        <Setter Property="BorderBrush" Value="#FFF2A500" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="BorderThickness" Value="5" />
+        <Setter Property="Background" Value="#800000" />
+        <Setter Property="BorderBrush" Value="#A52A2A" />
+        <Setter Property="Foreground" Value="#FFDAB9" />
+        <Setter Property="BorderThickness" Value="5" />
+        <Setter Property="Margin" Value="5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -26,16 +28,33 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="30"
+                            CornerRadius="10"
                             />
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#FFFECE19" />
+                            <Setter Property="Background" Value="#990000" />
+                            <Setter Property="BorderBrush" Value="#8B0000" />
+                            <Setter Property="Foreground" Value="#FFDAB9" />
                         </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Background" Value="#660000" />
+                            <Setter Property="BorderBrush" Value="#4B0000" />
+                            <Setter Property="Foreground" Value="#FFDAB9" />
+                        </Trigger>
+
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="#FFEDB800" />
+                            <Setter Property="Background" Value="#4B0000" />
+                            <Setter Property="BorderBrush" Value="#330000" />
+                            <Setter Property="Foreground" Value="#FFDAB9" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#B22222" />
+                            <Setter Property="BorderBrush" Value="#CD5C5C" />
+                            <Setter Property="Foreground" Value="#E6CFCF" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -49,6 +68,7 @@
         <Setter Property="Foreground" Value="#FFFFFF" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="BorderThickness" Value="5" />
+        <Setter Property="Margin" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -97,11 +117,18 @@
                 <Setter Property="Foreground" Value="#FFFFFF" />
             </Trigger>
 
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#0B3D91" />
+                <Setter Property="BorderBrush" Value="#082A63" />
+                <Setter Property="Foreground" Value="#FFFFFF" />
+            </Trigger>
+
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Background" Value="#B0C4DE" />
                 <Setter Property="BorderBrush" Value="#A9A9A9" />
                 <Setter Property="Foreground" Value="#D3D3D3" />
             </Trigger>
+
         </Style.Triggers>
     </Style>
 

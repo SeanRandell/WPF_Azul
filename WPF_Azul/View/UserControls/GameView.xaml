@@ -24,8 +24,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0.5*" />
             <RowDefinition Height="5*" />
-            <RowDefinition Height="1.5*" />
-            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -48,13 +48,12 @@
 
         <!--  Game Menu Modal  -->
         <custom:Modal
-            x:Name="GameMenuModal"
             Grid.RowSpan="5"
             Grid.ColumnSpan="4"
             Panel.ZIndex="3"
             IsOpen="{Binding IsGameMenuOpen}"
             >
-            <Grid Background="DarkGray">
+            <Grid>
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3.3*" />
@@ -67,45 +66,52 @@
                     <RowDefinition Height="3.3*" />
                 </Grid.RowDefinitions>
 
-                <!--  Resume Game  -->
-                <UniformGrid
+                <Border
                     Grid.Row="1"
                     Grid.Column="1"
-                    Columns="1"
-                    Rows="4"
+                    Style="{StaticResource menuBorderStyle}"
                     >
-                    <Button
-                        Margin="4"
-                        Command="{Binding CloseGameMenuCommand}"
-                        Content="RESUME"
-                        Style="{StaticResource MenuButton}"
-                        />
 
-                    <!--  Help Button  -->
-                    <Button
-                        Margin="4"
-                        Command="{Binding HowToPlayButtonCommand}"
-                        Content="HOW TO PLAY"
-                        Style="{StaticResource MenuButton}"
-                        />
+                    <!--  Resume Game  -->
+                    <UniformGrid
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Columns="1"
+                        Rows="4"
+                        >
+                        <Button
+                            Margin="4"
+                            Command="{Binding CloseGameMenuCommand}"
+                            Content="RESUME"
+                            Style="{StaticResource MenuButton}"
+                            />
 
-                    <!--  Restart Button  -->
-                    <Button
-                        Margin="4"
-                        Command="{Binding OpenRestartCommand}"
-                        Content="RESTART"
-                        Style="{StaticResource MenuButton}"
-                        />
+                        <!--  Help Button  -->
+                        <Button
+                            Margin="4"
+                            Command="{Binding HowToPlayButtonCommand}"
+                            Content="HOW TO PLAY"
+                            Style="{StaticResource MenuButton}"
+                            />
 
-                    <!--  Main Menu Button  -->
-                    <Button
-                        Margin="4"
-                        Command="{Binding MainMenuCommand}"
-                        Content="MAIN MENU"
-                        Style="{StaticResource MenuButton}"
-                        ToolTip="Quit to Main Menu"
-                        />
-                </UniformGrid>
+                        <!--  Restart Button  -->
+                        <Button
+                            Margin="4"
+                            Command="{Binding OpenRestartCommand}"
+                            Content="RESTART"
+                            Style="{StaticResource MenuButton}"
+                            />
+
+                        <!--  Main Menu Button  -->
+                        <Button
+                            Margin="4"
+                            Command="{Binding MainMenuCommand}"
+                            Content="MAIN MENU"
+                            Style="{StaticResource MenuButton}"
+                            ToolTip="Quit to Main Menu"
+                            />
+                    </UniformGrid>
+                </Border>
             </Grid>
         </custom:Modal>
 
@@ -114,23 +120,66 @@
             x:Name="RestartGameModal"
             Grid.RowSpan="5"
             Grid.ColumnSpan="4"
+            Panel.ZIndex="3"
             IsOpen="{Binding IsRestartMenuOpen}"
             >
-            <Grid>
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Reset Game to the start with current the current players?" />
-                    <Button
-                        Margin="2"
-                        Command="{Binding CancelRestartGameCommand}"
-                        Content="Cancel"
-                        />
-                    <Button
-                        Margin="2"
-                        Command="{Binding RestartGameCommand}"
-                        Content="Confirm"
-                        />
-                </StackPanel>
-            </Grid>
+            <Border Style="{StaticResource menuBorderStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3.3*" />
+                        <ColumnDefinition Width="3.3*" />
+                        <ColumnDefinition Width="3.3*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3.3*" />
+                        <RowDefinition Height="3.3*" />
+                        <RowDefinition Height="3.3*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="1" Grid.Column="1">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="8*" />
+                            <RowDefinition Height="2*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontSize="24"
+                            Style="{StaticResource MenuHeadingText}"
+                            Text="Reset Game to the start with current the current players?"
+                            TextWrapping="Wrap"
+                            />
+
+                        <UniformGrid
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Columns="2"
+                            Rows="1"
+                            >
+
+                            <Button
+                                Command="{Binding CancelRestartGameCommand}"
+                                Content="CANCEL"
+                                Style="{StaticResource MenuButton}"
+                                />
+
+                            <Button
+                                Command="{Binding RestartGameCommand}"
+                                Content="CONFIRM"
+                                Style="{StaticResource MenuButton}"
+                                />
+
+                        </UniformGrid>
+                    </Grid>
+                </Grid>
+            </Border>
         </custom:Modal>
 
         <!--  How To Play Modal  -->
@@ -140,90 +189,92 @@
             Panel.ZIndex="3"
             IsOpen="{Binding IsHowToPlayModalOpen}"
             >
-            <Grid>
+            <Border Style="{StaticResource menuBorderStyle}">
 
-                <!--  Grid Defintions  -->
-                <Grid.Background>
-                    <SolidColorBrush Color="LightGray" />
-                </Grid.Background>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.5*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="4*" />
-                    <RowDefinition Height="0.5*" />
-                </Grid.RowDefinitions>
+                <Grid>
+                    <!--  Grid Defintions  -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="4*" />
+                        <RowDefinition Height="0.5*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <!--  How To Play Heading  -->
-                <TextBlock
-                    Grid.Row="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Text="HOW TO PLAY"
-                    />
 
-                <!--  Object of the game Heading  -->
-                <TextBlock
-                    Grid.Row="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Text="OBJECT OF THE GAME"
-                    />
+                    <!--  How To Play Heading  -->
+                    <TextBlock
+                        Grid.Row="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        Text="HOW TO PLAY"
+                        />
 
-                <!--  Object of the game text  -->
-                <TextBlock
-                    Grid.Row="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    FontSize="15"
-                    Text="To be the player with the most points at the end of the game. The game ends after the round in which at least one player has completed a horizontal line of 5 consecutive tiles on her wall."
-                    />
+                    <!--  Object of the game Heading  -->
+                    <TextBlock
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        Text="OBJECT OF THE GAME"
+                        />
 
-                <!--  Gameplay Heading  -->
-                <TextBlock
-                    Grid.Row="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Text="GAMEPLAY"
-                    />
+                    <!--  Object of the game text  -->
+                    <TextBlock
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="15"
+                        Text="To be the player with the most points at the end of the game. The game ends after the round in which at least one player has completed a horizontal line of 5 consecutive tiles on her wall."
+                        />
 
-                <!--  Gameplay Text  -->
-                <TextBlock
-                    Grid.Row="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="15"
-                    Text="On your turn, you must pick tiles in one of the following ways:                         EITHER                         - Pick all tiles of the same color from any one Factory display                         and then move the remaining tiles from this Factory display                         to the center of the table.                         OR                         - Pick all tiles of the same color from the center of the table.                         If you are the first player in this round to pick tiles from the                         center of the table, also take the starting player marker and                         place it onto the leftmost free space of your floor line.                            Then, add the tiles you picked to one of the 5 pattern lines on                         your player board (the first line has 1 space to hold 1 tile, the fifth                         line has 5).                         • Place the tiles, one by one, from right                         to left in your chosen pattern line.                         • If the pattern line already                         holds tiles, you may only                         add tiles of the same color to it.                         • Once all spaces of a pattern line are                         filled, that line is considered complete. If you have picked up                         more tiles than you can place in your chosen pattern line, you                         must place the excess tiles in the floor line                         You are not allowed to place tiles of a certain color in                         a pattern line whose corresponding line of your wall already                         holds a tile of that color."
-                    />
+                    <!--  Gameplay Heading  -->
+                    <TextBlock
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        Text="GAMEPLAY"
+                        />
 
-                <!--  Scoring Heading  -->
-                <TextBlock
-                    Grid.Row="3"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Text="SCORING"
-                    />
+                    <!--  Gameplay Text  -->
+                    <TextBlock
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        Text="On your turn, you must pick tiles in one of the following ways:                         EITHER                         - Pick all tiles of the same color from any one Factory display                         and then move the remaining tiles from this Factory display                         to the center of the table.                         OR                         - Pick all tiles of the same color from the center of the table.                         If you are the first player in this round to pick tiles from the                         center of the table, also take the starting player marker and                         place it onto the leftmost free space of your floor line.                            Then, add the tiles you picked to one of the 5 pattern lines on                         your player board (the first line has 1 space to hold 1 tile, the fifth                         line has 5).                         • Place the tiles, one by one, from right                         to left in your chosen pattern line.                         • If the pattern line already                         holds tiles, you may only                         add tiles of the same color to it.                         • Once all spaces of a pattern line are                         filled, that line is considered complete. If you have picked up                         more tiles than you can place in your chosen pattern line, you                         must place the excess tiles in the floor line                         You are not allowed to place tiles of a certain color in                         a pattern line whose corresponding line of your wall already                         holds a tile of that color."
+                        />
 
-                <!--  Ok Button  -->
-                <Button
-                    x:Name="btnOk"
-                    Grid.Row="4"
-                    Margin="2"
-                    HorizontalAlignment="Center"
-                    Command="{Binding HideHowToPlayCommand}"
-                    Content="OK"
-                    />
+                    <!--  Scoring Heading  -->
+                    <TextBlock
+                        Grid.Row="3"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        Text="SCORING"
+                        />
 
-            </Grid>
+                    <!--  Ok Button  -->
+                    <Button
+                        x:Name="btnOk"
+                        Grid.Row="4"
+                        Margin="2"
+                        HorizontalAlignment="Center"
+                        Command="{Binding HideHowToPlayCommand}"
+                        Content="OK"
+                        />
 
+                </Grid>
+            </Border>
         </custom:Modal>
 
         <!--  Main Menu Button  -->
@@ -283,18 +334,6 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-
-        <!--  Undo Factory Click Button  -->
-        <Button
-            Grid.Row="3"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Stretch"
-            Command="{Binding UndoFactoryTileClick}"
-            Content="Undo Tile Selection"
-            Style="{StaticResource UndoButton}"
-            Visibility="{Binding IsFactoryTileSelected, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
-            />
 
         <!--  Center Factory view  -->
         <Grid
@@ -380,10 +419,9 @@
             <StackPanel Margin="5">
                 <TextBlock
                     Margin="0,0,0,10"
-                    HorizontalAlignment="Center"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Text="Selected Tiles"
+                    FontSize="18"
+                    Style="{StaticResource playerNameTextStyle}"
+                    Text="SELECTED TILES"
                     />
 
                 <ItemsControl ItemsSource="{Binding SelectedFactoryTiles}">
@@ -398,8 +436,8 @@
                         <DataTemplate>
                             <local:TileView
                                 Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}"
-                                MinWidth="30"
-                                MinHeight="30"
+                                MinWidth="35"
+                                MinHeight="35"
                                 TileColour="{Binding}"
                                 TileObject="{Binding}"
                                 />
@@ -409,6 +447,17 @@
                 </ItemsControl>
             </StackPanel>
         </Border>
+
+        <!--  Undo Factory Click Button  -->
+        <Button
+            Grid.Row="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Command="{Binding UndoFactoryTileClick}"
+            Content="UNDO TILE SELECTION"
+            Style="{StaticResource UndoButton}"
+            Visibility="{Binding IsFactoryTileSelected, Converter={StaticResource booleanToVisibilityConverter}, Mode=Twoway}"
+            />
 
         <!--  Debug Tile Collection Text  -->
         <StackPanel Grid.Row="2" Grid.Column="0">

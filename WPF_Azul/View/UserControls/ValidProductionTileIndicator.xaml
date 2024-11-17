@@ -17,12 +17,12 @@
                 Gesture="LeftClick"
                 />
         </Grid.InputBindings>
-        <Rectangle RadiusX="5" RadiusY="5">
-
-            <Rectangle.Fill>
-                <SolidColorBrush Opacity=".75" Color="LightGreen" />
-            </Rectangle.Fill>
-        </Rectangle>
+        <Border
+            Background="#9ad98d"
+            BorderBrush="ForestGreen"
+            BorderThickness="3"
+            CornerRadius="5"
+            />
         <Viewbox
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
@@ -36,5 +36,6 @@
                 Text="&#x1F882;"
                 />
         </Viewbox>
+
     </Grid>
 </UserControl>

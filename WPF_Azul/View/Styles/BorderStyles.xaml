@@ -1,0 +1,72 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="playerNameBorderStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="Gold" />
+        <Setter Property="BorderThickness" Value="4" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Margin" Value="4" />
+    </Style>
+
+    <Style x:Key="menuBorderStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="#4169E1" />
+        <Setter Property="Background" Value="LightBlue" />
+        <Setter Property="BorderThickness" Value="5" />
+    </Style>
+
+    <Style x:Key="AnimatedGradientBorder" TargetType="Border">
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush x:Name="animatedGradient" StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="#CC0000" />
+                    <GradientStop Offset="0.5" Color="#CCCC00" />
+                    <GradientStop Offset="1.0" Color="#00CC00" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+
+                        <!--  Animate GradientStop 1  -->
+                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)">
+                            <LinearColorKeyFrame KeyTime="0:0:0" Value="#CC0000" />
+                            <LinearColorKeyFrame KeyTime="0:0:2" Value="#CC00CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:4" Value="#0000CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:6" Value="#00CCCC" />
+                            <LinearColorKeyFrame KeyTime="0:0:8" Value="#00CC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:10" Value="#CCCC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:12" Value="#CC0000" />
+                        </ColorAnimationUsingKeyFrames>
+
+                        <!--  Animate GradientStop 2  -->
+                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)">
+                            <LinearColorKeyFrame KeyTime="0:0:0" Value="#CCCC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:2" Value="#CC0000" />
+                            <LinearColorKeyFrame KeyTime="0:0:4" Value="#CC00CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:6" Value="#0000CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:8" Value="#00CCCC" />
+                            <LinearColorKeyFrame KeyTime="0:0:10" Value="#00CC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:12" Value="#CCCC00" />
+                        </ColorAnimationUsingKeyFrames>
+
+                        <!--  Animate GradientStop 3  -->
+                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)">
+                            <LinearColorKeyFrame KeyTime="0:0:0" Value="#00CC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:2" Value="#CCCC00" />
+                            <LinearColorKeyFrame KeyTime="0:0:4" Value="#CC0000" />
+                            <LinearColorKeyFrame KeyTime="0:0:6" Value="#CC00CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:8" Value="#0000CC" />
+                            <LinearColorKeyFrame KeyTime="0:0:10" Value="#00CCCC" />
+                            <LinearColorKeyFrame KeyTime="0:0:12" Value="#00CC00" />
+                        </ColorAnimationUsingKeyFrames>
+
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
