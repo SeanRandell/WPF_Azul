@@ -8,7 +8,7 @@
 </div>
 
 ## About The Project
-I created this game to practice creating an application in WPF. I enjoy programming in c# and I wanted to learn a UI framework I could use for any custom applications I wanted to make that would need more than just a CLI.
+I created this game to practice creating an application in WPF. I enjoy programming in C# and I wanted to learn a UI framework I could use for any custom applications I wanted to make that would need more than just a CLI.
 
 This is still a work in progress.
 

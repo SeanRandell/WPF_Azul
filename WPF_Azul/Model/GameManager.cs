@@ -225,7 +225,7 @@ namespace WPF_Azul.Model
 
         internal void RestartGame()
         {
-            GameState.ResetGame();
+            GameState.ResetGameFromGameEnd();
         }
 
         internal void UpdateSelectedFactoryTiles(TileType selectedTileType, int factoriesIndex)

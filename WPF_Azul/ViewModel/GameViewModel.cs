@@ -45,7 +45,7 @@ namespace WPF_Azul.ViewModel
 
         public ICommand CancelRestartGameCommand => new RelayCommand(execute => CloseRestartMenu());
 
-        public ICommand ReplayGameButtonCommand => new RelayCommand(execute => ResetGame());
+        public ICommand ReplayGameButtonCommand => new RelayCommand(execute => ReplayGameWithCurrentPlayers());
 
         private TileType _selectedTileType;
 
@@ -470,7 +470,7 @@ namespace WPF_Azul.ViewModel
             }
         }
 
-        internal void ResetGame()
+        internal void ReplayGameWithCurrentPlayers()
         {
             GameHasEnded = false;
             IsGameEndDraw = false;

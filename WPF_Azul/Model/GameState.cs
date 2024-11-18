@@ -247,26 +247,9 @@ namespace WPF_Azul.Model
 
 
         // TODO - refactor restart game code
-        internal void ResetGame()
+        internal void ResetGameFromGameEnd()
         {
-            for (int i = 0; i < Players.Count; i++)
-            {
-                Players[i].ResetPlayerScore();
-
-                Players[i].PlayerBoard.ClearWallTilesForGameEnd(TileCollections);
-
-                Players[i].PlayerBoard.ClearProductionTilesForGameEnd(TileCollections);
-
-                Players[i].PlayerBoard.ClearDroppedTilesForGameEnd(TileCollections);
-
-                for (int j = 0; j < Players[i].PlayerBoard.WallTileScores.Count; j++)
-                {
-                    Players[i].PlayerBoard.WallTileScores[j] = 0;
-                }
-
-                Players[i].PlayerBoard.DroppedTileScore = 0;
-                Players[i].EndGameScore = 0;
-            }
+            ResetPlayerBoards();
 
             CenterFactory.GetStartingPlayerTileFromTileBin(TileCollections.tileBin);
 
@@ -274,35 +257,51 @@ namespace WPF_Azul.Model
 
             GamePhase = GamePhase.PlayingRound;
 
-            for (int i = 0; i < Players.Count; i++)
-            {
-                Players[i].Name = "";
-            }
+            ResetPlayerScores();
+
+            ResetPlayerNames();
 
             SetupFactoriesForRound();
         }
 
+        // TODO - Adapt this to player returning to main menu only
         internal void ResetGameFromAnyState()
         {
-            for (int i = 0; i < Players.Count; i++)
-            {
-                Players[i].ResetPlayerScore();
+            ResetPlayerBoards();
 
-                Players[i].PlayerBoard.ClearWallTilesForGameEnd(TileCollections);
+            ResetFactories();
 
-                Players[i].PlayerBoard.ClearProductionTilesForGameEnd(TileCollections);
+            TileCollections.ResetBagAndBinForNewGame();
 
-                Players[i].PlayerBoard.ClearDroppedTilesForGameEnd(TileCollections);
+            GamePhase = GamePhase.PlayingRound;
 
-                for (int j = 0; j < Players[i].PlayerBoard.WallTileScores.Count; j++)
-                {
-                    Players[i].PlayerBoard.WallTileScores[j] = 0;
-                }
+            ResetPlayerScores();
 
-                Players[i].PlayerBoard.DroppedTileScore = 0;
-                Players[i].EndGameScore = 0;
-            }
+            //ResetPlayerNames();
 
+            InitNewGame();
+        }
+
+        // TODO - Restart Game command is player initiated from Game view. Implement and use instead of above method.
+        internal void RestartGameCommand()
+        {
+            ResetPlayerBoards();
+
+            ResetFactories();
+
+            TileCollections.ResetBagAndBinForNewGame();
+
+            GamePhase = GamePhase.PlayingRound;
+
+            ResetPlayerScores();
+
+            //ResetPlayerNames();
+
+            InitNewGame();
+        }
+
+        private void ResetFactories()
+        {
             for (int i = 0; i < Factories.Count; i++)
             {
                 Factories[i].BinAllTiles(TileCollections);
@@ -314,16 +313,43 @@ namespace WPF_Azul.Model
             {
                 CenterFactory.GetStartingPlayerTileFromTileBin(TileCollections.tileBin);
             }
+        }
 
-            TileCollections.ResetBagAndBinForNewGame();
-            GamePhase = GamePhase.PlayingRound;
+        private void ResetPlayerBoards()
+        {
+            for (int i = 0; i < Players.Count; i++)
+            {
+                Players[i].ResetPlayerScore();
 
-            for (int i = 0;i < Players.Count; i++)
+                Players[i].PlayerBoard.ClearWallTilesForGameEnd(TileCollections);
+
+                Players[i].PlayerBoard.ClearProductionTilesForGameEnd(TileCollections);
+
+                Players[i].PlayerBoard.ClearDroppedTilesForGameEnd(TileCollections);
+
+                for (int j = 0; j < Players[i].PlayerBoard.WallTileScores.Count; j++)
+                {
+                    Players[i].PlayerBoard.WallTileScores[j] = 0;
+                }
+
+                Players[i].PlayerBoard.DroppedTileScore = 0;
+            }
+        }
+
+        private void ResetPlayerNames()
+        {
+            for (int i = 0; i < Players.Count; i++)
             {
                 Players[i].Name = "";
             }
+        }
 
-            InitNewGame();
+        private void ResetPlayerScores()
+        {
+            for (int i = 0; i < Players.Count; i++)
+            {
+                Players[i].EndGameScore = 0;
+            }
         }
     }
 }
