@@ -28,16 +28,16 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="6.5*" />
-                <RowDefinition Height="3.5*" />
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
 
             <!--  Player Grid Layout  -->
             <Grid>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1.5*" />
-                    <RowDefinition Height="8.5*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="8*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -381,8 +381,8 @@
 
                 <Grid Grid.Row="0" Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="5*" />
-                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="4*" />
+                        <RowDefinition Height="6*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
